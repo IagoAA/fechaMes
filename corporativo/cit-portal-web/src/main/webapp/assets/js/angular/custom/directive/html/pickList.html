@@ -1,0 +1,27 @@
+<div class="pick-list clearfix">
+	<div class="pick-list-source">
+		<label>{{sourceLabel}}</label>
+		<ul>
+			<li ng-click="selectSourceItem($event, source);" ng-class="{'selected': source.$selected}" ng-repeat="source in listSource">
+				<label ng-show="itensLabel">{{source[itensLabel[0]][itensLabel[1]]}}</label>
+				<label ng-hide="itensLabel">{{source[itemLabel]}}</label>
+			</li>
+		</ul>
+	</div>
+	<div class="pick-list-buttons">
+		<button class="btn btn-primary" ng-disabled="disabled" ng-click="addSourceInTarget();" type="button">&gt;</button>
+		<button class="btn btn-primary" ng-disabled="disabled" ng-click="addAllSourceInTarget();" type="button">&gt; &gt;</button>
+		<button class="btn btn-primary" ng-disabled="disabled" ng-click="removeSourceInTarget();" type="button">&lt;</button>
+		<button class="btn btn-primary" ng-disabled="disabled" ng-click="removeAllSourceInTarget();" type="button">&lt; &lt;</button>
+	</div>
+	
+	<div class="pick-list-target">
+		<label>{{targetLabel}}</label>
+		<ul>
+			<li ng-click="selectTargetItem($event, target);" ng-class="{'selected': target.$selected}" ng-repeat="target in listTarget">  
+				<label ng-show="itensLabel">{{target[itensLabel[0]][itensLabel[1]]}}</label>
+				<label ng-hide="itensLabel">{{target[itemLabel]}}</label>
+			</li>
+		</ul>
+	</div>
+</div>

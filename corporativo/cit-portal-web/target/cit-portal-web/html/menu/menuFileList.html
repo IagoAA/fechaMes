@@ -1,0 +1,75 @@
+<form name="$parent.menuFileForm">
+	<div class="modal-header">
+	    <button ng-click="$dismiss('cancel');" class="btn btn-clear">
+	        <i class="fa fa-times red"></i>
+	        <translate>LABEL.FECHAR</translate>
+	    </button>
+	</div><!-- .modal-header -->
+	
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-sm-4">
+				<label-input ng-label="LABEL.CAMINHO" ng-model="$parent.include.caminho" ng-id="include.caminho" ng-obrigatorio="true" form="$parent.menuFileForm"></label-input>
+			</div><!-- .col -->
+			
+			<div class="col-sm-4">
+				<label-select ng-label="LABEL.TIPO" ng-list="dominioMenuFileList" ng-custom-options="dominio.descricao for dominio" track-by="track by dominio.id" ng-model="$parent.include.dominioMenuFile" ng-id="include.dominioMenuFile" ng-obrigatorio="true" form="$parent.menuFileForm"></label-select>
+			</div><!-- .col -->
+			
+			<div class="col-sm-4">
+				<label-input-radio
+					ng-label="LABEL.ATIVO"
+					ng-obrigatorio="true"
+					list="$parent.radioValueList"
+					ng-model="$parent.include.ativo"
+					value="value"
+					text="text"
+					ng-obrigatorio="true"
+					form="$parent.menuForm"
+					></label-input-radio>
+			</div><!-- .col -->
+		</div><!-- .row -->
+		
+		<div class="row margin-bottom">
+			<div class="col-sm-12">
+				<button type="button" class="btn btn-success" ng-click="$parent.saveOrUpdateMenuFile();">
+					<i class="fa fa-plus-circle"></i> <translate>LABEL.ADICIONAR_NOVO</translate>
+				</button>
+			</div><!-- .col -->
+		</div><!-- .row -->
+		
+	    <h2 class="title-modal"><translate>LABEL.ARQUIVOS_MENU</translate></h2>
+	    
+	    <table class="table table-bordered table-hover">
+	    	<thead>
+	    		<tr>
+	    			<th class="text-center" style="width: 5%;">#</th>
+	    			<th style="width: 75%;"><translate>LABEL.CAMINHO</translate></th>
+	    			<th class="text-center" style="width: 6%;"><translate>LABEL.TIPO</translate></th>
+	    			<th class="text-center" style="width: 6%;"><translate>LABEL.ATIVO</translate></th>
+	    			<th class="text-center" style="width: 8%;"><translate>LABEL.ACOES</translate></th>
+	    		</tr>
+	    	</thead>
+	    	
+	    	<tbody>
+	    		<tr ng-repeat="include in $parent.menu.includes">
+	    			<td class="text-center">{{$index + 1}}</td>
+	    			<td>{{include.caminho}}</td>
+	    			<td class="text-center">{{include.dominioMenuFile.descricao}}</td>
+	    			<td class="text-center">
+	    				<i class="fa fa-circle" ng-class="{'green': include.ativo, 'red': !include.ativo}"></i>
+	    			</td>
+	    			<td class="text-center">
+	    				<a href="#void" class="blue" ng-click="editMenuFile(include);">
+	    					<i class="fa fa-pencil"></i>
+	    				</a>
+	    				
+	    				<a href="#void" class="red" ng-click="removeMenuFile(include);">
+	    					<i class="fa fa-remove"></i>
+	    				</a>
+	    			</td>
+	    		</tr>
+	    	</tbody>
+	    </table>
+	</div><!-- .modal-body -->
+</form>

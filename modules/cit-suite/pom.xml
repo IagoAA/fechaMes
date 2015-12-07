@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--     ******************************************************************************************************************** -->
+<!--     *												LICENCA*GPLv2														* -->
+<!--     * Copyright [2011,2012,2013,2014,2015] da CentralIT Tecnologia da Informação Ltda (www.centralit.com.br)          	* -->
+<!--     *                                                                                                                 	* -->
+<!--     * Este arquivo é parte do programa/software: Citsmart (www.citsmart.com.br)                                       	* -->
+<!--     *                                                                                                                 	* -->
+<!--     * O Citsmart é um software livre; você pode redistribui-lo e/ou modificá-lo dentro dos termos da Licença          	* -->
+<!--     * Pública Geral GNU como publicada pela Fundação do Software Livre (FSF); na versão 2 da Licença.                	* -->
+<!--     *                                                                                                                 	* -->
+<!--     * Este programa/software é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA; sem uma         	* -->
+<!--     * garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral     	* -->
+<!--     * GNU/GPL em português para maiores detalhes.                                                                     	* -->
+<!--     *                                                                                                                 	* -->
+<!--     * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título 'LICENCA.txt', junto com este     	* -->
+<!--     * programa/software, se não, acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br	* -->
+<!--     * ou escreva para a Fundação do Software Livre (FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301,USA 	* -->
+<!--     ******************************************************************************************************************** -->
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>br.com.centralit</groupId>
+		<artifactId>citsmart-grp-parent</artifactId>
+		<version>0.0.6-SNAPSHOT</version>
+	</parent>
+
+	<groupId>br.com.centralit</groupId>
+	<artifactId>citsmart-grp-modules</artifactId>
+	<version>0.0.6-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>citsmart-grp-modules</name>
+
+	<description>
+		Este projeto agrupa os projetos módulos da suite CitSmart-GRP.
+	</description>
+
+	<organization>
+		<name>Central IT</name>
+		<url>http://www.centralit.com.br</url>
+	</organization>
+
+	<properties>
+		<!-- BEGIN: Configuration properties -->
+		<!-- Tests properties -->
+		<skip.all.tests>true</skip.all.tests>
+		<skip.integration.tests>${skip.all.tests}</skip.integration.tests>
+		<skip.unit.tests>${skip.all.tests}</skip.unit.tests>
+
+		<!-- Versoes dos projetos corporativos. -->
+		<cit-core.version>${project.version}</cit-core.version>
+		<cit-portal.version>${project.version}</cit-portal.version>
+		<cit-tabelas-corp.version>${project.version}</cit-tabelas-corp.version>
+		<cit-tabelas-corp.version>${project.version}</cit-tabelas-corp.version>
+
+		<!--Versoes dos modulos do fechaMes-->
+		<fecha-mes.version>${project.version}</fecha-mes.version>
+
+		<!--Spring dependencies -->
+		<spring.framework.version>3.2.12.RELEASE</spring.framework.version>
+		<spring.security.version>3.2.5.RELEASE</spring.security.version>
+		<spring.security.saml.version>1.0.0.RELEASE</spring.security.saml.version>
+		<spring-security-cas.version>3.0.8.RELEASE</spring-security-cas.version>
+
+		<!--Hibernate Version -->
+		<hibernate.version>4.3.8.Final</hibernate.version>
+		<hibernate.search.version>4.5.1.Final</hibernate.search.version>
+
+		<!-- Test Dependencies -->
+		<junit.version>4.12</junit.version>
+		<mockito.version>1.10.19</mockito.version>
+		<jbehave.version>2.5.9</jbehave.version>
+		<hamcrest.version>1.3</hamcrest.version>
+		<fixture-factory.version>3.0.0</fixture-factory.version>
+		<hsqldb.version>2.3.2</hsqldb.version>
+		<json-path.version>0.9.1</json-path.version>
+
+		<!-- Drools Dependencies -->
+		<drools.version>6.3.0.Final</drools.version>
+	</properties>
+
+	<build>
+		<resources>
+			<!-- Resources que sao filtrados pelo maven -->
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.form</include>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/webapp</directory>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+					<include>**/*.MF</include>
+					<include>**/*.sql</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.json</include>
+					<include>**/*.sql</include>
+					<include>**/*.tag</include>
+				</includes>
+				<excludes>
+					<exclude>**/*jks</exclude>
+					<exclude>**/*jrxml</exclude>
+					<exclude>**/*svn</exclude>
+				</excludes>
+				<filtering>true</filtering>
+			</resource>
+			<!-- Resources que NAO sao filtrados pelo maven eh importante para nao
+				corromper determinados arquivos -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.jrxml</include>
+					<include>**/*.jks</include>
+					<include>**/*.jpeg</include>
+					<include>**/*.png</include>
+					<include>**/*.gif</include>
+					<include>**/*.jpg</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+
+	<modules>
+		<module>../cit-tabelas-corp</module>
+		<module>../fecha-mes</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Modulos da suite de aplicativos citSmart -->
+			<dependency>
+				<groupId>br.com.centralit</groupId>
+				<artifactId>cit-tabelas-corp-web</artifactId>
+				<version>${cit-tabelas-corp.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>br.com.centralit</groupId>
+				<artifactId>cit-tabelas-corp-api</artifactId>
+				<version>${cit-tabelas-corp.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>br.com.centralit</groupId>
+				<artifactId>fecha-mes-api</artifactId>
+				<version>${fecha-mes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>br.com.centralit</groupId>
+				<artifactId>fecha-mes-web</artifactId>
+				<version>${fecha-mes.version}</version>
+			</dependency>
+
+			<!-- Dependencias de testes comuns a todos os projetos -->
+			<dependency>
+				<groupId>org.jbehave</groupId>
+				<artifactId>jbehave-core</artifactId>
+				<version>${jbehave.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>${mockito.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.hamcrest</groupId>
+				<artifactId>hamcrest-all</artifactId>
+				<version>${hamcrest.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.hsqldb</groupId>
+				<artifactId>hsqldb</artifactId>
+				<version>${hsqldb.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>br.com.six2six</groupId>
+				<artifactId>fixture-factory</artifactId>
+				<version>${fixture-factory.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.jayway.jsonpath</groupId>
+				<artifactId>json-path</artifactId>
+				<version>${json-path.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<!-- Dependencias do cit-esi -->
+			<dependency>
+				<groupId>org.reflections</groupId>
+				<artifactId>reflections</artifactId>
+				<version>0.9.9-RC1</version>
+			</dependency>
+			<dependency>
+				<groupId>rhino</groupId>
+				<artifactId>js</artifactId>
+				<version>1.7R2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.python</groupId>
+				<artifactId>jython</artifactId>
+				<version>2.5.3</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jruby</groupId>
+				<artifactId>jruby-core</artifactId>
+				<version>1.7.16.1</version>
+			</dependency>
+			<dependency>
+				<groupId>com.thoughtworks.xstream</groupId>
+				<artifactId>xstream</artifactId>
+				<version>1.4.7</version>
+			</dependency>
+			<dependency>
+				<groupId>org.freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+				<version>2.3.21</version>
+			</dependency>
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>20140107</version>
+			</dependency>
+			<dependency>
+				<groupId>pentaho-reporting-engine</groupId>
+				<artifactId>pentaho-reporting-engine-classic-core</artifactId>
+				<version>5.0.5</version>
+			</dependency>
+			<dependency>
+				<groupId>pentaho-library</groupId>
+				<artifactId>libloader</artifactId>
+				<version>5.0.2</version>
+			</dependency>
+			<dependency>
+				<groupId>pentaho-library</groupId>
+				<artifactId>libbase</artifactId>
+				<version>5.0.5</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>3.11</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-email</artifactId>
+				<version>1.3.3</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-pool</groupId>
+				<artifactId>commons-pool</artifactId>
+				<version>1.6</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-all</artifactId>
+				<version>5.10.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz</artifactId>
+				<version>2.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz-jobs</artifactId>
+				<version>2.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>drools-core</artifactId>
+				<version>${drools.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>drools-compiler</artifactId>
+				<version>${drools.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>br.com.centralit</groupId>
+			<artifactId>cit-core</artifactId>
+			<version>${cit-core.version}</version>
+		</dependency>
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>hamcrest-core</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.jbehave</groupId>
+			<artifactId>jbehave-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.com.six2six</groupId>
+			<artifactId>fixture-factory</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-cas-client</artifactId>
+			<version>${spring-security-cas.version}</version>
+		</dependency>
+	</dependencies>
+
+</project>

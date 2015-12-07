@@ -1,0 +1,21 @@
+<div class="form-group">
+	<label class="control-label block"><translate>{{label}}</translate></label>
+	<div class="btn-group btn-group-color" dropdown is-open="isOpen">
+		<button type="button" class="btn" dropdown-toggle ng-disabled="disabled">
+			<span class="btn-color" style="background: {{model}}"></span> <span class="caret"></span>
+		</button>
+		
+		<ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+			<li class="btn-group-input-color" ng-click="noClose($event);">
+				<div class="form-group clearfix" ng-class="{'has-error': hasError}">
+					<input type="text" ng-model="model" maxlength="7" class="form-control" />
+					<button type="button" class="btn btn-primary" ng-click="close($event);"><translate>LABEL.OK</translate></button>
+				</div>
+			</li>
+			
+			<li ng-repeat="color in defaultColors">
+				<a href="javascript:;" ng-click="selectColor(color);" style="background: {{color}};"></a>
+			</li>
+		</ul>
+	</div>
+</div>

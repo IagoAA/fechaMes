@@ -1,0 +1,184 @@
+<form name="comissaoForm" novalidate id="searchComissaoEdit" ng-controller="ComissaoController" autocomplete="off">
+	<div class="page-content clearfix">
+		<div class="bar-buttons-action fixed">
+			<div class="row">
+				<div class="col-sm-8 text-left">
+					<button title="{{$translate.instant('LABEL.SALVAR')}}" alt="{{$translate.instant('LABEL.SALVAR')}}" class="btn btn-clear" ng-click="saveOrUpdate()" ng-show="edit">
+						<i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+					</button>
+
+					<button title="{{$translate.instant('LABEL.LIMPAR')}}" alt="{{$translate.instant('LABEL.LIMPAR')}}" class="btn btn-clear" ng-click="resetForm();" ng-show="comissao.id === undefined">
+						<i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+					</button>
+
+					<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-show="!(pgEdit || edit)" ng-click="edit = true; pgEdit = true;">
+						<i class="fa fa-pencil blue"></i>
+						<translate>LABEL.EDITAR</translate>
+					</button>
+
+					<button class="btn btn-clear" ng-click="remove(comissao);" ng-show="comissao.id !== undefined">
+						<i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+					</button>
+					
+					<bloquear-desbloquear ng-model="comissao" ng-repository="ComissaoRepository" ng-edit="edit"></bloquear-desbloquear>
+
+					<button title="{{$translate.instant('LABEL.PESQUISAR')}}" alt="{{$translate.instant('LABEL.PESQUISAR')}}" class="btn btn-clear"
+						ng-click="$showPageSearchWorkspace(workspace); atualizaPaginaPesquisa();">
+						<i class="fa fa-search"></i> <translate>LABEL.PESQUISAR</translate>
+					</button>
+				</div><!-- .col -->
+
+				<div class="col-sm-4 text-right">
+					<favorito/>
+
+					<help-button workspace="workspace" />
+				</div><!-- .col -->
+			</div><!-- .row -->
+		</div><!-- .bar-buttons-action -->
+
+		<breadcrumb ng-workspace="workspace"></breadcrumb>
+		
+        <p>
+			<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+			<small>( <span class="red">**</span> ) <translate>LABEL.PROIBIDO_EDITAR_APOS_USO_COMISSAO</translate></small>
+		</p>
+
+        <div class="page-content">
+	        <fieldset>
+	            <legend>
+					<translate>LABEL.COMISSAO</translate>
+				</legend>
+	            <div class="widget-body">
+	                <div class="widget-main">
+	                	<div class="row">
+							<div class="col-sm-2">
+								<label-input ng-type="text" ng-id="codigo" form="comissaoForm" ng-label="INVENTARIOCOMISSAO.CODIGO" ng-obrigatorio="false" ng-disabled="true" ng-model="comissao.codigo" ng-custom-maxlength="30"></label-input>
+							</div>
+							<div class="col-sm-6">
+								<label-input ng-type="text" ng-id="nome" form="comissaoForm" ng-label="INVENTARIOCOMISSAO.NOME" ng-obrigatorio="true" ng-disabled="!edit" ng-model="comissao.nome" ng-custom-maxlength="100"></label-input>
+							</div>
+							<div class="col-sm-4">
+								<label-select ng-id="comissao.dominioTipoComissao" ng-model="comissao.dominioTipoComissao" ng-label="LABEL.TIPO_COMISSAO" ng-obrigatorio='true' form="comissaoForm"
+									ng-disabled="!edit || emUso" ng-list="dominiosTipoComissao" ng-custom-options="dominioTipoComissao.originalElement as dominioTipoComissao.descricao for dominioTipoComissao" 
+									track-by="track by dominioTipoComissao.id">
+								</label-select>
+							</div>
+						</div>
+	                </div> <!-- /widget-main -->
+
+	                <div>
+						<legend >
+							<label ng-class="{'has-error' : (comissaoForm.$submitted && (!comissao.integrantes || comissao.integrantes.length < 3))}">
+								<translate>INVENTARIOCOMISSAO.INTEGRANTES_WIDGET</translate>
+								<span class='red'>*</span>
+								<span class='red'> **</span>
+								<i ng-show="(comissaoForm.$submitted && (!comissao.integrantes || comissao.integrantes.length < 3))" class='fa fa-warning red' tooltip="{{$translate.instant('VALIDACAO.MINIMO_INTEGRANTES')}}" tooltip-placement='top'></i>
+							</label>
+						</legend>
+
+						<div class="widget-body">
+							<div class="widget-main clearfix">
+								<div ng-if="edit" ng-controller="ComissaoController">
+									<div class="row" ng-hide="emUso">
+										<div class="col-sm-6">
+											<auto-complete ng-find="findIntegranteComissao(value)" ng-acao-borracha="limparIntegranteComissao()" ng-set-result="setIntegranteComissao(item)" ng-item="item.pessoa.nome" ng-id="colaboradorIntegrante" ng-label="INVENTARIOCOMISSAO.INTEGRANTE_COMISSAO_NOME" ng-model="colaboradorIntegrante" ng-disabled="false"></auto-complete>
+										</div><!-- .col -->
+										<div class="col-sm-2">
+											<div class="form-group no-label">
+												<div class="checkbox">
+													<label>
+														<input type="checkbox" ng-id="isPresidente" name="isPresidente" ng-model="isPresidente" />
+														<translate>INVENTARIOCOMISSAO.PRESIDENTE</translate>
+													</label>
+												</div><!-- .checkbox -->
+											</div><!-- .form-group -->
+										</div><!-- .col -->
+										<div class="col-sm-4">
+											<div class="form-group no-label">
+												<a class="btn btn-success" title ng-click="addIntegranteComissao()">
+													<i class="glyphicon glyphicon-plus">
+													</i>
+													<translate>INVENTARIOCOMISSAO.BOTAO_ADD_INTEGRANTE</translate>
+												</a>
+											</div><!-- .form-group -->
+										</div><!-- .col -->
+									</div><!-- .row -->
+								</div>
+								<br/>
+								<div class="panel panel-default">
+									<div class="panel-heading clearfix" ng-show="edit && !emUso">
+
+										<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" type="button"
+											ng-click="prepararExcluirItensSelecionados()">
+											<i class="fa fa-times red"></i>
+											<translate>LABEL.REMOVER</translate>
+										</button>
+
+									</div><!-- .panel-heading -->
+
+									<table class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr>
+												<th class="text-center" style="width: 40px;" ng-show="edit && !emUso">
+													<input type="checkbox" ng-model="selectedAll" ng-checked="selectedAll" ng-click="checkAll(selectedAll);" />
+												</th>
+												<th style="width: 60%;">
+													<translate>INVENTARIOCOMISSAO.INTEGRANTE_COMISSAO_NOME</translate>
+												</th>
+												<th style="width: 20%;">
+													<translate>INVENTARIOCOMISSAO.PRESIDENTE</translate>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="integrante in comissao.integrantes | orderIntegrantesBy">
+												<td class="text-center" ng-show="edit && !emUso">
+													<input type="checkbox" ng-click="verificaSelectedAll(integrante); integrante.$index = $index" ng-checked="integrante.$selected" ng-model="integrante.$selected" />
+												</td>
+												<td>
+													{{ integrante.integrante.pessoa.nome }}
+												</td>
+												<td>
+													<div ng-if="integrante.integrante.id == comissao.presidente.id">
+														<span class="fa fa-check"></span>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div><!-- .panel -->
+							</div><!-- .widget-main -->
+						</div><!-- .widget-body -->
+					</div><!-- .widget-box -->
+
+	                <div>
+						<legend>
+							<translate>INVENTARIOCOMISSAO.PROCESSO_WIDGET</translate>
+						</legend>
+
+						<div class="widget-body">
+							<div class="widget-main clearfix">
+								<div class="col-sm-3">
+									<label-input-number ng-type="text" ng-id="numProcesso" form="comissaoForm" ng-label="INVENTARIOCOMISSAO.NUMPROCESSO" ng-disabled="!edit" ng-model="comissao.numProcesso" ng-custom-maxlength="30"></label-input-number>
+								</div><!-- .col-sm-3 -->
+								<div class="col-sm-3">
+									<label-input-number ng-type="text" ng-id="portaria" form="comissaoForm" ng-label="INVENTARIOCOMISSAO.PORTARIA" ng-disabled="!edit" ng-model="comissao.portaria" ng-custom-maxlength="30"></label-input-number>
+								</div><!-- .col-sm-3 -->
+								<div class="col-sm-3">
+									<label-input-data ng-id="dataFormacao" form="comissaoForm" ng-label="INVENTARIOCOMISSAO.DATA_FORMACAO" ng-obrigatorio="true" ng-disabled="!edit" ng-model="comissao.dataFormacao"></label-input-data>
+								</div><!-- .col-sm-3 -->
+								<div class="col-sm-3">
+									<label-input-data ng-id="dataExtincao" form="comissaoForm" ng-label="INVENTARIOCOMISSAO.DATA_EXTINCAO" ng-disabled="!edit" ng-model="comissao.dataExtincao"></label-input-data>
+								</div><!-- .col-sm-3 -->
+							</div><!-- .widget-main -->
+						</div><!-- .widget-body -->
+					</div><!-- .widget-box -->
+
+					
+					<componente-observacao form="comissaoForm" ng-observacoes="comissao.observacoes" ng-hide="false" ng-edit="edit" />
+					
+	            </div> <!-- /widget-body -->
+	        </fieldset> <!-- /widget-box -->
+	    </div> <!-- /.page-content -->
+	</form>
+</div><!-- .page-content -->

@@ -1,0 +1,76 @@
+<div>
+	<div class="row" ng-show="!novo && edit">
+		<div class='col-sm-4'>
+			<auto-complete ng-find="findEndereco(value)" ng-acao-borracha="limparEnderecoFind()" ng-set-result="setEndereco(item)" ng-item="item.nome" ng-id="enderecoFind.nome" 
+				ng-label="LABEL.ENDERECO" button-new-show="true" button-new-tooltip="Clique aqui para adicionar um novo endereço" button-new-action="novoEndereco();" ng-model="$endereco.nome" ng-disabled="false"></auto-complete>
+		</div>
+	</div><!-- .row -->
+	
+	<div class="row" ng-show="novo">
+		<div class='col-sm-2'>
+			<label-input ng-type="text" ng-model="endereco.codigo" ng-label="LABEL.CODIGO" ng-id="endereco.codigo" ng-disabled="true" ng-custom-maxlength="30" form="form"/>
+			<p class="help-block small red" ng-show="obrigatorios.codigo">*<translate>LABEL.CODIGO</translate> <translate>LABEL.CAMPO_OBRIGATORIO</translate></p>
+		</div>
+		
+		<div class="col-md-10">
+       		<label-input ng-type="text" ng-model="endereco.nome" ng-label="LABEL.NOME" ng-id="endereco.nome" ng-disabled="!novo || !edit" ng-custom-maxlength="255" form="form" ng-obrigatorio="true"/>
+			<p class="help-block small red" ng-show="obrigatorios.nome">*<translate>LABEL.NOME</translate> <translate>LABEL.CAMPO_OBRIGATORIO</translate></p>
+		</div>
+	</div><!-- row -->			
+			
+	<div class="row">
+		<div class='col-sm-4'>
+			<div class='form-group'>
+				<label-select ng-id="endereco.dominioTipoEndereco.id" ng-model="endereco.dominioTipoEndereco.id" ng-label="LABEL.TIPO_ENDERECO" ng-obrigatorio="true" 
+                  	ng-disabled="!novo || !edit" form="form" ng-list="dominiosTipoEndereco" ng-custom-options="dominioTipoEndereco.id as dominioTipoEndereco.descricao for dominioTipoEndereco"></label-select>
+                  		
+			</div>
+		</div>
+		<div class='col-sm-4'>
+		 	<auto-complete ng-find="findPais(value)" ng-item="item.nome" ng-label="LABEL.PAIS" ng-model="endereco.$pais" ng-disabled="!novo || !edit" form="form" ng-obrigatorio="true"></auto-complete>
+		 		
+		</div>
+		<div class='col-sm-4'>
+			 <auto-complete ng-find="findRegiao(value)" ng-set-result="setRegiaoPais(item)" ng-item="item.nome" ng-label="LABEL.REGIAO" ng-model="endereco.$regiao" ng-disabled="!novo || !edit" form="form" ng-obrigatorio="true"></auto-complete>
+			 	
+		</div>
+	</div><!-- .row -->
+	<div class="row">
+	
+		<div class='col-sm-4'>
+			<auto-complete ng-find="findEstado(value)" ng-set-result="setEstadoRegiaoPais(item)" ng-item="item.nome" 
+				ng-label="LABEL.ESTADO" ng-model="endereco.$estado" ng-disabled="!novo || !edit" form="form" ng-obrigatorio="true"></auto-complete>
+				
+		</div>
+		<div class='col-sm-4'>
+			<auto-complete ng-find="findCidade(value)" ng-set-result="setCidadeEstadoRegiaoPais(item)" ng-item="item.nome"
+				ng-label="LABEL.CIDADE" ng-model="endereco.$cidade" ng-disabled="!novo || !edit"  form="form" ng-obrigatorio="true"></auto-complete>
+				
+		</div>
+		
+		<div class='col-sm-4'>
+			<auto-complete ng-find="findBairro(value)" ng-set-result="setBairroCidadeEstadoRegiaoPais(item)" ng-item="item.nome" form="form" 
+				ng-label="LABEL.BAIRRO" ng-model="endereco.bairro" ng-disabled="!novo || !edit"  ng-obrigatorio="true"></auto-complete>
+		</div>
+		
+	</div><!-- .row -->
+	<div class="row">
+	
+		<div class='col-sm-4'>
+			<label-input ng-type="text" ng-id="endereco.logradouro" ng-label="LABEL.LOGRADOURO" ng-model="endereco.logradouro" ng-custom-maxlength="100" ng-disabled="!novo || !edit" form="form" ng-obrigatorio="true"/>
+		</div>
+		
+		<div class='col-sm-4'>
+			<label-input ng-type="text" ng-model="endereco.complemento" ng-label="LABEL.COMPLEMENTO" ng-id="endereco.complemento" ng-custom-maxlength="100" ng-disabled="!novo || !edit" form="form"/>
+		</div>
+	
+		<div class='col-sm-4'>
+			<label-input ng-type="text" ng-model="endereco.cep" ng-label="LABEL.CEP" ng-mask="MASK_CEP"  ng-id="endereco.cep" ng-disabled="!novo || !edit" form="form" ng-obrigatorio="true"/>
+		</div>
+	</div><!-- .row -->
+	<div class="row">
+		<div class='col-sm-2'>
+			<label-input ng-type="text" ng-model="endereco.numero" ng-label="LABEL.NUMERO" ng-id="endereco.numero" ng-custom-maxlength="10" ng-disabled="!novo || !edit" form="form" ng-obrigatorio="true"/>
+		</div>
+	</div>
+</div>

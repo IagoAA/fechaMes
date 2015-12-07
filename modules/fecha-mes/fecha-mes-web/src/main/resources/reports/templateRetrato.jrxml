@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="templateRetrato" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a9bde7e-349d-4f0b-b96c-98310606be6f">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ORGANIZACAO_ID" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_PARAMETERS_MAP" class="java.util.Map" isForPrompting="false">
+		<parameterDescription><![CDATA[Parametros do SubReport]]></parameterDescription>
+	</parameter>
+	<parameter name="TITULO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select aImagem.anexo as logo,
+	(select param.valor from configuracaoparametrosistema param where param.configuracao_id = conf.id and param.chave = 'RELATORIO_PRIMEIRO_TITULO') as titulo1,
+	(select param.valor from configuracaoparametrosistema param where param.configuracao_id = conf.id and param.chave = 'RELATORIO_SEGUNDO_TITULO') as titulo2,
+	(select param.valor from configuracaoparametrosistema param where param.configuracao_id = conf.id and param.chave = 'RELATORIO_TERCEIRO_TITULO') as titulo3
+from anexoimagem aImagem right join configuracao conf on aImagem.configuracao_id = conf.id where conf.organizacao_id = $P{ORGANIZACAO_ID};]]>
+	</queryString>
+	<field name="logo" class="java.lang.Object"/>
+	<field name="titulo1" class="java.lang.String"/>
+	<field name="titulo2" class="java.lang.String"/>
+	<field name="titulo3" class="java.lang.String"/>
+	<title>
+		<band height="134" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="37" width="453" height="20" uuid="8b7353fa-6d6b-4b7d-bd04-2564491beff4"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{titulo2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="17" width="453" height="20" uuid="0c63ef23-5e35-4c22-81ed-dbd9a2fac964"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{titulo1}]]></textFieldExpression>
+			</textField>
+			<image onErrorType="Icon">
+				<reportElement positionType="Float" x="17" y="17" width="85" height="60" uuid="d161cd66-d9ef-43e9-b70a-3fb2c8b4eba4"/>
+				<imageExpression><![CDATA[new ByteArrayInputStream((byte[])$F{logo})]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="57" width="453" height="20" uuid="7fc824c8-633f-40d4-8310-4d81780f2834"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{titulo3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="103" width="555" height="20" uuid="3405a538-3907-4101-97dd-99920d6fc78d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TITULO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="53">
+			<subreport>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="53" uuid="39aa7cb4-c27a-484a-8e70-8c32a0da7922"/>
+				<parametersMapExpression><![CDATA[$P{SUBREPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="50"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="50">
+			<textField>
+				<reportElement x="0" y="30" width="200" height="20" uuid="618f2f00-e7b5-450c-9ea1-7a83d67bb44c"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA["Emitido em: " + new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="517" y="30" width="37" height="20" uuid="1b41ae74-6123-4fac-bb86-9fac7f685d30"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="297" y="30" width="220" height="20" uuid="a3cc221c-cc40-4f2b-bbfd-5fdeb80b696b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,19 @@
+<span>
+	<div class="btn-group dropdown" role="group" dropdown is-open="$buttonLockOpen" ng-show="pgEdit && model.id && !model.dataBloqueio">
+		<button type="button" class="btn btn-clear" dropdown-toggle>
+			<i class="fa fa-lock"></i> <translate>LABEL.BLOQUEAR</translate> <span class="fa fa-caret-down icon-on-right"></span>
+		</button>
+		
+		<div class="dropdown-menu-center dropdown-menu dropdown-lock dropdown-caret" role="menu">
+			<div class="dropdown-lock-input" ng-click="noCloseDropdown($event);">
+				<label-input-data ng-model="dataBloqueio" ng-label="LABEL.DATA_BLOQUEIO"></label-input-data>
+			</div>
+			<div class="dropdown-lock-button">
+				<button type="button" ng-click="bloquear();" class="btn btn-success">Ok</button>
+			</div>
+		</div>
+	</div><!-- .btn-group -->
+	<button type="button" title="{{$translate.instant('LABEL.DESBLOQUEAR')}}" alt="{{$translate.instant('LABEL.DESBLOQUEAR')}}" class="btn btn-clear" ng-show="pgEdit && model.dataBloqueio" ng-click="desbloquear();">
+		<i class="fa fa-unlock grey"></i> <translate>LABEL.DESBLOQUEAR</translate>
+	</button>
+</span>

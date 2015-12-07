@@ -1,0 +1,63 @@
+<div id="editCidade" class="page-content clearfix" ng-controller="CidadeController">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+				<button title="{{$translate.instant('LABEL.SALVAR')}}" alt="{{$translate.instant('LABEL.SALVAR')}}" class="btn btn-clear" ng-click="saveOrUpdate()" ng-show="edit">
+					<i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.LIMPAR')}}" alt="{{$translate.instant('LABEL.LIMPAR')}}" class="btn btn-clear" ng-click="resetForm();" ng-show="cidade.id === undefined">
+					<i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-show="!(pgEdit || edit)" ng-click="edit = true; pgEdit = true;">
+					<i class="fa fa-pencil blue"></i>
+					<translate>LABEL.EDITAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-click="remove(cidade);" ng-show="cidade.id !== undefined">
+					<i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+				</button>
+				
+				<bloquear-desbloquear ng-model="cidade" ng-repository="CidadeRepository" ng-edit="edit"></bloquear-desbloquear>
+
+				<button title="{{$translate.instant('LABEL.PESQUISAR')}}" alt="{{$translate.instant('LABEL.PESQUISAR')}}" class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); atualizaPaginaPesquisa();">
+					<i class="fa fa-search"></i> <translate>LABEL.PESQUISAR</translate>
+				</button>
+			</div><!-- .col -->
+
+			<div class="col-sm-4 text-right">
+				<favorito/>
+
+				<help-button workspace="workspace" />
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+	<form name="cidadeForm" novalidate autocomplete="off">
+		<p>
+			<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+		</p>
+
+		<fieldset>
+			<legend><translate>LABEL.DADOS_CIDADE</translate></legend>
+
+         	 <div class="row">
+				<div class="col-sm-2">
+					<label-input ng-type="text" ng-id="cidade.codigo" ng-label="LABEL.CODIGO" ng-disabled="true" ng-model="cidade.codigo" ng-custom-maxlength="30" form="cidadeForm"/>
+				</div><!-- .col-sm-2 -->
+				<div class="col-sm-6">
+					<label-input ng-type="text" ng-id="cidade.nome" ng-label="LABEL.NOME" ng-obrigatorio="true" ng-disabled="!edit" ng-model="cidade.nome" ng-custom-maxlength="255" form="cidadeForm"/>
+				</div><!-- .col-sm-6 -->
+			</div><!-- row -->
+
+			<div class="row">
+				<div class='col-sm-4'>
+					<auto-complete ng-find="findEstado(value)" ng-acao-borracha="limparAutoCompleteEstado()" ng-item="item.nome + ' | ' + item.regiao.nome +  ' | ' + item.regiao.pais.sigla" ng-id="cidade.estado" ng-label="LABEL.ESTADO" ng-model="cidade.estado" ng-disabled="!edit" form="cidadeForm" ng-obrigatorio="true"> </auto-complete>
+				</div><!-- .col-sm-4 -->
+			</div><!-- row -->
+		</fieldset>
+	</form>
+</div><!-- .page-content -->

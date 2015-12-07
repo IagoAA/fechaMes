@@ -1,0 +1,10 @@
+<div class="form-group">
+	<label class="form-label block"><translate>{{label}}</translate></label>
+	
+	<ui-select ng-model="model" theme="select2" style="min-width: 100%;" on-select="selectIcon($item, $model);">
+		<ui-select-match placeholder="Seleciona um opção..."><i class="fa {{$select.selected}}"></i> {{replaceFa($select.selected)}}</ui-select-match>
+		<ui-select-choices repeat="icon in iconList | filter:$select.search">
+			<i class="fa {{icon}}"></i> {{replaceFa(icon)}}
+		</ui-select-choices>
+	</ui-select>
+</div><!-- .form-group -->

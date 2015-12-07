@@ -1,0 +1,10 @@
+Title Recadastramento de Senha
+Narrative:
+As a Usuario
+I want recadastrar minha senha
+So that continue tenasso ao sistema, com outra senha
+
+Scenario: Validar nova senha
+Given Um usuário de nome Marcelo Zeferino e login zeferino e a senha é 1234
+When verifico se a senha é segura
+Then Deve retornar a mensagem "A senha deve conter pelo menos 5 caracteres"

@@ -1,0 +1,293 @@
+<div class="table-container">
+	<div class="table-header clearfix">
+		<div class="table-header-right">
+			<button class="btn btn-primary btn-inline btn-white table-header-item" ng-click="$showAdvancedFilters = !$showAdvancedFilters">
+				<i class="fa fa-filter"></i>
+				<small><translate>LABEL.FILTROS_AVANCADOS</translate></small>
+			</button>
+		</div><!-- .table-header-right -->
+		
+		<div class="table-header-left">
+			<div class="form-group">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Digite uma palavra chave" on-enter-blur on-blur-change="filterResult(true)" ng-model="filterCriteria.keywordValue" />
+					<span class="input-group-addon">
+						<i class="fa fa-search fa-lg"></i>
+					</span>
+				</div>
+			</div><!-- .form-group -->
+		</div><!-- .table-header-left -->
+	</div><!-- .table-header -->
+
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+			 <tr>
+				<th colspan="2" style="width: 50%;"><small><translate>LABEL.TAREFA</translate></small></th>
+				<th colspan="2" style="width: 50%;"><small><translate>LABEL.PROCESSO_NEGOCIO</translate></small></th>
+				<th class="text-center" style="width: 3%;"><small><translate>LABEL.ACOES</translate></small></th>						
+            </tr>
+		</thead>							
+		<tfoot ng-show="totalItens > 0">
+			<tr>
+				<td colspan="5">
+					<div class="row">
+						<div class='col-sm-4 table-showing small'>
+							<translate>LABEL.MOSTRANDO</translate>
+							{{filterCriteria.start}}
+							<translate>LABEL.ATE</translate>
+							{{filterCriteria.limit > totalItens ? totalItens :
+							filterCriteria.limit}}
+							<translate>LABEL.DE</translate>
+							({{totalItens}})							.
+						</div>
+						<div class="col-sm-8 text-right">
+							<pagination rotate="true" total-items="totalItens" num-pages="totalPages" ng-model="filterCriteria.start" items-per-page="filterCriteria.limit" class="pagination-sm" boundary-links="true" ng-change="fetchResult()"></pagination>
+						</div><!-- .col -->
+					</div><!-- .row -->
+				</td>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr ng-show="$showAdvancedFilters">
+				<td style="width: 5%;">
+					<div class="row">
+						<div class="col-sm-12">
+							<input class="form-control" ng-change="filterResult()" ng-model="filterCriteria.filters[0].value" type="text" integer/>
+						</div><!-- .col -->
+					</div><!-- .row -->
+				</td>
+				<td>
+					<div class="row">
+						<div class="col-sm-12">
+							<input class="form-control" ng-change="filterResult()" ng-model="filterCriteria.filters[1].value" type="text" />
+						</div><!-- .col -->
+					</div><!-- .row -->
+				</td>
+				<td style="width: 5%;">
+					<div class="row">
+						<div class="col-sm-12">
+							<input class="form-control" ng-change="filterResult()" ng-model="filterCriteria.filters[2].value" type="text" integer/>
+						</div><!-- .col -->
+					</div><!-- .row -->
+				</td>
+				<td>
+					<div class="row">
+						<div class="col-sm-12">
+							<input class="form-control" ng-change="filterResult()" ng-model="filterCriteria.filters[3].value" type="text" />
+						</div><!-- .col -->
+					</div><!-- .row -->
+				</td>
+				<td>
+					&nbsp;
+				</td>
+			</tr>
+
+			<tr ng-repeat-start="assignment in assignments">
+				<td class="text-center" style="width: 5%;">
+					<span class="small green" >{{assignment.id}}</span>
+				</td>
+				<td>
+					<span class="small green">{{assignment.flowElement.name}}&nbsp;
+						<a href="javascript:;" class="blue" ng-click="retrieveAditionalHtml(assignment)">
+							<i class="fa fa-lg" ng-class="{'fa-caret-right': !assignment.$show, 'fa-caret-down': assignment.$show}"></i>
+						</a>
+					</span>									
+				</td>
+				<td class="text-center" style="width: 5%;">
+					<span class="small green">{{assignment.processInstance.id}}</span>
+				</td>
+				<td>
+					<span class="small green">{{assignment.processInstance.businessProcess.description}}</span>
+				</td>
+				<td>
+					<div class="btn-group dropdown" role="group" dropdown>
+						<button title="{{$translate.instant('LABEL.ACOES')}}" alt="{{$translate.instant('LABEL.ACOES')}}" class="btn btn-clear" dropdown-toggle ng-click="recuperarPermissoes(assignment)" >
+							<i class="fa fa-cog blue bigger-170"></i>
+							<span class="fa fa-caret-down icon-on-right"></span>
+						</button>
+						<ul class="dropdown-menu-center dropdown-menu dropdown-caret" role="menu">
+							<li ng-show="!assignment.workItem || !assignment.workItem.id">
+								<span class="small red">&nbsp;&nbsp;&nbsp;&nbsp;<b><translate>MSG.AGUARDE</translate></b></span>
+							</li>
+							<li ng-show="assignment.workItem.execute">
+								<a href="javascript:;" ng-click="executarTarefa(assignment)" ><i class="fa fa-play-circle-o green"></i> <translate>LABEL.EXECUTAR</translate></a>
+							</li>
+							<li ng-show="assignment.workItem.execute">
+								<a href="javascript:;" ng-click="capturarTarefa(assignment)" ><i class="fa fa-thumb-tack orange"></i> <translate>LABEL.CAPTURAR</translate></a>
+							</li>
+							<li ng-show="assignment.workItem.delegate">
+								<a href="javascript:;" ng-click="delegarTarefa(assignment)" ><i class="fa fa-users blue"></i> <translate>ESI.PERMISSAO.DELEGAR</translate></a>
+							</li>
+							<li ng-show="assignment.workItem.suspend">
+								<a href="javascript:;" ng-click="suspenderProcesso(assignment)" ><i class="fa fa-pause red"></i> <translate>ESI.PERMISSAO.SUSPENDER</translate></a>
+							</li>
+							<li ng-show="assignment.workItem.restart">
+								<a href="javascript:;" ng-click="reativarProcesso(assignment)" ><i class="fa fa-play green"></i> <translate>ESI.PERMISSAO.REATIVAR</translate></a>
+							</li>
+							<li ng-show="assignment.workItem.visualize">
+								<a href="javascript:;" ng-click="visualizarFluxo(assignment)" ><i class="fa fa-search blue"></i> <translate>ESI.VISUALIZAR_FLUXO</translate></a>
+							</li>
+							<li ng-show="assignment.workItem.visualize">
+								<a href="javascript:;" ng-click="consultarHistorico(assignment)" ><i class="fa fa-history yellow-dark"></i> <translate>ESI.LOG.CONSULTA_LOG</translate></a>
+							</li>
+						</ul>
+					</div>					
+				</td>
+			</tr>
+			<tr ng-show="assignment.$show" ng-repeat-end>
+				<td >&nbsp;</td>
+				<td colspan="4">
+					<div class="media media-card">
+						<small ng-show="!assignment.workItem"><font color="red"><b><translate>MSG.AGUARDE</translate></b></font></small>
+						<fieldset ng-show="assignment.workItem">
+							<legend style="font-size: 16px !important"><b><translate>ESI.INFORMACOES_ADICIONAIS</translate></b></legend>
+							<div id="divHtmlAdicional_{{idPainelItem}}_{{assignment.id}}" tabindex="1" style="z-index:0 !important" class="small"></div>
+						</fieldset>
+						<fieldset ng-show="assignment.workItem && assignment.workItem.processInstance.owner">
+							<legend style="font-size: 16px !important"><b><translate>ESI.EXECUCAO_PROCESSO_NEGOCIO.PROCESSO_ORIGEM</translate></b></legend>
+							<div class="row">											
+								<div class="col-md-12">
+									<div class='col-md-6'>
+										<label>
+											<div class="small bolder">
+												<translate>ESI.DATA_HORA_CRIACAO</translate>
+											</div> <span class="small green">{{assignment.workItem.processInstance.owner.startTimestamp
+												| date : 'dd/MM/yyyy HH:mm:ss'}}</span>
+										</label>
+									</div>
+									<div class='col-md-6'>
+										<label ng-show="assignment.workItem.processInstance.owner.status != 'SUSPENDED'">
+											<div class="small bolder">
+												<translate>ESI.DATA_HORA_TERMINO</translate>
+											</div> <span class="small green">{{assignment.workItem.processInstance.owner.estimatedEndTimestamp
+												| date : 'dd/MM/yyyy HH:mm:ss'}}</span>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="row">											
+								<div class="col-md-12">									
+									<div class='col-md-6'>
+										<label>
+											<div class="small bolder">
+												<translate>ESI.CONTAGEM_TEMPO</translate>
+											</div>
+											<span class="badge black" style="background-color: {{assignment.workItem.processInstance.owner.backgroundColorTimeStatus}} !important">
+												<font color="{{assignment.workItem.processInstance.owner.textColorTimeStatus}}"><b>{{getTimeManagementStatus(assignment.workItem.processInstance.owner)}}</translate></b></font>
+											</span>
+										</label>
+									</div>										
+									<div class='col-md-6' ng-show="assignment.workItem.processInstance.owner.status != 'SUSPENDED' && assignment.workItem.processInstance.owner.flowStatus">
+										<label>
+											<div class="small bolder">
+												<translate>LABEL.SITUACAO</translate> <translate>ESI.EXECUCAO_PROCESSO_NEGOCIO.PROCESSO</translate>
+											</div> <span class="small badge black"
+											style="background-color: {{assignment.workItem.processInstance.owner.flowStatus.backgroundColor}} !important"><b><font color="{{assignment.workItem.processInstance.owner.flowStatus.textColor}}"><translate>{{assignment.workItem.processInstance.owner.flowStatus.name}}</translate></b></font></span>
+										</label>
+									</div>	
+									<div class='col-md-6' ng-show="assignment.workItem.processInstance.owner.status == 'SUSPENDED'">
+										<label>
+											<div class="small bolder">
+												<translate>LABEL.SITUACAO</translate>
+											</div> <span class="small badge black"
+											style="background-color: red !important"><b><font color="white"><translate>ESI.ENUMERADO.SITUACAO_INSTANCIA_SUSPENSA</translate></b></font></span>
+										</label>
+									</div>	
+								</div>
+							</div>
+						</fieldset>
+						<fieldset ng-show="assignment.workItem">
+							<legend style="font-size: 16px !important"><b><translate>LABEL.PROCESSO_NEGOCIO</translate></b></legend>
+							<div class="row">											
+								<div class="col-md-12">
+									<div class='col-md-6'>
+										<label>
+											<div class="small bolder">
+												<translate>ESI.DATA_HORA_CRIACAO</translate>
+											</div> <span class="small green">{{assignment.workItem.processInstance.startTimestamp
+												| date : 'dd/MM/yyyy HH:mm:ss'}}</span>
+										</label>
+									</div>
+									<div class='col-md-6'>
+										<label ng-show="assignment.workItem.processInstance.status != 'SUSPENDED'">
+											<div class="small bolder">
+												<translate>ESI.DATA_HORA_TERMINO</translate>
+											</div> <span class="small {{assignment.classePrazoProcesso}}">{{assignment.workItem.processInstance.estimatedEndTimestamp
+												| date : 'dd/MM/yyyy HH:mm:ss'}}</span>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="row">											
+								<div class="col-md-12">									
+									<div class='col-md-6'>
+										<label>
+											<div class="small bolder">
+												<translate>ESI.CONTAGEM_TEMPO</translate>
+											</div>
+											<span class="badge black" style="background-color: {{assignment.workItem.processInstance.backgroundColorTimeStatus}} !important">
+												<font color="{{assignment.workItem.processInstance.textColorTimeStatus}}"><b>{{getTimeManagementStatus(assignment.workItem.processInstance)}}</translate></b></font>
+											</span>
+										</label>
+									</div>										
+									<div class='col-md-6' ng-show="assignment.workItem.processInstance.status != 'SUSPENDED' && assignment.workItem.processInstance.flowStatus">
+										<label>
+											<div class="small bolder">
+												<translate>LABEL.SITUACAO</translate>
+											</div> <span class="small badge black"
+											style="background-color: {{assignment.workItem.processInstance.flowStatus.backgroundColor}} !important"><b><font color="{{assignment.workItem.processInstance.flowStatus.textColor}}"><translate>{{assignment.workItem.processInstance.flowStatus.name}}</translate></b></font></span>
+										</label>
+									</div>	
+									<div class='col-md-6' ng-show="assignment.workItem.processInstance.status == 'SUSPENDED'">
+										<label>
+											<div class="small bolder">
+												<translate>LABEL.SITUACAO</translate>
+											</div> <span class="small badge black"
+											style="background-color: red !important"><b><font color="white"><translate>ESI.ENUMERADO.SITUACAO_INSTANCIA_SUSPENSA</translate></b></font></span>
+										</label>
+									</div>	
+	
+								</div>
+							</div>
+						</fieldset>
+						<fieldset ng-show="assignment.workItem">
+							<legend style="font-size: 16px !important"><b><translate>LABEL.TAREFA</translate></b></legend>
+							<div class="row">
+								<div class="col-md-12">		
+									<div class='col-md-4'>
+										<label>
+											<div class="small bolder">
+												<translate>ESI.DATA_HORA_CRIACAO_TAREFA</translate>
+											</div> <span class="small green">{{assignment.workItem.creationTimestamp
+												| date : 'dd/MM/yyyy HH:mm:ss'}}</span>
+										</label>
+									</div>
+									<div class='col-md-4'>
+										<label ng-show="assignment.workItem.processInstance.status != 'SUSPENDED'">
+											<div class="small bolder">
+												<translate>ESI.DATA_HORA_TERMINO_TAREFA</translate>
+											</div> <span class="small {{assignment.classePrazoTarefa}}">{{assignment.workItem.estimatedEndTimestamp
+												| date : 'dd/MM/yyyy HH:mm:ss'}}</span>
+										</label>
+									</div>
+									<div class='col-md-4' ng-show="assignment.workItem.owner">
+										<label>
+											<div class="small bolder">
+												<translate>LABEL.RESPONSAVEL</translate>
+											</div> <span class="small green">{{assignment.workItem.owner.id}}</span>
+										</label>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div><!-- .media -->											
+				</td>
+			</tr>
+			<tr ng-show="totalItens <= 0">
+				<td colspan="5">
+					<strong><translate>MSG.NENHUM_REGISTRO_ENCONTRADO</translate></strong>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

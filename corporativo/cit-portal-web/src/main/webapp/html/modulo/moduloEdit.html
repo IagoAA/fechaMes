@@ -1,0 +1,77 @@
+<div id="editModulo" class="page-content clearfix" ng-controller="ModuloController">
+    <div class="bar-buttons-action fixed">
+        <div class="row">
+            <div class="col-sm-8 text-left">
+                <button class="btn btn-clear" ng-click="saveOrUpdate()" ng-show="edit">
+                    <i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+                </button>
+
+                <button class="btn btn-clear" ng-click="limparModulo()" ng-show="modulo.id === undefined">
+                    <i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+                </button>
+
+                <button class="btn btn-clear" ng-show="!edit" ng-click="edit = true">
+                    <i class="fa fa-pencil blue"></i>
+                    <translate>LABEL.EDITAR</translate>
+                </button>
+
+                <button class="btn btn-clear" ng-click="remove(modulo);" ng-show="modulo.id !== undefined">
+                    <i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+                </button>
+
+                <button class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); atualizaPaginaPesquisa();">
+                    <i class="fa fa-search"></i> <translate>LABEL.PESQUISAR</translate>
+                </button>
+            </div><!-- .col -->
+
+            <div class="col-sm-4 text-right">
+                <favorito />
+
+                <help-button workspace="workspace" />
+            </div><!-- .col -->
+        </div><!-- .row -->
+    </div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+    <form name="moduloForm" novalidade>
+        <p>
+            <small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+        </p>
+
+        <fieldset>
+            <legend>Dados de modulo</legend>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <label-input ng-type="text" ng-id="modulo.nome" ng-label="LABEL.NOME" ng-obrigatorio="true" ng-disabled="!edit" ng-model="modulo.nome" form="moduloForm"/>
+                </div><!-- .col-sm-4 -->
+
+                <div class="col-md-3">
+                    <label-input ng-type="text" ng-id="modulo.caminho" ng-label="LABEL.CAMINHO" ng-obrigatorio="true" ng-disabled="!edit" ng-model="modulo.caminho" form="moduloForm"/>
+                </div><!-- .col-sm-4 -->
+
+                <div class="col-md-3">
+                    <label-input ng-type="text" ng-id="modulo.baseUrl" ng-label="LABEL.URL" ng-obrigatorio="true" ng-disabled="!edit" ng-model="modulo.baseUrl" form="moduloForm"/>
+                </div><!-- .col-sm-4 -->
+
+                <div class="col-md-3">
+                    <label-input ng-type="text" ng-id="modulo.restAngular" ng-label="LABEL.RESTANGULAR" ng-obrigatorio="true" ng-disabled="!edit" ng-model="modulo.restAngular" form="moduloForm"/>
+                </div><!-- .col-sm-4 -->
+            </div>
+            <div class="row">
+            	<div class="col-sm-6">
+	               	<label-input-checkbox ng-model="modulo.habilitado" ng-disabled="!edit" ng-label="LABEL.ATIVO">
+	           		</label-input-checkbox>
+            	</div>
+            </div>
+        </fieldset>
+    </form>
+</div><!-- .page-content -->
+
+
+
+
+
+
+

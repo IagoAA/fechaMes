@@ -1,0 +1,131 @@
+<div class="page-content" id="widget-list-controller" ng-controller="WidgetListController">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+				<button type="button" class="btn btn-clear" ng-click="resetForm(); $showPageEditWorkspace(workspace);">
+					<i class="fa fa-plus-circle yellow-dark"></i>
+					<translate>LABEL.CADASTRAR</translate>
+				</button>
+				
+				<button type="button" class="btn btn-clear" ng-click="visualizarWidget();">
+					<i class="fa fa-search blue"></i>
+					<translate>LABEL.VISUALIZAR</translate>
+				</button>
+				
+				<button type="button" class="btn btn-clear" ng-click="editarWidget();">
+					<i class="fa fa-pencil blue"></i>
+					<translate>LABEL.EDITAR</translate>
+				</button>
+				
+				<button type="button" class="btn btn-clear" ng-click="remove();">
+					<i class="fa fa-times red"></i>
+					<translate>LABEL.REMOVER</translate>
+				</button>
+				
+				<span class="divider-vertical"></span>
+				
+				<filtros ng-filter="filterCriteria" ng-workspace="workspace"></filtros>
+			</div><!-- .col -->
+			
+			<div class="col-sm-4 text-right">
+				<favorito/>
+				
+				<help-button workspace="workspace" />
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+	
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+	
+	<form name="formWidgetSearch">
+		<div class="table-container">
+			<div class="table-header clearfix">
+				<div class="table-header-right">
+					<button class="btn btn-primary btn-inline btn-white table-header-item" ng-click="showAdvancedFilters(null, this)">
+						<i class="fa fa-filter"></i> <translate>LABEL.FILTROS_AVANCADOS</translate>
+					</button>
+				</div><!-- .table-header-right -->
+				
+				<div class="table-header-left">
+					<div class="form-group">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Digite uma palavra chave" on-enter-blur on-blur-change="filterResult(true)" ng-model="filterCriteria.keywordValue" />
+							<span class="input-group-addon">
+								<i class="fa fa-search fa-lg"></i>
+							</span>
+						</div>
+					</div><!-- .form-group -->
+				</div><!-- .table-header-left -->
+			</div><!-- .table-header -->
+			
+			<table class="table table-striped table-bordered table-hover">
+				<thead>
+					<tr>
+						<th class="text-center" style="width: 5%;">&nbsp;</th>
+						<th style="width: 35%;">
+							<translate>LABEL.NOME</translate>
+						</th>
+						<th style="width: 30%;">
+							<translate>LABEL.DESCRICAO</translate>
+						</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<td colspan="3">
+							<div class="row">
+								<div class="col-sm-4 table-showing">
+									<translate>LABEL.MOSTRANDO</translate>
+									{{filterCriteria.start}}
+									<translate>LABEL.ATE</translate>
+									{{filterCriteria.limit > totalItens ? totalItens : filterCriteria.limit}}
+									<translate>LABEL.DE</translate>
+									({{totalItens}})
+									<translate>LABEL.WIDGETS</translate>.
+								</div><!-- .col -->
+								<div class="col-sm-8 text-right">
+									<pagination rotate="true" total-items="totalItens" num-pages="totalPages" ng-model="filterCriteria.start" items-per-page="filterCriteria.limit" class="pagination-sm" boundary-links="true" ng-change="fetchResult()"></pagination>
+								</div><!-- .col -->
+							</div><!-- .row -->
+						</td>
+					</tr>
+				</tfoot>
+				<tbody>
+					<tr ng-show="$showAdvancedFilters">
+						<td class="text-center">&nbsp;</td>
+						<td>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<input type="text" class="form-control" ng-change="filterResult();" ng-model="filterCriteria.filters[0].value" />
+									</div>
+								</div><!-- .col -->
+							</div><!-- .row -->
+						</td>
+						<td>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<input type="text" class="form-control" ng-change="filterResult();" ng-model="filterCriteria.filters[1].value" />
+									</div>
+								</div><!-- .col -->
+							</div><!-- .row -->
+						</td>
+					</tr>
+					
+					<tr ng-repeat="widget in widgets">
+						<td class="text-center">
+							<input type="radio" name="widgetChecked" ng-model="$parent.widgetChecked" ng-value="widget" />
+						</td>
+						<td>
+							{{widget.nome}}
+						</td>
+						<td>
+							{{widget.descricao}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div><!-- .table-container -->
+	</form>
+</div><!-- .page-content -->

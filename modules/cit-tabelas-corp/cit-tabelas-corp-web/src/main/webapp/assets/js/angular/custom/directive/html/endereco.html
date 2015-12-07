@@ -1,0 +1,169 @@
+<div class='row'>
+	<div class="col-sm-12">
+		<div class='row' ng-show="showCampos">
+			<div class='col-sm-4'>
+				<div class='form-group' ng-class="{'has-error' : obrigatorios.dominioTipoEndereco}">
+					<label><translate>LABEL.TIPO_ENDERECO</translate><span class='red'>*</span></label>
+					<i ng-show='obrigatorios.dominioTipoEndereco' class='fa fa-warning red'></i> 
+					<div class="input-group col-sm-12">
+						<select class="col-sm-12 form-control" ng-model="endereco.dominioTipoEndereco" id="endereco.dominioTipoEndereco" ng-options="tipoEndereco.originalElement as tipoEndereco.descricao for tipoEndereco in tipoEnderecos"/>
+					</div>
+				</div>
+			</div>
+			<div class='col-sm-4'>
+				<div class='form-group' ng-class="{'has-error' : obrigatorios.pais}">
+					<label><translate>LABEL.PAIS</translate><span class='red'>*</span></label>
+					<i ng-show='obrigatorios.pais' class='fa fa-warning red'></i> 
+					 <auto-complete ng-find="findPais(value)" ng-acao-borracha="limparFilhosAutoComplete('pais')" ng-item="item.nome" ng-id="pais" ng-model="pais" ng-disabled="false"></auto-complete>
+			  	</div>
+			</div>
+			<div class='col-sm-4'>
+				<div class='form-group' ng-class="{'has-error' : obrigatorios.regiao}">
+					<label><translate>LABEL.REGIAO</translate><span class='red'>*</span></label>
+					<i ng-show='obrigatorios.regiao' class='fa fa-warning red'></i>
+					 <auto-complete ng-find="findRegiao(value)" ng-acao-borracha="limparFilhosAutoComplete('regiao')"  ng-set-result="setPais(item)"  ng-item="item.nome + ' | ' + item.pais.sigla" ng-id="regiao" ng-model="regiao" ng-disabled="false"></auto-complete>
+				 </div>
+			</div>
+		</div>
+		<div class='row' ng-show="showCampos">
+			<div class='col-sm-4'>
+				<div class='form-group' ng-class="{'has-error' : obrigatorios.estado}">
+					<label><translate>LABEL.ESTADO</translate><span class='red'>*</span></label>
+					<i ng-show='obrigatorios.estado' class='fa fa-warning red'></i>
+					<auto-complete ng-find="findEstado(value)" ng-set-result="setRegiaoPais(item)"  ng-acao-borracha="limparFilhosAutoComplete('estado')" ng-item="item.nome + ' | ' + item.regiao.nome +  '|' + item.regiao.pais.sigla" ng-id="estado" ng-model="estado" ng-disabled="false" ></auto-complete>
+				 </div>
+			</div>
+			<div class='col-sm-4'>
+				<div class='form-group' ng-class="{'has-error' : obrigatorios.cidade}">
+					<label><translate>LABEL.CIDADE</translate><span class='red'>*</span></label>
+					<i ng-show='obrigatorios.cidade' class='fa fa-warning red'></i>
+					<auto-complete ng-find="findCidade(value)" ng-set-result="setEstadoRegiaoPais(item)" ng-item="item.nome + ' | ' + item.estado.nome + ' | ' + item.estado.regiao.nome +  '|' + item.estado.regiao.pais.sigla" ng-id="cidade"  ng-model="cidade" ng-disabled="false" ></auto-complete>
+				 </div>
+			</div>
+			
+			<div class='col-sm-4'>
+				<div class='form-group' ng-class="{'has-error' : obrigatorios.bairro}">
+					<label><translate>LABEL.BAIRRO</translate><span class='red'>*</span></label>
+					<i ng-show='obrigatorios.bairro' class='fa fa-warning red'></i>
+					<auto-complete ng-find="findBairro(value)" ng-set-result="setCidadeEstadoRegiaoPais(item)" ng-item="item.nome + ' | ' + item.cidade.nome + ' | ' + item.cidade.estado.nome + ' | ' + item.cidade.estado.regiao.nome +  '|' + item.cidade.estado.regiao.pais.sigla" ng-id="bairro" ng-model="bairro" ng-disabled="false"></auto-complete>
+			 	</div>
+			</div>
+			
+		</div>
+		<div class="row" ng-show="showCampos">
+		
+			<div class='col-sm-4'>
+				<div class='form-group' ng-class="{'has-error' : obrigatorios.logradouro}">
+					<label><translate>LABEL.LOGRADOURO</translate><span class='red'>*</span></label>
+					<i ng-show='obrigatorios.logradouro' class='fa fa-warning red'></i>
+					<label-input ng-type="text" ng-id="endereco.logradouro"  ng-disabled="false" ng-model="endereco.logradouro" ng-custom-maxlength="255" ng-obrigatorio='false'/>
+				</div>
+			</div>
+			
+			<div class='col-sm-4'>
+				<div class='form-group' ng-class="{'has-error' : obrigatorios.complemento}">
+					<label><translate>LABEL.COMPLEMENTO</translate><span class='red'>*</span></label>
+					<i ng-show='obrigatorios.complemento' class='fa fa-warning red'></i>
+					<label-input ng-type="text" ng-model="endereco.complemento" ng-id="endereco.complemento" ng-obrigatorio='false' ng-custom-maxlength='255'/>
+				</div>
+			</div>
+		
+			<div class='col-sm-4'>
+				<div class='form-group' ng-class="{'has-error' : obrigatorios.cep}">
+					<label><translate>LABEL.CEP</translate><span class='red'>*</span></label>
+					<i ng-show='obrigatorios.cep' class='fa fa-warning red'></i>
+					<label-input ng-type="text" ng-model="endereco.cep" ng-mask="MASK_CEP"  ng-id="endereco.cep" ng-obrigatorio='false'/>
+				</div>
+			</div>
+			
+		</div>
+		<div class="row" ng-show="showCampos">
+			<div class='col-sm-2'>
+				<label-input ng-type="text" ng-model="endereco.numero" ng-label="LABEL.NUMERO" ng-id="endereco.numero" ng-custom-maxlength='10'/>
+				<p class="help-block small red" ng-show="obrigatorios.numero">*<translate>LABEL.NUMERO</translate> <translate>LABEL.CAMPO_OBRIGATORIO</translate></p>
+			</div>
+			<div class="checkbox">
+				<label> 
+					<input type="checkbox" id="endereco.enderecoPrincipal" ng-model="endereco.enderecoPrincipal" ng-disabled="isVisualizar" form="form"/> 
+					<translate>LABEL.ENDERECO_PRINCIPAL</translate>
+				</label>
+			</div>
+		</div>
+			
+
+		<div class='row'>
+			<div class='col-sm-12'>
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix" ng-show="showCampos">
+						<button class="btn btn-clear" ng-click="adicionarEndereco()" type="button">
+							<i class="fa fa-plus-circle yellow-dark"></i>
+							<translate>LABEL.ADICIONAR</translate> </a>
+						</button>
+						
+						<button class="btn btn-clear" ng-click="openModal('modalConfirmRemocaoEndereco.html')" ng-show="enderecos.length > 0" type="button">
+							<i class="fa fa-close red"></i>
+							<translate>LABEL.REMOVER</translate> </a>
+						</button>
+					</div>
+					<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th class="text-center" style="width: 5%;"></th>
+								<th><translate>LABEL.TIPO_ENDERECO</translate></th>
+								<th><translate>LABEL.ESTADO</translate></th>
+								<th><translate>LABEL.CIDADE</translate></th>
+								<th><translate>LABEL.BAIRRO</translate></th>
+								<th><translate>LABEL.LOGRADOURO</translate></th>
+								<th><translate>LABEL.COMPLEMENTO</translate></th>
+								<th>Nº</th>
+								<th><translate>LABEL.CEP</translate></th>
+								<th><translate>LABEL.ENDERECO_PRINCIPAL</translate></th>
+							</tr>
+						</thead>
+						<tbody ng-show="enderecos.length < 1">
+							<tr>
+								<td colspan="9" class="text-center"><translate>LABEL.TABLEVAZIA</translate></td>
+							</tr>
+						</tbody>
+						<tbody>
+							<tr ng-repeat="endereco in enderecos">
+								<td class="text-center">
+									<input type="radio" name="enderecoSelected" ng-checked="endereco.$checked" ng-click="checkEndereco(endereco)"/>
+								</td>
+								<td>{{endereco.dominioTipoEndereco.descricao}}</td>
+								<td>{{endereco.cidade.estado.nome}}</td>
+								<td>{{endereco.cidade.nome}}</td>
+								<td>{{endereco.bairro.nome}}</td>
+								<td>{{endereco.logradouro}}</td>
+								<td>{{endereco.complemento}}</td>
+								<td>{{endereco.numero}}</td>
+								<td>{{endereco.cep | brCep}}</td>
+								<td class="text-center" ng-show="endereco.enderecoPrincipal">
+									<input type="checkbox" ng-model="endereco.enderecoPrincipal" />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/ng-template" id="modalConfirmRemocaoEndereco.html">
+	<div class="modal-header">
+	    <button class="btn btn-clear" ng-click="removerEndereco();">
+	        <i class="fa fa-check blue"></i>
+	        <translate>LABEL.CONFIRMAR</translate></th>
+	    </button>
+	    
+	    <button ng-click="$dismiss('cancel');" class="btn btn-clear">
+	        <i class="fa fa-times red"></i>
+	        <translate>LABEL.CANCELAR</translate></th>
+	    </button>
+	</div><!-- .modal-header -->
+	
+	<div class="modal-body">
+	    <h2 class="title-modal blue"> <translate>LABEL.CONFIRMACAO</translate></th></h2>
+	    <translate>MSG.CONFIRMA_EXCLUSAO</translate></th>
+	</div><!-- .modal-body -->
+</script>
+</div>

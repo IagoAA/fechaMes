@@ -1,0 +1,160 @@
+<div ng-controller="DefaultFileController">
+	<div class="page-content">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="widget-box">
+					<div class="widget-header">
+						<h4 class="widget-title">Arquivos padrão</h4>
+					</div>
+					<div class="widget-body">
+						<div class="widget-main">
+							<form name="defaultFileForm" class="row">
+								<div class="col-sm-5">
+									<div class="form-group">
+										<label for="defaultFile.caminho" class="control-label">Caminho <span class="red">*</span></label>
+										<input type="text" class="form-control" id="defaultFile.caminho" name="defaultFile.caminho" ng-model="defaultFile.caminho" required />
+									</div><!-- .form-group -->
+								</div><!-- .col -->
+								
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="defaultFile.caminho" class="control-label block">Tipo <span class="red">*</span></label>
+										
+										<div class="radio-inline" ng-repeat="dominioDefaultFile in dominiosDefaultFile">
+											<label>
+												<input type="radio" name="defaultFile.dominioDefaultFile.id" ng-model="defaultFile.dominioDefaultFile.id" value="{{dominioDefaultFile.id}}" required /> {{dominioDefaultFile.nome}}
+											</label>
+										</div><!-- .radio-inline -->
+									</div><!-- .form-group -->
+								</div><!-- .col -->
+								
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="defaultFile.caminho" class="control-label block">Ativo</label>
+										
+										<div class="radio-inline">
+											<label>
+												<input type="radio" name="defaultFile.ativo" ng-model="defaultFile.ativo" value="S" /> Sim
+											</label>
+										</div><!-- .radio-inline -->
+										
+										<div class="radio-inline">
+											<label>
+												<input type="radio" name="defaultFile.ativo" ng-model="defaultFile.ativo" value="N" /> Não
+											</label>
+										</div><!-- .radio-inline -->
+									</div><!-- .form-group -->
+								</div><!-- .col -->
+								
+								<div class="col-sm-3">
+									<label class="control-label">&nbsp;</label>
+									<button ng-click="saveOrUpdate()" class="btn btn-sm btn-success btn-block">
+										<i class="ace-icon fa fa-plus-circle bigger-130"></i>
+										Adicionar arquivo
+									</button>
+								</div><!-- .col -->
+							</form><!-- .row -->
+							
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="widget-box collapsed">
+										<div class="widget-header">
+											<h2 class="widget-title">.css</h2>
+											
+											<div class="widget-toolbar">
+												<a href="#void" data-action="collapse">
+													<i class="ace-icon fa fa-chevron-down"></i>
+												</a>
+											</div><!-- .widget-toolbar -->
+										</div><!-- .widget-header -->
+										
+										<div class="widget-body">
+											<div class="widget-main clearfix">
+												<div class="dd-draghandle" ui-tree data-max-depth="1">
+													<ol ui-tree-nodes="" ng-model="defaultFiles">
+														<li class="dd-item dd2-item" ng-repeat="defaultFile in defaultFiles" ui-tree-node ng-if="defaultFile.dominioDefaultFile.nome == 'CSS'">
+															<div class="tree-node tree-node-content">
+																<div class="dd-handle dd2-handle" ui-tree-handle>
+																	<i class="ace-icon fa fa-arrows bigger-125"></i>
+																</div>
+																<div class="dd2-content">
+																	<span ng-bind="defaultFile.ordem = $index" ng-show="false"></span>
+																	{{defaultFile.caminho}}
+																	
+																	<div class="pull-right action-buttons">
+																		<a href="#void" class="blue" ng-click="editDefaultFile(defaultFile);">
+																			<i class="ace-icon fa fa-pencil bigger-130"></i>
+																		</a>
+																		<a href="#void" class="red" ng-click="removeDefaultFile(defaultFile);">
+																			<i class="ace-icon fa fa-trash-o bigger-130"></i>
+																		</a>
+																	</div>
+																</div>
+															</div>
+														</li>
+													</ol>
+												</div>
+											</div><!-- .widget-main -->
+										</div><!-- .widget-body -->
+									</div><!-- .widget-box -->
+								</div><!-- .col -->
+								
+								<div class="col-sm-6">
+									<div class="widget-box collapsed">
+										<div class="widget-header">
+											<h2 class="widget-title">.js</h2>
+											
+											<div class="widget-toolbar">
+												<a href="#void" data-action="collapse">
+													<i class="ace-icon fa fa-chevron-down"></i>
+												</a>
+											</div><!-- .widget-toolbar -->
+										</div><!-- .widget-header -->
+										
+										<div class="widget-body">
+											<div class="widget-main clearfix">
+												<div class="dd-draghandle" ui-tree data-max-depth="1">
+													<ol ui-tree-nodes="" ng-model="defaultFiles">
+														<li class="dd-item dd2-item" ng-repeat="defaultFile in defaultFiles" ui-tree-node ng-if="defaultFile.dominioDefaultFile.nome == 'JS'">
+															<div class="tree-node tree-node-content">
+																<div class="dd-handle dd2-handle" ui-tree-handle>
+																	<i class="ace-icon fa fa-arrows bigger-125"></i>
+																</div>
+																<div class="dd2-content">
+																	<span ng-bind="defaultFile.ordem = $index" ng-show="false"></span>
+																	{{defaultFile.caminho}}
+																	
+																	<div class="pull-right action-buttons">
+																		<a href="#void" class="blue" ng-click="editDefaultFile(defaultFile);">
+																			<i class="ace-icon fa fa-pencil bigger-130"></i>
+																		</a>
+																		<a href="#void" class="red" ng-click="removeDefaultFile(defaultFile);">
+																			<i class="ace-icon fa fa-trash-o bigger-130"></i>
+																		</a>
+																	</div>
+																</div>
+															</div>
+														</li>
+													</ol>
+												</div>
+											</div><!-- .widget-main -->
+										</div><!-- .widget-body -->
+									</div><!-- .widget-box -->
+								</div><!-- .col -->
+							</div><!-- .row -->
+							
+							<div class="row text-right">
+								<div class="col-sm-12">
+									<button ng-click="saveConfig()" class="btn btn-success wide-xs">
+										<i class="ace-icon fa fa-save"></i> Salvar alterações
+									</button>
+								</div><!-- /.col -->
+							</div><!-- /.row -->
+						</div> <!-- /widget-main -->
+					</div> <!-- /widget-body -->
+				</div> <!-- /widget-box -->
+			</div><!-- /.col-sm-8 -->
+		</div><!-- /.row -->
+	</div> <!-- /.page-content -->
+	
+</div>

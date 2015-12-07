@@ -1,0 +1,17 @@
+<button ng-click="openModal('help-modal.html');" type="button" class="btn btn-clear" ng-show="showButtonHelp">
+	<i class="fa fa-life-ring"></i> <translate>LABEL.AJUDA</translate>
+
+<script type="text/ng-template" id="help-modal.html">
+	<div class="modal-header">
+	    <button ng-click="$dismiss('cancel');" class="btn btn-clear">
+	        <i class="fa fa-check green"></i>
+	        <translate>LABEL.ENTENDI</translate>
+	    </button>
+	</div>
+	
+	<div class="modal-body">
+	    <div ng-bind-html="ajuda"></div>
+	</div>
+</script>
+
+</button>

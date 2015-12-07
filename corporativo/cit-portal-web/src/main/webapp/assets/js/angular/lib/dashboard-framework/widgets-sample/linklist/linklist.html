@@ -1,0 +1,10 @@
+<div class="linklist">
+  <div class="alert alert-info" ng-if="!list.links.length">
+    <translate>MSG.CLIQUE_NO_ICONE_PARA_CONFIGURAR_O_WIDGET</translate>
+  </div>
+  <ul>
+    <li ng-repeat="link in list.links | orderBy:'title'" ng-show='!link.remover'>
+      <a  target="_blank" ng-href="{{link.href}}">{{link.title}}</a>
+    </li>
+  </ul>
+</div>

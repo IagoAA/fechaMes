@@ -1,0 +1,131 @@
+<div id="breadcrumbs" class="breadcrumbs">
+	<script type="text/javascript">
+		try {
+			ace.settings.check('breadcrumbs', 'fixed')
+		} catch (e) {
+		}
+	</script>
+
+	<ul class="breadcrumb">
+		<li>
+			<i class="ace-icon fa fa-home home-icon"></i> <a href="#">Home</a>
+		</li>
+		<li class="active">
+			<translate>LABEL.PORTADOR</translate> <favorito />
+		</li>
+	</ul>
+</div><!-- #breadcrumbs -->
+
+<div class="page-content">
+	<h1>
+		<translate>LABEL.PORTADOR</translate>
+	</h1>
+
+</div>
+
+	<div class="tabbable">
+
+		<ul class="nav nav-tabs tab-color-blue">
+			<li class="active">
+				<a href="#search_portador" data-toggle="tab" aria-expanded="true">
+					<i class="ace-icon fa fa-search bigger-120"></i>
+					<translate>LABEL.PESQUISAR</translate>
+				</a>
+			</li>
+
+			<li>
+				<a href="#edit_portador" data-toggle="tab" aria-expanded="true">
+					<i class="ace-icon fa fa-edit bigger-120"></i>
+					<translate>LABEL.CADASTRAR</translate>
+				</a>
+			</li>
+		</ul><!-- .nav -->
+
+		<div class="tab-content">
+
+			<div class="tab-pane fade active in" id="search_portador">
+
+			</div>
+
+			<div class="tab-pane fade" id="edit_portador">
+
+				<div class="alert-fixed alert alert-danger alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<strong>Alerta!</strong> Coloque o texto aqui
+				</div>
+
+				<form name="formPortador" autocomplete="off">
+
+					<div class="widget-box">
+
+						<div class="widget-header">
+
+							<h2 class="widget-title"><translate>LABEL.PORTADOR</translate></h2>
+
+							<div class="widget-toolbar">
+								<a href="#void" data-action="collapse">
+									<i class="ace-icon fa fa-chevron-up"></i>
+								</a>
+							</div><!-- .widget-toolbar -->
+						</div><!-- .widget-header -->
+
+						<div class="widget-body">
+							<div class="widget-main clearfix">
+								<p>
+									<small>( <span class="red">*</span> ) Campos obrigatórios</small>
+								</p>
+
+								<div class="row">
+									<div class="col-sm-12">
+										<label-input ng-id="exemplo.nome" ng-type="text" ng-obrigatorio='true' ng-label="LABEL.PORTADOR" ng-model="exemplo.nome" ng-disabled="false" ng-custom-maxlength="10" form="formPortador"/>
+									</div><!-- .col -->
+								</div><!-- .row -->
+
+								<div class="row">
+									<div class="col-sm-12">
+										<label-input-money ng-id="exemplo.valor" ng-obrigatorio='true' ng-label="LABEL.PORTADOR" ng-model="exemplo.valor" ng-disabled="false" ng-custom-maxlength="15" form="formPortador"/>
+									</div><!-- .col -->
+								</div><!-- .row -->
+
+								<div class="row">
+									<div class="col-sm-12">
+										<label-input-radio ng-label="LABEL.PORTADOR" ng-model="exemplo.lista" ng-model-destino="modelExemplo" ng-disabled="false" form="formPortador" ng-class="radio-inline" ng-name="tipoPessoa"/>
+									</div><!-- .col -->
+								</div><!-- .row -->
+						</div><!-- .widget-body -->
+					</div><!-- .widget-box -->
+
+				</form>
+
+			</div><!-- .tab-pane fade -->
+
+			<hr />
+
+			<div class="row text-right">
+				<div class="col-sm-12">
+					<button class="btn btn-success wide-xs">
+						<i class="ace-icon fa fa-save"></i> Salvar
+					</button>
+
+					<button class="btn wide-xs">
+						<i class="ace-icon fa fa-refresh"></i> Restaurar
+					</button>
+
+					<button class="btn btn-info wide-xs">
+						<i class="ace-icon fa fa-eraser"></i> Limpar
+					</button>
+
+					<button class="btn btn-danger wide-xs">
+						<i class="ace-icon fa fa-trash-o"></i> Excluir
+					</button>
+
+					<button class="btn btn-warning wide-xs">
+						<i class="ace-icon fa fa-times"></i> Fechar
+					</button>
+				</div><!-- .col -->
+			</div><!-- .row -->
+
+		</div>
+
+	</div>
+

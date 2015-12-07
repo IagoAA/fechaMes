@@ -1,0 +1,16 @@
+Script de Migração (ASIWEB para GRP)
+
+Pré Condições :
+
+- Banco de dados do ASI com esquema ASIWEB.
+- Banco de dados vazio GRP com os dados de menu, páginas, menufile e defaultfile.
+- Restaurar o banco de dados do GRP no schema public.
+
+Scripts:
+
+-Os scripts de migração estão divididos em 7 arquivos. A execução deve ser sequencial de acordo com os números que iniciam o nome dos scripts: 00, 01, 02, 03, 04, 05, 99.
+-Recomendo a execução dos scripts em blocos conforme delimitado no arquivo begin; commit;.
+-Os scripts de entrada e transferência demoram para ser executados, principalmente o de transferência, cabe uma otimização do script para que ele seja executado mais rapidamente.
+-Alguns erros de sequences podem surgir no decorrer da migração, ou é necessário criar uma sequence que está faltando, ou atualizar o nextval de uma sequence existente.
+-As funções para gerar o contacontabilsaldo e contacontabilsaldoreferencia também tomam um tempo para rodar (as configurações necessárias para as funções estão nos comentários no código).
+-A função para gerar os históricos também demora um pouco para executar.

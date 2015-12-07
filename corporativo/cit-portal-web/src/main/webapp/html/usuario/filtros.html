@@ -1,0 +1,50 @@
+<fieldset>
+	<legend>
+		<translate>LABEL.FILTROS</translate>
+	</legend>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix">
+					<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-click="excluirFiltro()" ng-show="usuario.paginasUsuario.length > 0 && edit">
+						<i class="fa fa-close red"></i>
+						<translate>LABEL.REMOVER</translate> </a>
+					</button>
+				</div>
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th class="text-center" style="width: 5%;"></th>
+							
+							<th style="width: 35%;">
+								<translate>LABEL.NOME_FILTRO</translate>
+							</th>
+							<th style="width: 30%;">
+								<translate>LABEL.NOME_PAGINA</translate>
+							</th>
+							<th style="width: 30%;">
+								<translate>LABEL.PAGINA</translate>
+							</th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="paginaUsuario in usuario.paginasUsuario">
+						<tr ng-repeat="searchParams in paginaUsuario.searchParams">
+							<td class="text-center">
+								<input type="radio" name="usuarioFiltroSelected" ng-checked="searchParams.$checked" ng-click="checkUsuarioFiltro($parent.$index, $index, searchParams)"/>
+							</td>
+							<td>
+								{{searchParams.nome}}
+							</td>
+							<td>
+								{{paginaUsuario.pagina.nome}}
+							</td>
+							<td>
+								{{paginaUsuario.pagina.pagina}}
+							</td>								
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div><!-- .row -->
+</fieldset>

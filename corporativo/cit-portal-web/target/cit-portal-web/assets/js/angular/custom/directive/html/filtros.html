@@ -1,0 +1,49 @@
+<div class="btn-group dropdown" role="group" dropdown>
+	<button title="Adicionar filtros de pesquisa" alt="Adicionar filtros de pesquisa" type="button" class="btn btn-clear" dropdown-toggle>
+		<i class="fa fa-filter"></i> <translate>LABEL.FILTROS</translate> <span class="fa fa-angle-down icon-on-right"></span>
+	</button>
+
+	<ul class="dropdown-menu-center dropdown-menu dropdown-caret" role="menu">
+	
+		<li ng-repeat="filter in filters">
+			<a href="javascript:;">
+				<span ng-click="setFiltro(filter);"><i class="ace-icon fa fa-filter"></i>&nbsp;<translate>{{filter.nome}}</translate></span>
+				
+				<span class="red pull-right" ng-click="removeFilter(filter);"><i class="fa fa-trash-o bigger-130"></i></span>
+			</a>
+		</li>
+		<li class="divider"></li>
+		<li>
+			<a ng-click="limparFiltro(); openModal('add-filter-modal.html');" > <i class="ace-icon fa fa-plus-circle"></i>
+				<translate>LABEL.FILTROS</translate>
+			</a>
+		</li>
+	</ul>
+	
+<script type="text/ng-template" id="add-filter-modal.html">
+	<div class="modal-header">
+	    <button class="btn btn-clear" ng-click="salvarFiltro(filtros, workspace)">
+	        <i class="fa fa-save green"></i>
+	        <translate>LABEL.SALVAR</translate>
+	    </button>
+	    
+	    <button ng-click="$dismiss('cancel');" class="btn btn-clear">
+	        <i class="fa fa-times red"></i>
+	        <translate>LABEL.CANCELAR</translate>
+	    </button>
+	</div>
+	
+	<div class="modal-body">
+	    <h2 class="title-modal blue"><translate>LABEL.ADICIONAR_FILTRO</translate></h2>
+	    <div class="row">
+	        <div class="col-sm-12">
+	            <div class="form-group">
+					<input type="text" class="form-control" ng-model="filtros.nome" placeholder="{{'LABEL.INFORME_FILTRO' | translate}}" />
+					<p class="help-block small red">*<translate>LABEL.NOME</translate> <translate>LABEL.CAMPO_OBRIGATORIO</translate></p>
+				</div>
+	        </div>
+	    </div>
+	</div>
+</script>
+
+</div>

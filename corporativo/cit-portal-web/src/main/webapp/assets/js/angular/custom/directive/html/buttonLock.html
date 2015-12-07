@@ -1,0 +1,14 @@
+<div class="btn-group dropdown" role="group" dropdown is-open="$buttonLockOpen">
+	<button type="button" class="btn btn-clear" dropdown-toggle>
+		<i class="fa fa-lock"></i> Bloquear <span class="fa fa-caret-down icon-on-right"></span>
+	</button>
+	
+	<div class="dropdown-menu-center dropdown-menu dropdown-lock dropdown-caret" role="menu">
+		<div class="dropdown-lock-input" ng-click="noCloseDropdown($event);">
+			<label-input-data ng-model="model" ng-label="Data bloqueio"></label-input-data>
+		</div>
+		<div class="dropdown-lock-button">
+			<button type="button" ng-click="actionLock();" class="btn btn-success">Ok</button>
+		</div>
+	</div>
+</div><!-- .btn-group -->

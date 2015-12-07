@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>citgrp Patrimonio</display-name>
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/classes/spring/applicationContext.xml</param-value>
+	</context-param>
+
+	<!-- Configuracoes do properties -->
+	<context-param>
+		<param-name>contextInitializerClasses</param-name>
+		<param-value>br.com.centralit.framework.util.CustomApplicationContextInitializer</param-value>
+	</context-param>
+	<context-param>
+		<param-name>propertiesFile</param-name>
+		<param-value>classpath:cit-app.properties</param-value>
+	</context-param>
+	<context-param>
+		<param-name>propertiesFileLoadOrder</param-name>
+		<param-value>FIRST</param-value>
+	</context-param>
+	<!-- Este parametro controla a ordem na qual o arquivo de propriedades sera carregado -->
+	<!-- "FIRST": Os parametros do arquivo de propriedades sao carregados primero que os outros recursos no ambiente (System, JVM, JNDI Parameters). -->
+	<!-- "LAST": Os parametros do arquivo de propriedades sao carregados por ultimo que os outros recursos no ambiente (System, JVM, JNDI Parameters). -->
+	<!-- Por padrao o parametro eh "FIRST". -->
+
+	<filter>
+		<filter-name>openSessionInViewFilter</filter-name>
+		<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>openSessionInViewFilter</filter-name>
+		<url-pattern>*.json</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>encoding-filter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encoding-filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<listener>
+		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+	</listener>	
+
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- CORS Filter -->
+    <filter>
+        <filter-name>cors</filter-name>
+        <filter-class>br.com.centralit.framework.filter.SimpleCORSFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>cors</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+	<servlet>
+		<servlet-name>spring</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value></param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>spring</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+</web-app>

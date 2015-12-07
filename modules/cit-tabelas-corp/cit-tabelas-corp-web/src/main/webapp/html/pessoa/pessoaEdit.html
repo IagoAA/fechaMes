@@ -1,0 +1,282 @@
+<div class="page-content clearfix">
+	<form name="formPessoa" novalidate ng-controller="PessoaController" id="pessoaEdit" autocomplete="off">
+		<div class="bar-buttons-action fixed">
+			<div class="row">
+				<div class="col-sm-8 text-left">
+					<button class="btn btn-clear" ng-click="saveOrUpdate()" ng-show="!isVisualizar" type="button">
+						<i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+					</button>
+					
+					<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-show="isVisualizar" type="button" ng-click="habilitarSalvar()">
+						<i class="fa fa-pencil blue"></i>
+						<translate>LABEL.EDITAR</translate>
+					</button>
+					
+					<button title="{{$translate.instant('LABEL.LIMPAR')}}" alt="{{$translate.instant('LABEL.LIMPAR')}}" ng-show="!isVisualizar && pessoa.id === undefined" class="btn btn-clear" ng-click="resetForm()" type="button">
+						<i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+					</button>
+					
+					<button class="btn btn-clear" ng-disabled="!pessoa.id || isVisualizar" ng-click="apresentarDialogConfirmacaoRemocaoPessoa();" type="button">
+						<i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+					</button>
+					
+					<bloquear-desbloquear ng-model="pessoa" ng-repository="PessoaRepository" ng-show="isVisualizar"></bloquear-desbloquear>
+					
+					<button class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); fetchResult()" type="button">
+						<i class="fa fa-search"></i>  <translate>LABEL.PESQUISAR</translate>
+					</button>
+					
+				</div>
+				
+				<div class="col-sm-4 text-right">
+					<favorito/>
+				
+					<help-button workspace="workspace" />
+				</div>
+			</div>
+		</div>
+		
+		<breadcrumb ng-workspace="workspace"></breadcrumb>
+	
+		<p>
+			<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+		</p>
+		
+		 <fieldset>
+		 
+        	<legend><translate>LABEL.DADOS_PESSOA</translate></legend>
+        	
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label-input ng-id="pessoa.nome" name="pessoa.nome" ng-typ="text" ng-obrigatorio='true' ng-custom-maxlength='255' form="formPessoa" ng-label="LABEL.NOME" ng-model="pessoa.nome"
+								ng-disabled="isVisualizar" ng-trim="true"/>
+						</div>
+						<!-- .form-group -->
+					</div>
+					<!-- .col -->
+
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label-input ng-id="pessoa.email" name="pessoa.email" ng-type="email" ng-obrigatorio='false' ng-label="LABEL.EMAIL" ng-model="pessoa.email" ng-disabled="isVisualizar"  ng-custom-maxlength='255' form="formPessoa"/>
+						</div>
+				
+					</div>
+					<!-- .col -->
+
+					<div class='col-sm-3'>
+						<div class="form-group">
+							<label class="control-label block" ng-class="{'has-error': formPessoa['pessoa.dominioPessoa.codigo'].$error.required && (!formPessoa['pessoa.dominioPessoa.codigo'].$pristine || formPessoa.$submitted)}">
+								<translate>LABEL.TIPO_PESSOA</translate>
+								<span class="red">*</span>
+								<i ng-show="formPessoa['pessoa.dominioPessoa.codigo'].$error.required && (!formPessoa['pessoa.dominioPessoa.codigo'].$pristine || formPessoa.$submitted)" class='fa fa-warning red' tooltip="{{$translate.instant('LABEL.TIPO_PESSOA') + ' ' +$translate.instant('LABEL.CAMPO_OBRIGATORIO')}}" tooltip-placement='top'></i>
+							</label>
+							<div class="radio-inline" ng-repeat="tipoPessoa in tiposPessoa">
+								<label> 
+									<input type="radio" required="true" name="pessoa.dominioPessoa.codigo" ng-disabled="isVisualizar" ng-value="tipoPessoa.codigo" ng-model="pessoa.dominioPessoa.codigo" /> 
+									{{tipoPessoa.descricao}}
+								</label>
+							</div>
+
+							<p class="help-block small red" ng-show="formPessoa['pessoa.dominioPessoa'].$error.required">
+								*
+								<translate>LABEL.TIPO_PESSOA</translate>
+								<translate>LABEL.E_OBRIGATORIO</translate>
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div ng-include src="'/cit-tabelas-corp-web/html/pessoa/pessoaFisica.html'" />
+				<div ng-include src="'/cit-tabelas-corp-web/html/pessoa/pessoaJuridica.html'" />
+				
+		</fieldset>	
+		
+	<div ng-include src="'/cit-tabelas-corp-web/html/pessoa/contatos.html'" />
+
+	<div class="widget-box margin-bottom">
+		<div class="widget-header">
+			<h2 class="widget-title">
+				<translate>LABEL.TELEFONES</translate>
+			</h2>
+			<div class="widget-toolbar">
+				<a href="#void" ng-click="widgetTelefoneCollapsed = !widgetTelefoneCollapsed">
+					<i class="fa" ng-class="{'fa-chevron-up': !widgetTelefoneCollapsed, 'fa-chevron-down': widgetTelefoneCollapsed}"></i>
+				</a>
+			</div>
+		</div>
+		<div collapse="widgetTelefoneCollapsed" class="widget-body">
+			<div class="widget-main clearfix">
+				<componente-telefone ng-telefones="pessoa.telefones" show-campos="!isVisualizar"></componente-telefone>
+			</div>
+		</div>
+	</div>
+	
+	  <div class="widget-box margin-bottom">
+		<div class="widget-header">
+			<h2 class="widget-title">
+				<translate>LABEL.ENDERECOS</translate>
+			</h2>
+			<div class="widget-toolbar">
+				<a href="#void" ng-click="widgetEnderecoIsCollapsed = !widgetEnderecoIsCollapsed">
+					<i class="fa" ng-class="{'fa-chevron-up': !widgetEnderecoIsCollapsed, 'fa-chevron-down': widgetEnderecoIsCollapsed}"></i>
+				</a>
+			</div>
+		</div>
+		<div collapse="widgetEnderecoIsCollapsed" class="widget-body">
+			<div class="widget-main clearfix">
+				<componente-endereco ng-enderecos="pessoa.enderecos" show-campos="!isVisualizar"></componente-endereco>
+			</div>
+		</div>
+	</div>
+	
+	<div class="widget-box margin-bottom">
+		<div class="widget-header">
+			<h2 class="widget-title">
+				<translate>LABEL.PAPEL</translate>
+			</h2>
+			<div class="widget-toolbar">
+				<a href="#void" ng-click="widgetParceiroIsCollapsed = !widgetParceiroIsCollapsed">
+					<i class="fa" ng-class="{'fa-chevron-up': !widgetParceiroIsCollapsed, 'fa-chevron-down': widgetParceiroIsCollapsed}"></i>
+				</a>
+			</div>
+		</div>
+		
+		<div collapse="widgetParceiroIsCollapsed" class="widget-body">
+			<div class="widget-main clearfix">
+				<div class='row'>
+					<div class="col-sm-3">
+						<label-select ng-id="dominioTipoParceiro" ng-model="dominioTipoParceiro" ng-label="LABEL.TIPO" ng-obrigatorio="false" ng-disabled="false" form="formPessoa"
+							ng-list="tiposParceiro" ng-custom-options="tipoParceiro as tipoParceiro.descricao for tipoParceiro" ng-show="!isVisualizar"> </label-select>
+					</div>
+					<div class="col-sm-1">
+						<div class="form-group btn-no-label">
+							<a class="btn btn-sm btn-success" href="#void" ng-disabled="!dominioTipoParceiro.id" ng-click="adicionarParceiro(dominioTipoParceiro);" ng-hide="isVisualizar"> <i class="ace-icon fa fa-plus-circle"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+	
+				<div class="row">
+					<div class="col-sm-9">
+						<tabset class="tabbable" justified="true" id="tabSetParceiro" ng-show="apresentarColaborador || apresentarOrgaoExterno || apresentarPortador || apresentarFornecedor || apresentarSeguradora|| apresentarCliente || apresentarFuncionario"> 
+						
+							<tab id="tab_colaborador" ng-show="apresentarColaborador">
+								<tab-heading><translate>LABEL.COLABORADOR</translate></tab-heading>
+								<div ng-include src="'/cit-tabelas-corp-web/html/pessoa/parceiroColaborador.html'" />
+							</tab> 
+							
+							<tab id="tab_orgao_externo" ng-show="apresentarOrgaoExterno" active='activeOrgaoExterno'>
+								<tab-heading><translate>LABEL.ORGAO_EXTERNO</translate></tab-heading>
+								<div ng-include src="'/cit-tabelas-corp-web/html/pessoa/parceiroOrgaoExterno.html'" />
+							</tab> 
+							
+							<tab id="tab_portador" ng-show="apresentarPortador" active="activePortador">
+								<tab-heading><translate>LABEL.PORTADOR</translate></tab-heading>
+								<div ng-include src="'/cit-tabelas-corp-web/html/pessoa/parceiroPortador.html'" />
+							</tab> 
+							
+							<tab id="tab_fornecedor" ng-show="apresentarFornecedor" active="activeFornecedor">
+								<tab-heading><translate>LABEL.FORNECEDOR</translate></tab-heading>
+								<div ng-include src="'/cit-tabelas-corp-web/html/pessoa/parceiroFornecedor.html'" />
+							</tab> 
+							
+							<tab id="tab_seguradora" ng-show="apresentarSeguradora" active="activeSeguradora">
+								<tab-heading><translate>LABEL.SEGURADORA</translate></tab-heading>
+								<div ng-include src="'/cit-tabelas-corp-web/html/pessoa/parceiroSeguradora.html'" />
+							</tab> 			
+							
+							<tab id="tab_cliente" ng-show="apresentarCliente" active="activeCliente">
+								<tab-heading><translate>LABEL.CLIENTE</translate></tab-heading>
+								<div ng-include src="'/cit-tabelas-corp-web/html/pessoa/parceiroCliente.html'" />
+							</tab> 				
+							
+							<tab id="tab_funcionario" ng-show="apresentarFuncionario" active="activeFuncionario">
+								<tab-heading><translate>LABEL.FUNCIONARIO</translate></tab-heading>
+								<div ng-include src="'/cit-tabelas-corp-web/html/pessoa/parceiroFuncionario.html'" />
+							</tab> 				
+						
+						</tabset>
+					</div>
+				</div>
+	 		</div> 
+	
+			<div class="row text-right" ng-show="!isVisualizar">
+				<div class="col-sm-12">
+				
+				    <button class="btn btn-sm btn-danger" type="button"   ng-click="apresentarDialogConfirmacaoRemocaoParceiro(1)"  ng-if="apresentarColaborador">
+						<i class="fa fa-times red"></i>
+						<translate>LABEL.REMOVER_COLABORADOR</translate>
+					</button>
+	
+				    <button class="btn btn-sm btn-danger" type="button"  ng-click="apresentarDialogConfirmacaoRemocaoParceiro(2)" ng-if="apresentarOrgaoExterno">
+						<i class="fa fa-times red"></i>
+						<translate>LABEL.REMOVER_ORGAO_EXTERNO</translate>
+					</button>
+	
+					<button class="btn btn-sm btn-danger" type="button"  ng-click="apresentarDialogConfirmacaoRemocaoParceiro(3)" ng-if="apresentarPortador">
+						<i class="fa fa-times red"></i>
+						<translate>LABEL.REMOVER_PORTADOR</translate>
+					</button>
+	
+					<button class="btn btn-sm btn-danger" type="button" ng-click="apresentarDialogConfirmacaoRemocaoParceiro(4);" ng-if="apresentarFornecedor">
+						<i class="fa fa-times red"></i>
+						<translate>LABEL.REMOVER_FORNECEDOR</translate>
+					</button>
+	
+					<button class="btn btn-sm btn-danger" type="button" ng-click="apresentarDialogConfirmacaoRemocaoParceiro(5);" ng-if="apresentarSeguradora">
+						<i class="fa fa-times red"></i>
+						<translate>LABEL.REMOVER_SEGURADORA</translate>
+					</button>
+
+					<button class="btn btn-sm btn-danger" type="button" ng-click="apresentarDialogConfirmacaoRemocaoParceiro(6);" ng-if="apresentarCliente">
+						<i class="fa fa-times red"></i>
+						<translate>LABEL.REMOVER_CLIENTE</translate>
+					</button>
+					
+					<button class="btn btn-sm btn-danger" type="button" ng-click="apresentarDialogConfirmacaoRemocaoParceiro(7);" ng-if="apresentarFuncionario">
+						<i class="fa fa-times red"></i>
+						<translate>LABEL.REMOVER_FUNCIONARIO</translate>
+					</button>
+								
+				</div>
+			</div>
+		</div>
+	
+	</div>
+	
+	<div class="widget-box margin-bottom">
+		<div class="widget-header">
+			<h2 class="widget-title">
+				<translate>LABEL.USUARIO</translate>
+			</h2>
+			<div class="widget-toolbar">
+				<a href="#void" ng-click="widgetUsuarioIsCollapsed = !widgetUsuarioIsCollapsed">
+					<i class="fa" ng-class="{'fa-chevron-up': !widgetUsuarioIsCollapsed, 'fa-chevron-down': widgetUsuarioIsCollapsed}"></i>
+				</a>
+			</div>
+		</div>
+		
+		<div collapse="widgetUsuarioIsCollapsed" class="widget-body">
+			<div class="widget-main clearfix">
+				<div class='row'>
+					<div class="col-sm-9">
+						<auto-complete 
+							ng-find="findUsuario(value)" 
+							ng-acao-borracha="limparUsuario()" 
+							ng-set-result="setUsuario(item)" 
+							ng-item="item.username" 
+							ng-model="pessoa.usuario"  
+							ng-disabled="isVisualizar">
+						</auto-complete>
+					</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+		
+</div>
+
+</form>
+
+</div>

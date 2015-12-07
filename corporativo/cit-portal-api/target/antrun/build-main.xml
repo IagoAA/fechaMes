@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <delete>
+    <fileset dir="E:\Workstation\Freelancer\fechaMes\corporativo\cit-portal-api/src/main/resources/" includes="*.tag"/>
+  </delete>
+  <touch file="E:\Workstation\Freelancer\fechaMes\corporativo\cit-portal-api/src/main/resources/0.0.6-SNAPSHOT-build-20151206123308.tag"/>
+</target>
+</project>

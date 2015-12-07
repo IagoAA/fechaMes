@@ -1,0 +1,250 @@
+<div class="page-content" ng-controller="DefaultTemplateListController">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+				<button type="button" class="btn btn-clear" ng-click="$showPageEditWorkspace(workspace);">
+					<i class="fa fa-plus-circle yellow-dark"></i>
+					<translate>LABEL.CADASTRAR</translate>
+				</button>
+				
+				<button type="button" class="btn btn-clear">
+					<i class="fa fa-search blue"></i>
+					<translate>LABEL.VISUALIZAR</translate>
+				</button>
+				
+				<button type="button" class="btn btn-clear">
+					<i class="fa fa-pencil blue"></i>
+					<translate>LABEL.EDITAR</translate>
+				</button>
+				
+				<button type="button" class="btn btn-clear">
+					<i class="fa fa-times red"></i>
+					<translate>LABEL.REMOVER</translate>
+				</button>
+				
+				<span class="divider-vertical"></span>
+				
+				<div class="btn-group dropdown" role="group" dropdown>
+					<button type="button" class="btn btn-clear" dropdown-toggle>
+						<i class="fa fa-file"></i> Exportar <span class="fa fa-caret-down icon-on-right"></span>
+					</button>
+					
+					<ul class="dropdown-menu-center dropdown-menu dropdown-caret" role="menu">
+						<li>
+							<a href="#void"><i class="fa fa-file-o"></i> Excel</a>
+						</li>
+						<li>
+							<a href="#void"><i class="fa fa-file-o"></i> CSV</a>
+						</li>
+						<li>
+							<a href="#void"><i class="fa fa-file-o"></i> XML</a>
+						</li>
+						<li>
+							<a href="#void"><i class="fa fa-file-o"></i> JSON</a>
+						</li>
+					</ul>
+				</div><!-- .btn-group -->
+				
+				<filtros ng-filter="filterCriteria" ng-workspace="workspace"></filtros>
+			</div><!-- .col -->
+			
+			<div class="col-sm-4 text-right">
+				<favorito/>
+				
+				<button type="button" class="btn btn-clear">
+					<i class="fa fa-life-ring"></i>
+					Ajuda
+				</button>
+				
+				<!-- <help-button workspace="workspace" /> -->
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+	
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+	
+	<form name="formSearch">
+		<div class="table-container">
+			<div class="table-header clearfix">
+				<div class="table-header-right">
+					<button class="btn btn-primary btn-inline btn-white table-header-item" ng-click="showAdvancedFilters(null, this)">
+						<i class="fa fa-filter"></i> Filtros avançados
+					</button>
+				</div><!-- .table-header-right -->
+				
+				<div class="table-header-left">
+					<div class="form-group">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Digite uma palavra chave" />
+							<span class="input-group-addon">
+								<i class="fa fa-search fa-lg"></i>
+							</span>
+						</div>
+					</div><!-- .form-group -->
+				</div><!-- .table-header-left -->
+			</div><!-- .table-header -->
+			
+			<table class="table table-striped table-bordered table-hover">
+				<thead>
+					<tr>
+						<th class="text-center" style="width: 3%;">
+							&nbsp;
+						</th>
+						<th class="text-center" style="width: 5%;">
+							<input type="checkbox" />
+						</th>
+						<th style="width: 32%;">
+							Coluna 1
+						</th>
+						<th style="width: 30%;">
+							Coluna 2
+						</th>
+						<th style="width: 30%;">
+							Coluna 3
+						</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<td colspan="5">
+							<div class="row">
+								<div class="col-sm-4 table-showing">
+									Mostrando 1 até 10 de (3) Exemplos.
+								</div><!-- .col -->
+								<div class="col-sm-8 text-right">
+									<ul class="pagination" style="margin: 0;">
+										<li><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
+										<li><a href="#">1</a></li>
+										<li><a href="#">2</a></li>
+										<li><a href="#">3</a></li>
+										<li><a href="#">4</a></li>
+										<li><a href="#">5</a></li>
+										<li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+									</ul>
+								</div><!-- .col -->
+							</div><!-- .row -->
+						</td>
+					</tr>
+				</tfoot>
+				<tbody>
+					<tr ng-show="$showAdvancedFilters">
+						<td class="text-center">&nbsp;</td>
+						<td class="text-center">&nbsp;</td>
+						<td>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<input type="text" class="form-control" />
+									</div>
+								</div><!-- .col -->
+							</div><!-- .row -->
+						</td>
+						<td>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<select class="form-control">
+											<option value="">--Selecione</option>
+											<option value="">Opção 1</option>
+										</select>
+									</div>
+								</div><!-- .col -->
+							</div><!-- .row -->
+						</td>
+						<td>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<div class="input-group">
+											<input type="text" class="col-sm-6 form-control date-picker input-mask-date" on-enter-blur on-blur-change="filterResult()" ng-model="filterCriteria.filters[3].value" placeholder="Data inicio" />
+											<span class="input-group-addon">
+												<i class="fa fa-calendar bigger-110"></i>
+											</span>
+										</div><!-- .input-group -->
+									</div><!-- .form-group -->
+								</div><!-- .col -->
+								
+								<div class="col-sm-6">
+									<div class="form-group">
+										<div class="input-group">
+											<input type="text" class="col-sm-6 form-control date-picker input-mask-date" on-enter-blur on-blur-change="filterResult()" ng-model="filterCriteria.filters[4].value" placeholder="Data fim" />
+											<span class="input-group-addon">
+												<i class="fa fa-calendar bigger-110"></i>
+											</span>
+										</div><!-- .input-group -->
+									</div><!-- .form-group -->
+								</div><!-- .col -->
+							</div><!-- .row -->
+						</td>
+					</tr>
+					
+					<tr ng-repeat-start="item in items">
+						<td class="text-center">
+							<a href="#void" class="grey" ng-click="showItem(item);">
+								<i class="fa fa-lg" ng-class="{'fa-caret-right': !item.$show, 'fa-caret-down': item.$show}"></i>
+							</a>
+						</td>
+						<td class="text-center">
+							<input type="checkbox" />
+						</td>
+						<td>
+							{{item.column1}}
+						</td>
+						<td>
+							{{item.column2}}
+						</td>
+						<td>
+							{{item.column3}}
+						</td>
+					</tr>
+					
+					<tr ng-show="item.$show" class="table-subgrid" ng-repeat-end>
+						<td colspan="5">
+							<div class="media media-card">
+								<div class="media-left">
+									<img data-src="holder.js/64x64" alt="64x64" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGRlZnMvPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjE0LjUiIHk9IjMyIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9nPjwvc3ZnPg==" data-holder-rendered="true" style="width: 64px; height: 64px;">
+								</div><!-- .media-left -->
+								
+								<div class="media-body">
+									<h4 class="media-heading">Item</h4>
+									<ul>
+										<li><strong>Campo 1:</strong> {{item.column1}}</li>
+										<li><strong>Campo 2:</strong> {{item.column2}}</li>
+									</ul>
+								</div><!-- .media-body -->
+							</div><!-- .media -->
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div><!-- .table-container -->
+
+<script type="text/ng-template" id="modalAddFilter.html">
+    <div class="modal-header">
+	    <button class="btn btn-clear">
+	        <i class="fa fa-save green"></i>
+	        Salvar
+	    </button>
+	    
+	    <button ng-click="$dismiss('cancel')" class="btn btn-clear">
+	        <i class="fa fa-times red"></i>
+	        Cancelar
+	    </button>
+	</div><!-- .modal-header -->
+	
+	<div class="modal-body">
+	    <h2 class="title-modal blue">Adicionar novo</h2>
+	    
+	    <div class="row">
+	        <div class="col-sm-12">
+	            <div class="form-group">
+	                <input type="text" class="form-control" placeholder="Informe o nome" />
+	                <p class="help-block small red">*Nome é um campo obrigatório</p>
+	            </div><!-- .form-group -->
+	        </div><!-- .col -->
+	    </div><!-- .row -->
+	</div><!-- .modal-body -->
+</script>
+
+	</form>
+</div><!-- .page-content -->

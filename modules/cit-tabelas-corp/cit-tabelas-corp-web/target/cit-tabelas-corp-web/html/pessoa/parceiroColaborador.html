@@ -1,0 +1,28 @@
+
+<div class="row" ng-show="apresentarColaborador">
+
+	<div class="col-sm-6">
+		<auto-complete ng-find="findFuncao(value)" ng-item="item.nome" ng-id="colaborador.funcao" ng-model="colaborador.funcao" ng-disabled="isVisualizar" ng-label="LABEL.FUNCAO"
+			  ng-obrigatorio="{{apresentarColaborador}}" form="formPessoa"/>
+	</div>
+
+	<div class='col-sm-6'>
+		<label-input ng-id="colaborador.matricula" name="colaborador.matricula" ng-typ="text" ng-label="LABEL.MATRICULA" ng-model="colaborador.matricula"
+			ng-disabled="isVisualizar"  ng-obrigatorio='apresentarColaborador'  form="formPessoa" ng-custom-maxlength='255'/>
+	</div>
+	
+</div>
+
+<div class="row" ng-show="apresentarColaborador">
+	<div class='col-sm-6'>
+		<label-input ng-id="colaborador.cargo" name="colaborador.cargo" ng-typ="text" ng-label="LABEL.CARGO" ng-model="colaborador.cargo"
+			ng-disabled="isVisualizar"   ng-obrigatorio='apresentarColaborador' form="formPessoa" ng-custom-maxlength='255'/>
+	</div>
+	
+	<div class="col-sm-6">
+		<auto-complete ng-find="findEstrutura(value)" ng-item="item.nome + ' - ' + item.classificacao" ng-id="colaborador.estruturaOrganizacional" ng-model="colaborador.estruturaOrganizacional" ng-disabled="isVisualizar" ng-label="LABEL.ESTRUTURA_ORGANIZACIONAL"
+			  ng-obrigatorio="{{apresentarColaborador}}" form="formPessoa"/>
+	</div>
+	
+</div>
+	

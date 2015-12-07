@@ -1,0 +1,98 @@
+
+<div class="page-content clearfix">
+	<form name="formPainel" novalidate ng-controller="PainelController" id="painelEdit" autocomplete="off">
+		<div class="bar-buttons-action fixed">
+			<div class="row">
+				<div class="col-sm-8 text-left">
+					<button class="btn btn-clear" ng-click="saveOrUpdate()" ng-show="!isVisualizar" type="button">
+						<i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+					</button>
+
+					<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-show="isVisualizar" type="button" ng-click="abilitarEditar()">
+						<i class="fa fa-pencil blue"></i>
+						<translate>LABEL.EDITAR</translate>
+					</button>
+
+					<button title="{{$translate.instant('LABEL.LIMPAR')}}" alt="{{$translate.instant('LABEL.LIMPAR')}}" ng-show="painel.id === undefined" class="btn btn-clear" ng-click="resetForm()" type="button">
+						<i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+					</button>
+
+					<button class="btn btn-clear" ng-disabled="!painel.id || isVisualizar" ng-click="apresentarDialogConfirmacaoRemocao();" type="button">
+						<i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+					</button>
+
+					<bloquear-desbloquear ng-model="painel" ng-repository="PainelRepository" ng-edit="isVisualizar"></bloquear-desbloquear>
+
+					<button class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); fetchResult()" type="button">
+						<i class="fa fa-search"></i>  <translate>LABEL.PESQUISAR</translate>
+					</button>
+
+				</div>
+
+				<div class="col-sm-4 text-right">
+					<favorito/>
+
+					<help-button workspace="workspace" />
+				</div>
+			</div>
+		</div>
+		
+		<breadcrumb ng-workspace="workspace"></breadcrumb>
+	
+		<p>
+			<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+		</p>
+		 <fieldset>
+        	<legend><translate>LABEL.DADO_PAINEL</translate></legend>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<label-input ng-id="painel.nome" name="painel.nome" ng-typ="text" ng-obrigatorio='true' ng-custom-maxlength='255' form="formPainel" ng-label="LABEL.NOME" ng-model="painel.nome" ng-disabled="isVisualizar" />
+				</div>
+
+				<div class="col-sm-6">
+					 <label-input-identifier ng-id="painel.identificacao" name="painel.identificacao" ng-typ="text" ng-obrigatorio='true' ng-custom-maxlength='255' form="formPainel" ng-label="LABEL.IDENTIFICACAO" ng-model="painel.identificacao" ng-disabled="isVisualizar" ></label-input-identifier>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-2">
+						<label-input-checkbox ng-label="LABEL.ATIVO" name="painel.ativo" ng-model="painel.ativo" ng-disabled="isVisualizar"></label-input-checkbox>
+				</div>
+
+				<div class="col-sm-2">
+						<label-input-checkbox ng-label="LABEL.RECEBE_ATUALIZACAO" name="painel.recebeAtualizacao" ng-model="painel.recebeAtualizacao" ng-disabled="isVisualizar"></label-input-checkbox>
+				</div>
+			</div>
+			
+			
+		<fieldset class="margin-bottom">
+			<legend><translate>LABEL.PERMISSOES</translate></legend>
+			
+				<div class="row">
+					<div class="col-sm-4">
+						<pick-list list-source="painelGrupoSource" list-target="painel.painelGrupos" ng-disabled="isVisualizar" source-label="{{$translate.instant('LABEL.GRUPOS')}}" target-label="{{$translate.instant('LABEL.GRUPOS_SELECIONADOS')}}" item-label="grupo.nome"></pick-list>
+					</div>
+					
+					<div class="col-sm-4">
+						<pick-list list-source="painelPrivilegioSource" list-target="painel.painelPrivilegios" ng-disabled="isVisualizar" source-label="{{$translate.instant('LABEL.PERMISSOES')}}" target-label="{{$translate.instant('LABEL.PERMISSOES_SELECIONADAS')}}" item-label="privilegio.nome"></pick-list>
+					</div>
+
+					<div class="col-sm-4">
+						<pick-list list-source="painelModuloSource" list-target="painel.painelModulos" ng-disabled="isVisualizar" source-label="{{$translate.instant('LABEL.MODULOS')}}" target-label="{{$translate.instant('LABEL.MODULOS_SELECIONADOS')}}" item-label="modulo.nome"></pick-list>
+					</div>
+				</div>
+		</fieldset>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="painel-edit-dashboard">
+						<div class="painel-edit-dashboard-content">
+							<adf-dashboard name="adfPainel" collapsible="false" structure="4-8" adf-model="model" />
+						</div><!-- .painel-edit-dashboard-content -->
+					</div><!-- .painel-edit-dashboard -->
+				</div><!-- .col -->
+			</div><!-- .row -->
+		</fieldset>
+	</form>
+</div>

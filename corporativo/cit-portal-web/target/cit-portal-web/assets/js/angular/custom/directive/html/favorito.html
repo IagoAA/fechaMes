@@ -1,0 +1,4 @@
+<button title="{{$parent.$translate.instant('LABEL.FAVORITAR_ESTA_PAGINA')}}" alt="{{$parent.$translate.instant('LABEL.FAVORITAR_ESTA_PAGINA')}}" class="btn btn-clear" type="button" ng-click="$parent.addFavorito($parent.workspace);">
+	<i class="fa" ng-class="{'black fa-star-o':!$parent.workspace.favorito, 'fa-star yellow':$parent.workspace.favorito}"></i>
+	<translate>LABEL.FAVORITAR</translate>
+</button>

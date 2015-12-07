@@ -1,0 +1,93 @@
+/* tree */
+.uiTree {
+	list-style-type: none;
+	margin-left: 10px;
+	padding-bottom: 5px;
+}
+
+.uiTree li a.icon {
+	display: inline-block;
+	width: 24px;
+	cursor: pointer;
+	vertical-align: text-bottom;
+}
+
+.uiTree li .node:hover>a.addChild {
+	display: inline-block;
+}
+
+.uiTree li a.addChild {
+	margin-left: 10px;
+	cursor: pointer;
+	display: none;
+	vertical-align: text-bottom;
+}
+
+.uiTree li .node {
+	padding-bottom: 5px;
+}
+
+.uiTree span.nodeLabel {
+	cursor: pointer;
+}
+
+.uiTree span.nodeLabel.selected {
+	border: 1px solid #aaa;
+	background-color: #ddd;
+	padding: 1px 3px;
+}
+
+#veil {
+	background: -moz-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,0.1)), color-stop(100%,rgba(0,0,0,0.5)));
+	background: -webkit-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.5) 100%);
+	background: -o-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.5) 100%);
+	background: -ms-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.5) 100%);
+	background: radial-gradient(ellipse at center,  rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.5) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a000000', endColorstr='#80000000',GradientType=1 );
+	cursor: not-allowed;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10000;
+}
+#feed-loading-container {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10002;
+}
+#feed-loading {
+	background: rgba(0, 0, 0, 0.7);
+	box-shadow: 2px 8px 10px rgba(0, 0, 0, 0.6);
+		-moz-box-shadow: 2px 8px 10px rgba(0, 0, 0, 0.6);
+		-ms-box-shadow: 2px 8px 10px rgba(0, 0, 0, 0.6);
+		-o-box-shadow: 2px 8px 10px rgba(0, 0, 0, 0.6);
+		-webkit-box-shadow: 2px 8px 10px rgba(0, 0, 0, 0.6);
+	color: #fff;
+	cursor: not-allowed;
+	display: table;
+	min-height: 95px;
+	margin: -95px auto 0;
+	padding: 35px 40px;
+	position: relative;
+	text-align: left;
+	top: 50%;
+	max-width: 500px;
+	z-index: 10002;
+}
+
+#feed-loading-image {
+	float: left;
+	margin: 0 20px 0 0;
+}
+
+#feed-loading-text {
+	font-size: 1.4em;
+	overflow: hidden;
+	margin: 3px 0 0;
+}

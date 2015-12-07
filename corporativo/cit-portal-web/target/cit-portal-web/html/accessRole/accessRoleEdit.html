@@ -1,0 +1,76 @@
+<div id="editAccessRole" class="page-content clearfix" ng-controller="AccessRoleController">
+    <div class="bar-buttons-action fixed">
+        <div class="row">
+            <div class="col-sm-8 text-left">
+                <button class="btn btn-clear" ng-click="saveOrUpdate()" ng-disabled="accessRoleForm.$invalid" ng-show="edit">
+                    <i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+                </button>
+
+                <button class="btn btn-clear" ng-click="limparAccessRole()" ng-show="accessRole.id === undefined">
+                    <i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+                </button>
+
+                <button class="btn btn-clear" ng-show="!edit" ng-click="edit = true">
+                    <i class="fa fa-pencil blue"></i>
+                    <translate>LABEL.EDITAR</translate>
+                </button>
+
+                <button class="btn btn-clear" ng-click="remove(accessRole);" ng-show="accessRole.id !== undefined">
+                    <i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+                </button>
+
+				<bloquear-desbloquear ng-model="accessRole" ng-repository="AccessRoleRepository" ng-edit="edit"></bloquear-desbloquear>
+
+                <button class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); atualizaPaginaPesquisa();">
+                    <i class="fa fa-search"></i> <translate>LABEL.PESQUISAR</translate>
+                </button>
+            </div><!-- .col -->
+
+            <div class="col-sm-4 text-right">
+                <button class="btn btn-clear">
+                    <i class="fa fa-star-o"></i>
+                    Favoritar
+                </button>
+
+                <button class="btn btn-clear">
+                    <i class="fa fa-life-ring"></i>
+                    Ajuda
+                </button>
+            </div><!-- .col -->
+        </div><!-- .row -->
+    </div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+    <form name="accessRoleForm" autocomplete="off">
+        <p>
+            <small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+        </p>
+
+        <fieldset>
+            <legend>Dados de accessRole</legend>
+
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label-input ng-type="text" ng-id="accessRole.url" ng-label="LABEL.URL" ng-obrigatorio="true" ng-disabled="!edit" ng-model="accessRole.url" form="accessRoleForm"/>
+                </div><!-- .col-sm-2 -->
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label-input ng-type="text" ng-id="accessRole.roles" ng-label="LABEL.ROLES" ng-obrigatorio="true" ng-disabled="!edit" ng-model="accessRole.roles" form="accessRoleForm"/>
+                </div><!-- .col-sm-2 -->
+            </div>
+
+
+        </fieldset>
+    </form>
+</div><!-- .page-content -->
+
+
+
+
+
+
+

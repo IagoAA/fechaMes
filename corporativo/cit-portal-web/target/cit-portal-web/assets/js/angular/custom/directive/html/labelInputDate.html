@@ -1,0 +1,14 @@
+<div class="form-group" ng-class="{'has-error': form[id].$error.required && (!form[id].$pristine || form.$submitted) || dataInvalida}">
+	<label for="{{id}}" class="control-label" ng-if='labelRender'><translate>{{label}}</translate> <span class="red" ng-show="obrigatorio">*</span> <i ng-if='obrigatorio' ng-show='(form[id].$error.required && (!form[id].$pristine || form.$submitted)) || dataInvalida' class='fa fa-warning red' tooltip='{{labelAlertTooltipCopy}}' tooltip-placement='top'></i> <i ng-if='labelInfoTooltipRender' class='fa fa-info-circle blue' tooltip='{{labelInfoTooltip}}' tooltip-placement='top'></i> <i ng-if='labelQuestionTooltipRender' class='fa fa-question-circle green' tooltip='{{labelQuestionTooltip}}' tooltip-placement='top'></i></label>
+	<div class="input-group">
+		<input class="form-control" id="{{id}}" name="{{id}}" type="text" ng-model="model" ng-change="eventoChange();" ng-keyup="formataDataAoDigitar($event);" ng-keydown="formataDataAoDigitar($event);" ng-disabled="disabled" ng-required="obrigatorio" datepicker-popup="{{$datePickerFormat}}"
+			datepicker-options="$datePickerOptions" is-open="$opened" min-date="minDate" max-date="maxDate" close-text="{{LABEL.FECHAR | translate}}" ng-focus="$datePickerOpen($event);" ng-click="$datePickerOpen($event);" ng-blur="formataDataAoDesfocar($event)" 
+			/>
+		<a class="input-group-addon" ng-class="{'hover-directive' : (($hover == true) && !disabled)}" ng-mouseover="$hover = true" ng-mouseout="$hover = false" ng-disabled="disabled" ng-click="$datePickerOpen($event);">
+			 <i class="fa fa-calendar bigger-110 black"></i>
+		</a> 
+		<a class="input-group-addon" ng-class="{'hover-directive' : (($hover1 == true) && !disabled)}" ng-mouseover="$hover1 = true" ng-mouseout="$hover1 = false" ng-disabled="disabled" ng-click="$limparModel()">
+			<i class="fa fa-eraser bigger-110 black"></i>
+		</a>
+	</div>
+</div>

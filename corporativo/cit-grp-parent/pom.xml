@@ -1,0 +1,844 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--     ******************************************************************************************************************** -->
+<!--     *												LICENCA*GPLv2														* -->
+<!--     * Copyright [2011,2012,2013,2014,2015] da CentralIT Tecnologia da Informação Ltda (www.centralit.com.br)          	* -->
+<!--     *                                                                                                                 	* -->
+<!--     * Este arquivo é parte do programa/software: Citsmart (www.citsmart.com.br)                                       	* -->
+<!--     *                                                                                                                 	* -->
+<!--     * O Citsmart é um software livre; você pode redistribui-lo e/ou modificá-lo dentro dos termos da Licença          	* -->
+<!--     * Pública Geral GNU como publicada pela Fundação do Software Livre (FSF); na versão 2 da Licença.                	* -->
+<!--     *                                                                                                                 	* -->
+<!--     * Este programa/software é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA; sem uma         	* -->
+<!--     * garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral     	* -->
+<!--     * GNU/GPL em português para maiores detalhes.                                                                     	* -->
+<!--     *                                                                                                                 	* -->
+<!--     * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título 'LICENCA.txt', junto com este     	* -->
+<!--     * programa/software, se não, acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br	* -->
+<!--     * ou escreva para a Fundação do Software Livre (FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301,USA 	* -->
+<!--     ******************************************************************************************************************** -->
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>br.com.centralit</groupId>
+	<artifactId>citsmart-grp-parent</artifactId>
+	<version>0.0.6-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>cit-grp-parent</name>
+
+	<description>
+		Este projeto é exclusivamente para armazenar configurações comuns entre os dois principais repositórios de projetos da suite
+		citsmart-grp. Configurações como: plugins de construção e testes, profiles de construção, respectivamente. E propriedades comuns
+		a ambos repositórios. Este parent conhece apenas o modulo citsmart-corporativo. Entretanto os modulos citsmart-corporativo e
+		citsmart-grp-modules conhecem seu parent.
+	</description>
+
+	<organization>
+		<name>Central IT</name>
+		<url>http://www.centralit.com.br</url>
+	</organization>
+
+	<inceptionYear>2014</inceptionYear>
+
+	<licenses>
+		<license>
+			<name>Copyright ${project.organization.name}</name>
+			<url>LICENSE.txt</url>
+			<distribution>manual</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>ally.barra</id>
+			<name>Ally Barra</name>
+			<email>ally.barra@centralit.com.br</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>ciro.anacleto</id>
+			<name>Ciro Anacleto</name>
+			<email>ciro.junior@centralit.com.br</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>geovane.filho</id>
+			<name>Geovane Filho</name>
+			<email>geovane.filho@centralit.com.br</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>gilberto.nery</id>
+			<name>Gilberto Nery</name>
+			<email>betinhoneres2@gmail.com</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>haline.moreira</id>
+			<name>Haline Moreira</name>
+			<email>haline.moreira@centralit.com.br</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>helyer.mesquita</id>
+			<name>Helyer Mesquita</name>
+			<email>helyer.mesquita@centralit.com.br</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>iago.almeida</id>
+			<name>Iago Almeida</name>
+			<email>iago.almeida@centralit.com.br</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>juliana.barbosa</id>
+			<name>Juliana Barbosa</name>
+			<email>juliana.barbosa@centralit.com.br</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>renato.jesus</id>
+			<name>Renato Jesus</name>
+			<email>renato.jesus@centralit.com.br</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>rogerio.cassimiro</id>
+			<name>Rogerio Cassimiro</name>
+			<email>rogerio.cassimiro@centralit.com.br</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>rogerio.costa</id>
+			<name>Rogerio Costa</name>
+			<email>rogerio.costa@centralit.com.br</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>thiago.borges</id>
+			<name>Thiago Borges</name>
+			<email>thiago.borges@centralit.com.br</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>wilker.machado</id>
+			<name>Wilker Machado</name>
+			<email>wilker.machado@centralit.com.br</email>
+			<organization>${project.organization.name}</organization>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+	      <id>gilberto.ney</id>
+	      <name>Gilberto Nery</name>
+	      <email>betinhoneres2@gmail.com</email>
+	      <organization>Central IT</organization>
+	      <timezone>-3</timezone>
+	    </developer>
+		<developer>
+	      <id>vinicius.deoliveira</id>
+	      <name>Vinicius de Oliveira</name>
+	      <email>oliveiraviinicius@gmail.com</email>
+	      <organization>Central IT</organization>
+	      <timezone>-3</timezone>
+	    </developer>
+	</developers>
+
+	<distributionManagement>
+		<repository>
+			<id>Artifactory Central IT</id>
+			<name>${releaseRepoName}</name>
+			<url>${releaseRepoUrl}</url>
+		</repository>
+		<snapshotRepository>
+			<id>Artifactory Central IT</id>
+			<name>${snapshotRepoName}</name>
+			<url>${snapshotRepoUrl}</url>
+			<uniqueVersion>true</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<!-- Garante que todos desenvolvedores usem a mesma versao minima -->
+	<prerequisites>
+		<maven>3.2.1</maven>
+	</prerequisites>
+
+	<properties>
+		<!-- BEGIN: Configuration properties -->
+
+		<java.version>1.7</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+		<build.timestamp>${maven.build.timestamp}</build.timestamp>
+
+		<!-- Sonar server Properties -->
+		<sonar.host.url>http://localhost:9000/</sonar.host.url>
+		<sonar.jdbc.url>jdbc:postgresql://localhost:5432/sonar</sonar.jdbc.url>
+		<sonar.jdbc.username>postgres</sonar.jdbc.username>
+		<sonar.jdbc.password>postgres</sonar.jdbc.password>
+
+		<!-- Tests properties -->
+		<skip.all.tests>true</skip.all.tests>
+		<skip.integration.tests>${skip.all.tests}</skip.integration.tests>
+		<skip.unit.tests>${skip.all.tests}</skip.unit.tests>
+
+		<findbugs.config.path>${project.parent.parent.basedir}/filterfile.xml</findbugs.config.path>
+		<license.config.path>${project.basedir}/src/licensing</license.config.path>
+
+		<!-- ESI Configuration -->
+		<esi.web.url>http://localhost:8080/cit-esi-web</esi.web.url>
+		<broker.url>tcp://localhost:61616</broker.url>
+		<esi.input.queue>esi.input.queue</esi.input.queue>
+		<esi.output.queue>esi.output.queue</esi.output.queue>
+		<!-- END: Configuration properties -->
+
+		<!-- BEGIN: Versions properties -->
+		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
+		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+		<maven-jar-plugin.version>2.4</maven-jar-plugin.version>
+		<maven-war-plugin.version>2.3</maven-war-plugin.version>
+		<maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+		<maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
+		<jacoco-maven-plugin.version>0.7.0.201403182114</jacoco-maven-plugin.version>
+		<maven-surefire-plugin.version>2.18</maven-surefire-plugin.version>
+		<maven-failsafe-plugin.version>2.12.4</maven-failsafe-plugin.version>
+		<maven-site-plugin.version>3.3</maven-site-plugin.version>
+		<versions-maven-plugin.version>2.0</versions-maven-plugin.version>
+		<maven-license-plugin.version>1.9.0</maven-license-plugin.version>
+		<findbugs-maven-plugin.version>3.0.0</findbugs-maven-plugin.version>
+		<!-- END: Versions properties -->
+
+		<!-- BEGIN: Plugin phases -->
+		<findbugs-maven-plugin.phase>none</findbugs-maven-plugin.phase>
+		<maven-license-plugin.phase>none</maven-license-plugin.phase>
+		<native2ascii-maven-plugin.phase>none</native2ascii-maven-plugin.phase>
+		<maven-antrun-plugin.phase>none</maven-antrun-plugin.phase>
+		<minify-maven-plugin.phase>none</minify-maven-plugin.phase>
+		<!-- END: Plugin phases -->
+
+	</properties>
+
+	<build>
+		<plugins>
+			<!-- Manipula a copia de resources de codigo fonte e de testes -->
+			<!-- http://maven.apache.org/plugins/maven-resources-plugin/ -->
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${maven-resources-plugin.version}</version>
+			</plugin>
+			<!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<!-- http://maven.apache.org/plugins/maven-jar-plugin/ -->
+			<!-- Fornece a capacidade de construir e assinar jars -->
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven-jar-plugin.version}</version>
+			</plugin>
+			<!-- http://maven.apache.org/plugins/maven-war-plugin/ -->
+			<!-- Responsavel por coletar artefatos de dependencias, classes e recursos
+				e empacotar em um arquivo de aplicacao web WAR -->
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven-war-plugin.version}</version>
+			</plugin>
+			<!-- http://maven.apache.org/plugins/maven-source-plugin/ -->
+			<!-- Responsavel por criar um jar com os fontes da aplicacao -->
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven-source-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- https://maven.apache.org/plugins/maven-dependency-plugin -->
+			<!-- Forca a resolucao das dependencias sempre do repositorio remoto para evitar problemas de versoes desatualizadas -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${maven-dependency-plugin.version}</version>
+			</plugin>
+			<!-- http://www.eclemma.org/jacoco/trunk/doc/maven.html -->
+			<!-- Fornece um agente em tempo de execucao para os testes -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<executions>
+					<!-- Preparar a cobertura dos testes unitarios -->
+					<execution>
+						<id>pre-unit-test</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+							<propertyName>UTestArgLine</propertyName>
+						</configuration>
+					</execution>
+					<!-- Reportanto a cobertura dos testes unitarios -->
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+							<outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+						</configuration>
+					</execution>
+					<!-- Preparar a cobertura dos testes de integracao -->
+					<execution>
+						<id>pre-integration-test</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
+							<propertyName>ITestArgLine</propertyName>
+						</configuration>
+					</execution>
+					<!-- Reportando a cobertura dos testes de integracao -->
+					<execution>
+						<id>post-integration-test</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
+							<outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- http://maven.apache.org/plugins/maven-surefire-plugin/ -->
+			<!-- O Surefire Plugin eh usado durante a fase de teste do ciclo de vida
+				do build para executar os testes unitarios da aplicacao. Ele tambem gera
+				relatorios no final da execucao nos formatos txt e xml -->
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surefire-plugin.version}</version>
+				<configuration>
+					<skipTests>${skip.all.tests}</skipTests>
+					<!-- Exclui testes de integracao quando testes unitarios estiverem executando -->
+					<excludes>
+						<exclude>**/IT*.java</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>unit-tests</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<argLine>${UTestArgLine} -Xmx512m -XX:MaxPermSize=256m</argLine>
+							<skip>${skip.unit.tests}</skip>
+							<excludes>
+								<exclude>**/*ITCase.java</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- http://maven.apache.org/surefire/maven-failsafe-plugin/ -->
+			<!-- O plugin FailSafe eh responsavel por executar os testes de integracao
+				independentemente dos testes unitarios -->
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${maven-failsafe-plugin.version}</version>
+				<configuration>
+					<skipTests>${skip.all.tests}</skipTests>
+					<skipIT>${skip.integration.tests}</skipIT>
+					<includes>
+						<include>**/*ITCase.java</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>integration-tests</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+						<configuration>
+							<argLine>${UTestArgLine} -Xmx512m -XX:MaxPermSize=256m</argLine>
+							<skip>${skip.integration.tests}</skip>
+							<!-- Exclui testes unitarios quando testes de integracao estiverem
+								executando -->
+							<excludes>
+								<exclude>**/*Test.java</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- http://mojo.codehaus.org/native2ascii-maven-plugin/index.html -->
+			<!-- Substitui os caracteres especiais para escapes unicode -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>native2ascii-maven-plugin</artifactId>
+				<version>1.0-beta-1</version>
+				<executions>
+					<execution>
+						<id>native2ascii-utf8</id>
+						<phase>${native2ascii-maven-plugin.phase}</phase>
+						<goals>
+							<goal>native2ascii</goal>
+						</goals>
+						<configuration>
+							<encoding>UTF8</encoding>
+							<src>${basedir}/src/main/webapp</src>
+							<dest>${project.build.outputDirectory}</dest>
+							<includes>
+								<include>**/*.js</include>
+							</includes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- http://mojo.codehaus.org/versions-maven-plugin/ -->
+			<!-- Gerencia as versoes de artefatos de projetos maven -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>${versions-maven-plugin.version}</version>
+			</plugin>
+			<!-- http://mojo.codehaus.org/findbugs-maven-plugin-3.0.0/ -->
+			<!-- Plugin responsavel pela analise de qualidade de codigo buscando possiveis bugs desenvolvidos -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<configuration>
+					<effort>Max</effort>
+					<threshold>Low</threshold>
+					<xmlOutput>true</xmlOutput>
+					<failOnError>false</failOnError>
+					<findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
+					<includeFilterFile>${findbugs.config.path}</includeFilterFile>
+				</configuration>
+				<executions>
+					<execution>
+						<id>analyze-compile</id>
+						<phase>${findbugs-maven-plugin.phase}</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- http://code.mycila.com/license-maven-plugin/ -->
+			<!-- Plugin que gera cabecalhos de licenca em todos os artefatos que sao definidos em sua configuracao -->
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>${maven-license-plugin.version}</version>
+				<configuration>
+					<header>${license.config.path}/header.txt</header>
+					<skipExistingHeaders>true</skipExistingHeaders>
+					<strictCheck>true</strictCheck>
+					<headerDefinitions>
+						<headerDefinition>${license.config.path}/header-definitions.xml</headerDefinition>
+					</headerDefinitions>
+					<aggregate>true</aggregate>
+					<includes>
+						<include>**/*.xml</include>
+						<include>**/*.java</include>
+						<include>**/custom/*.js</include>
+						<include>**/custom/**/*.js</include>
+						<include>**/pom.xml</include>
+					</includes>
+					<excludes>
+						<exclude>LICENSE</exclude>
+						<exclude>COPYING</exclude>
+						<exclude>COPYING-EN</exclude>
+						<exclude>**/*min.js</exclude>
+						<exclude>**/*.license</exclude>
+						<exclude>**/*.txt</exclude>
+						<exclude>**/*.log</exclude>
+						<exclude>**/*.crt</exclude>
+						<exclude>**/*.crl</exclude>
+						<exclude>**/*.key</exclude>
+						<exclude>**/*.jks</exclude>
+						<exclude>**/*.jrxml</exclude>
+						<exclude>**/*.properties</exclude>
+						<exclude>src/licensing/**</exclude>
+						<exclude>**/*.keystore</exclude>
+						<exclude>**/*.conf</exclude>
+						<exclude>**/*.doc</exclude>
+						<exclude>**/*.jmx</exclude>
+						<exclude>**/*.editorconfig</exclude>
+						<exclude>**/*.gitignore</exclude>
+						<exclude>**/*.json</exclude>
+						<exclude>**/*.md</exclude>
+						<exclude>**/jboss-deployment-structure.xml</exclude>
+						<exclude>**/jboss-web.xml</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>${maven-license-plugin.phase}</phase>
+						<goals>
+							<!-- Cria cabecalhos se nao existirem -->
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- https://maven.apache.org/plugins/maven-antrun-plugin/ -->
+			<!-- Fornece uma serie de tarefas automatizadas para o build. Aqui eh usado apenas para gerar um arquivo .tag com a versao do build -->
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>${maven-antrun-plugin.phase}</phase>
+						<configuration>
+							<tasks>
+								<delete>
+									<fileset dir="${project.basedir}/src/main/resources/" includes="*.tag" />
+								</delete>
+								<touch file="${project.basedir}/src/main/resources/${project.version}-build-${build.timestamp}.tag" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- https://maven.apache.org/plugins/minify-maven-plugin/ -->
+			<!-- Fornece uma serie de tarefas automatizadas para o build. Aqui eh usado apenas para gerar um arquivo .tag com a versao do build -->
+			<plugin>
+				<groupId>com.samaxes.maven</groupId>
+				<artifactId>minify-maven-plugin</artifactId>
+				<version>1.7.4</version>
+				<executions>
+					<execution>
+						<id>min-js</id>
+						<phase>${minify-maven-plugin.phase}</phase>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+						<configuration>
+							<charset>UTF-8</charset>
+							<!-- Nao cria um unico arquivo com todos os arquivos. -->
+							<skipMerge>true</skipMerge>
+							<jsEngine>CLOSURE</jsEngine>
+							<closureLanguage>ECMASCRIPT5</closureLanguage>
+							<closureAngularPass>true</closureAngularPass>
+							<!-- Diretorio dos arquivos .js que sao lidos -->
+							<jsSourceDir>assets/js/angular/custom</jsSourceDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>**/*.js</jsSourceInclude>
+							</jsSourceIncludes>
+							<jsSourceExcludes>
+								<jsSourceExclude>**/*.min.js</jsSourceExclude>
+							</jsSourceExcludes>
+
+							<webappTargetDir>${project.build.directory}/${project.build.finalName}</webappTargetDir>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>${findbugs-maven-plugin.version}</version>
+				</plugin>
+				<!-- Armazenas as informacoes de configuracao do Eclipse m2e somente.
+					Nao influencia no build do maven. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.jacoco</groupId>
+										<artifactId>jacoco-maven-plugin</artifactId>
+										<versionRange>[0.6.4.201312101107,)</versionRange>
+										<goals>
+											<goal>prepare-agent</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>findbugs-maven-plugin</artifactId>
+										<versionRange>[3.0.0,)</versionRange>
+										<goals>
+											<goal>check</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.mycila.maven-license-plugin</groupId>
+										<artifactId>maven-license-plugin</artifactId>
+										<versionRange>[1.0.0,)</versionRange>
+										<goals>
+											<goal>format</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+<!-- Importante conhecer apenas o repositorio corporativo para que o artefato citsmart-grp-parent seja implantado no artifactory,
+			assim o repositorio citsmart-grp-modules ira reconhece-lo durante a construcao evitando problemas com caminhos relativos -->
+	<modules>
+		<module>../</module>
+	</modules>
+
+	<profiles>
+		<profile>
+			<build>
+				<plugins>
+					<!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
+					<!-- Compilador padrao do maven -->
+					<plugin>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>3.0</version>
+						<configuration>
+							<source>${java.version}</source>
+							<target>${java.version}</target>
+							<debug>false</debug>
+							<optimize>true</optimize>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<!-- Profile de desenvolvimento ativado por padrao -->
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<environment>dev</environment>
+				<log4j.level>debug</log4j.level>
+
+				<!-- hibernate properties -->
+				<hibernate.show.sql>false</hibernate.show.sql>
+				<hibernate.format.sql>true</hibernate.format.sql>
+				<hibernate.generate.ddl>true</hibernate.generate.ddl>
+				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+				<hibernate.use_sql_comments>false</hibernate.use_sql_comments>
+				<hibernate.generate_statistics>true</hibernate.generate_statistics>
+				<hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
+				<!-- <hibernate.dialect>org.hibernate.dialect.SQLServerDialect</hibernate.dialect> -->
+				<!-- <hibernate.dialect>org.hibernate.dialect.OracleDialect</hibernate.dialect> -->
+				<!-- <hibernate.dialect>org.hibernate.dialect.DB2Dialect</hibernate.dialect> -->
+				<!-- <hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect> -->
+
+				<!-- Metodos de autenticacao -->
+				<authentication.method>spring-security-cas.xml</authentication.method>
+				<authentication.url>https://localhost:8443</authentication.url>
+				<!-- <authentication.method>spring-security-db.xml</authentication.method> -->
+				<!-- <authentication.method>spring-security-openam.xml</authentication.method> -->
+
+			</properties>
+		</profile>
+
+		<!-- Profile de homologacao normalmente utilizando em builds enviados para a equipe de testes -->
+		<profile>
+			<id>homo</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<environment>prod</environment>
+				<log4j.level>warn</log4j.level>
+
+				<!-- hibernate properties -->
+				<hibernate.show.sql>false</hibernate.show.sql>
+				<hibernate.format.sql>true</hibernate.format.sql>
+				<hibernate.generate.ddl>true</hibernate.generate.ddl>
+				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+				<hibernate.use_sql_comments>false</hibernate.use_sql_comments>
+				<hibernate.generate_statistics>false</hibernate.generate_statistics>
+				<hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
+				<!-- <hibernate.dialect>org.hibernate.dialect.SQLServerDialect</hibernate.dialect> -->
+				<!-- <hibernate.dialect>org.hibernate.dialect.OracleDialect</hibernate.dialect> -->
+				<!-- <hibernate.dialect>org.hibernate.dialect.DB2Dialect</hibernate.dialect> -->
+				<!-- <hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect> -->
+
+				<!-- Metodos de autenticacao -->
+				<authentication.method>spring-security-cas.xml</authentication.method>
+				<authentication.url>https://citsmart-grpdesen.centralit.com.br</authentication.url>
+				<!-- <authentication.method>spring-security-db.xml</authentication.method> -->
+				<!-- <authentication.method>spring-security-openam.xml</authentication.method> -->
+			</properties>
+		</profile>
+
+		<!-- Profile de producao utilizado para gerar build para deploy no ambiente	do cliente -->
+		<profile>
+			<id>prod</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<environment>prod</environment>
+				<log4j.level>warn</log4j.level>
+
+				<!-- hibernate properties -->
+				<hibernate.show.sql>false</hibernate.show.sql>
+				<hibernate.format.sql>true</hibernate.format.sql>
+				<hibernate.generate.ddl>true</hibernate.generate.ddl>
+				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+				<hibernate.use_sql_comments>false</hibernate.use_sql_comments>
+				<hibernate.generate_statistics>false</hibernate.generate_statistics>
+				<hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
+				<!-- <hibernate.dialect>org.hibernate.dialect.SQLServerDialect</hibernate.dialect> -->
+				<!-- <hibernate.dialect>org.hibernate.dialect.OracleDialect</hibernate.dialect> -->
+				<!-- <hibernate.dialect>org.hibernate.dialect.DB2Dialect</hibernate.dialect> -->
+				<!-- <hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect> -->
+
+				<!-- Metodos de autenticacao -->
+				<authentication.method>spring-security-cas.xml</authentication.method>
+				<authentication.url>https://citsmart-grp.centralit.com.br</authentication.url>
+				<!-- <authentication.method>spring-security-db.xml</authentication.method> -->
+				<!-- <authentication.method>spring-security-openam.xml</authentication.method> -->
+
+			</properties>
+		</profile>
+
+		<!-- Profile de producao utilizado para gerar build para deploy no ambiente	de testes. -->
+		<profile>
+			<id>test</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<environment>prod</environment>
+				<log4j.level>warn</log4j.level>
+
+				<!-- hibernate properties -->
+				<hibernate.show.sql>false</hibernate.show.sql>
+				<hibernate.format.sql>false</hibernate.format.sql>
+				<hibernate.generate.ddl>true</hibernate.generate.ddl>
+				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+				<hibernate.use_sql_comments>false</hibernate.use_sql_comments>
+				<hibernate.generate_statistics>false</hibernate.generate_statistics>
+				<hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
+				<!-- <hibernate.dialect>org.hibernate.dialect.SQLServerDialect</hibernate.dialect> -->
+				<!-- <hibernate.dialect>org.hibernate.dialect.OracleDialect</hibernate.dialect> -->
+				<!-- <hibernate.dialect>org.hibernate.dialect.DB2Dialect</hibernate.dialect> -->
+				<!-- <hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect> -->
+
+				<!-- Metodos de autenticacao -->
+				<authentication.method>spring-security-cas.xml</authentication.method>
+				<authentication.url>https://10.2.1.46:9447</authentication.url>
+				<!-- <authentication.method>spring-security-db.xml</authentication.method> -->
+				<!-- <authentication.method>spring-security-openam.xml</authentication.method> -->
+
+			</properties>
+		</profile>
+	</profiles>
+
+	<reporting>
+		<plugins>
+			<!-- https://maven.apache.org/plugins/maven-javadoc-plugin/ -->
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<configuration>
+					<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+					<docletArtifact>
+						<groupId>org.umlgraph</groupId>
+						<artifactId>umlgraph</artifactId>
+						<version>5.6.6</version>
+					</docletArtifact>
+					<additionalparam>
+						-views -inferrel -inferdep -attributes -visibility
+						-types -enumerations
+						-enumconstants -hide java.* -collpackages
+						java.util.*
+					</additionalparam>
+					<useStandardDocletOptions>true</useStandardDocletOptions>
+				</configuration>
+			</plugin>
+			<!-- http://maven.apache.org/surefire/maven-surefire-report-plugin/ -->
+			<plugin>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.18</version>
+			</plugin>
+			<!-- Usado para gerar informacoes sobre os projetos. -->
+			<!-- https://maven.apache.org/plugins/maven-project-info-reports-plugin/ -->
+			<plugin>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.7</version>
+			</plugin>
+			<!-- https://gleclaire.github.io/findbugs-maven-plugin/index.html -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<effort>Max</effort>
+					<threshold>Low</threshold>
+					<xmlOutput>true</xmlOutput>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.0.201403182114</version>
+			</plugin>
+		</plugins>
+	</reporting>
+</project>

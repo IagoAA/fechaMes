@@ -1,0 +1,160 @@
+<div class="page-content clearfix" id="menu-controller" ng-controller="MenuController">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+				&nbsp;
+			</div><!-- .col -->
+
+			<div class="col-sm-4 text-right">
+				<favorito/>
+
+				<help-button workspace="workspace" />
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+		
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+	
+	<div class="row noselect">
+		<div class="menu-manager-container col-sm-12">
+			<div class="menu-manager-items-modules-container" ui-tree="treeOptions" data-max-depth="1">
+				<ol class="menu-manager-items-modules-list menu-manager-list" ui-tree-nodes="" ng-model="menuList" ng-class="{'no-selected': !menuSelected.id}" data-type="menuMain">
+					<li class="menu-manager-items-modules-item menu-manager-item" ng-class="{'selected': menu.id === menuSelected.id}" ng-repeat="menu in menuList" ui-tree-node>
+						<div class="menu-manager-item-handle" ui-tree-handle>
+							<i class="fa fa-arrows-v bigger-125"></i>
+						</div><!-- .menu-manager-item-handle -->
+						
+						<div class="menu-manager-item-content clearfix" style="color: {{menu.cor}}" class="clearfix">
+							<span ng-bind="menu.ordem = $index" ng-show="false"></span>
+							<span class="menu-manager-item-title">
+								<i class="fa {{menu.icone}}"></i> {{ menu.nome }}
+							</span><!-- .menu-manager-item-title -->
+							
+							<div class="menu-manager-item-buttons pull-right action-buttons">
+								<a ng-if="!menu.ativo" href="#void" class="yellow-dark cursor-default" title="{{$translate.instant('LABEL.MENU_DESATIVADO')}}">
+									<i class="fa fa-exclamation-triangle bigger-130"></i>
+								</a>
+								
+								<a href="#void" class="green" title="{{$translate.instant('LABEL.ADICIONAR_UM_NOVO_MENU_PRINCIPAl')}}" ng-click="addMenuModule();">
+									<i class="fa fa-plus-circle bigger-130"></i>
+								</a>
+								
+								<a href="#void" class="blue" title="{{$translate.instant('LABEL.ARQUIVOS_MENU')}}" ng-click="menuFileList(menu);">
+									<i class="fa fa-file-code-o bigger-130"></i>
+								</a>
+								
+								<a href="#void" class="blue" title="{{$translate.instant('LABEL.EDITAR_MENU')}}" ng-click="editMenuModule(menu);">
+									<i class="fa fa-pencil bigger-130"></i>
+								</a>
+								
+								<a href="#void" class="red" title="{{$translate.instant('LABEL.REMOVER_MENU')}}" ng-click="removeMenu(menu);">
+									<i class="fa fa-trash-o bigger-130"></i>
+								</a>
+								
+								<a href="#void" class="grey" title="{{$translate.instant('LABEL.VISUALIZAR_SUBMENUS')}}" ng-click="selectMenu(menu);">
+									&nbsp;&nbsp;<i class="fa fa-chevron-right bigger-130"></i>
+								</a>
+							</div><!-- .menu-manager-item-buttons -->
+						</div><!-- .menu-manager-item-content -->
+					</li><!-- .menu-manager-item -->
+				</ol><!-- .menu-manager-list -->
+				
+				<div class="menu-manager-submenu-container" ng-show="menuSelected.id">
+					<h2 class="menu-manager-title">{{menuSelected.nome}}</h2>
+					
+					<div ng-if="menuSelected.submenu.length <= 0">
+						<div class="margin-bottom">
+							<a href="#void" ng-click="addMenuTitle();">
+								<i class="fa fa-plus-circle green"></i> <translate>LABEL.ADICIONAR_SUBMENU</translate>
+							</a>
+						</div>
+						
+						<div class="alert alert-warning">
+							<translate>MSG.NAO_HA_SUBMENU_LIGADO_A_ESTE_MENU_CLIQUE_NO_ICONE_PARA_ADICIONAR</translate>
+						</div>
+					</div>
+					
+					<div ng-repeat="submenu in menuSelected.submenuList" class="menu-manager-submenu-column clearfix">
+						<ol class="menu-manager-submenu-title-list menu-manager-list clearfix" ui-tree-nodes data-max-depth="1" ng-model="submenu" data-type="submenuTitle" data-column="{{$index}}">
+							<li class="menu-manager-submenu-title-item menu-manager-item" ui-tree-node ng-repeat="menuTitle in submenu" ng-class="{'menu-manager-submenu-title-item-empty': !menuTitle.id}">
+								<div class="menu-manager-item-handle" ui-tree-handle ng-show="menuTitle.id">
+									<i class="fa fa-arrows-v bigger-125"></i>
+								</div><!-- .menu-manager-item-handle -->
+								
+								<div class="menu-manager-item-content" style="color: {{menuTitle.cor}}" ng-show="menuTitle.id">
+									<span ng-bind="menuTitle.ordem = getOrdemSubmenuTitle($parent.$index, $index, submenu); menuTitle.coluna = $parent.$index;" ng-show="false"></span>
+									<span class="menu-manager-item-title text-bold">
+										{{ menuTitle.nome }}
+									</span><!-- .menu-manager-item-title -->
+									
+									<span class="menu-manager-item-buttons action-buttons">
+										<a ng-if="!menuTitle.ativo" href="#void" class="yellow-dark cursor-default" title="{{$translate.instant('LABEL.MENU_DESATIVADO')}}">
+											<i class="fa fa-exclamation-triangle bigger-130"></i>
+										</a>
+										
+										<a href="#void" class="green" title="{{$translate.instant('LABEL.ADICIONAR_UM_NOVO_MENU_PRINCIPAl')}}" ng-click="addMenuTitle();">
+											<i class="fa fa-plus-circle bigger-130"></i>
+										</a>
+										
+										<a href="#void" class="blue" title="{{$translate.instant('LABEL.ARQUIVOS_MENU')}}" ng-click="menuFileList(menuTitle);">
+											<i class="fa fa-file-code-o bigger-130"></i>
+										</a>
+										
+										<a href="#void" class="blue" title="{{$translate.instant('LABEL.EDITAR_MENU')}}" ng-click="editMenuTitle(menuTitle);">
+											<i class="fa fa-pencil bigger-130"></i>
+										</a>
+										
+										<a href="#void" class="red" title="{{$translate.instant('LABEL.REMOVER_MENU')}}" ng-click="removeMenu(menuTitle);">
+											<i class="fa fa-trash-o bigger-130"></i>
+										</a>
+										
+										<a ng-if="menuTitle.ativo" href="#void" class="grey" title="{{$translate.instant('LABEL.ADICIONAR_SUBMENU')}}" ng-click="addMenuLink(menuTitle);">
+											<i class="fa fa-chevron-down bigger-130"></i>
+										</a>
+									</span><!-- .menu-manager-item-buttons -->
+								</div><!-- .menu-manager-item-content -->
+								
+								<ol class="menu-manager-submenu-link-list menu-manager-list" ui-tree-nodes ng-model="menuTitle.submenu" data-max-depth="1" data-type="submenuLink">
+									<li class="menu-manager-submenu-link-item menu-manager-item" ui-tree-node ng-repeat="menuLink in menuTitle.submenu" ui-tree-handle>
+										<div class="menu-manager-item-handle" class="">
+											<i class="fa fa-arrows-v bigger-125"></i>
+										</div>
+										
+										<div class="menu-manager-item-content" style="color: {{menuLink.cor}}">
+											<span ng-bind="menuLink.ordem = $index" ng-show="false"></span>
+											<span class="menu-manager-item-title">
+												{{menuLink.nome}}
+											</span><!-- .menu-manager-item-title -->
+											
+											<span class="menu-manager-item-buttons action-buttons" data-nodrag>
+												<a ng-if="!menuLink.ativo" href="#void" class="yellow-dark cursor-default" title="{{$translate.instant('LABEL.MENU_DESATIVADO')}}">
+													<i class="fa fa-exclamation-triangle bigger-130"></i>
+												</a>
+												
+												<a href="#void" class="green" title="{{$translate.instant('LABEL.ADICIONAR_UM_NOVO_MENU_PRINCIPAl')}}" ng-click="addMenuLink(menuTitle);">
+													<i class="fa fa-plus-circle bigger-130"></i>
+												</a>
+												
+												<a href="#void" class="blue" title="{{$translate.instant('LABEL.ARQUIVOS_MENU')}}" ng-click="menuFileList(menuLink);">
+													<i class="fa fa-file-code-o bigger-130"></i>
+												</a>
+												
+												<a href="#void" class="blue" title="{{$translate.instant('LABEL.EDITAR_MENU')}}" ng-click="editMenuLink(menuLink, menuTitle);">
+													<i class="fa fa-pencil bigger-130"></i>
+												</a>
+												
+												<a href="#void" class="red" title="{{$translate.instant('LABEL.REMOVER_MENU')}}" ng-click="removeMenu(menuLink);">
+													<i class="fa fa-trash-o bigger-130"></i>
+												</a>
+											</span><!-- .menu-manager-item-buttons -->
+										</div><!-- .menu-manager-item-content -->
+									</li><!-- .menu-manager-item -->
+								</ol><!-- .menu-manager-list -->
+							</li><!-- .menu-manager-item -->
+						</ol><!-- .menu-manager-list -->
+					</div><!-- .menu-manager-submenu-column -->
+				</div><!-- .menu-manager-submenu-container -->
+			</div><!-- .menu-manager-items-modules-container -->
+		</div><!-- .col -->
+	</div><!-- .row -->
+</div><!-- .page-content -->

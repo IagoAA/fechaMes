@@ -1,0 +1,74 @@
+<!--
+
+    *********************************************************************************************************************
+    *												LICENCA*GPLv2														*
+    * Copyright [2011,2012,2013,2014,2015] da CentralIT Tecnologia da Informação Ltda (www.centralit.com.br)          	*
+    *                                                                                                                 	*
+    * Este arquivo é parte do programa/software: Citsmart (www.citsmart.com.br)                                       	*
+    *                                                                                                                 	*
+    * O Citsmart é um software livre; você pode redistribui-lo e/ou modificá-lo dentro dos termos da Licença          	*
+    * Pública Geral GNU como publicada pela Fundação do Software Livre (FSF); na versção 2 da Licença.                	*
+    *                                                                                                                 	*
+    * Este programa/software é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA; sem uma         	*
+    * garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral     	*
+    * GNU/GPL em português para maiores detalhes.                                                                     	*
+    *                                                                                                                 	*
+    * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título 'LICENCA.txt', junto com este     	*
+    * programa/software, se não, acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br	*
+    * ou escreva para a Fundação do Software Livre (FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301,USA 	*
+    *********************************************************************************************************************
+
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int-security="http://www.springframework.org/schema/integration/security"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-3.1.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.1.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util-3.1.xsd
+	http://www.springframework.org/schema/integration
+	http://www.springframework.org/schema/integration/spring-integration.xsd
+	http://www.springframework.org/schema/integration/security
+	http://www.springframework.org/schema/integration/security/spring-integration-security-3.1.xsd">
+
+	<bean id="citPortalDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:/env/jdbc/cit-portal" />
+	</bean>
+
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+		p:packagesToScan="br.com.centralit.framework.model, br.com.centralit.api.model"
+		p:dataSource-ref="citPortalDataSource"
+		p:jpaPropertyMap-ref="jpaPropertyMap"
+		p:jpaVendorAdapter-ref="jpaVendorAdapter" />
+
+	<bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+
+	<util:map id="jpaPropertyMap">
+		<entry key="generateDdl" value="${hibernate.generate.ddl}" />
+		<entry key="hibernate.hbm2ddl.auto" value="${hibernate.hbm2ddl.auto}" />
+		<entry key="hibernate.dialect" value="${hibernate.dialect}" />
+		<entry key="hibernate.format_sql" value="${hibernate.format.sql}" />
+	</util:map>
+
+	<import resource="webmvc-context.xml" />
+	<import resource="classpath*:spring/applicationContext-base.xml" />
+	<import resource="${authentication.method}" />
+
+</beans>

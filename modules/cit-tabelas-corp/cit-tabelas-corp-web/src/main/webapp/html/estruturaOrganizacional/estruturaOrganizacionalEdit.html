@@ -1,0 +1,228 @@
+<div class="page-content clearfix" id="editEstruturaOrganizacional" ng-controller="EstruturaOrganizacionalController" ng-init="init()" novalidate>
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-9 text-left">
+				<button title="{{$translate.instant('LABEL.SALVAR')}}" alt="{{$translate.instant('LABEL.SALVAR')}}" class="btn btn-clear" ng-click="saveOrUpdate()" ng-show="edit">
+					<i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.LIMPAR')}}" alt="{{$translate.instant('LABEL.LIMPAR')}}" class="btn btn-clear" ng-click="limpar();" ng-show="estruturaOrganizacional.id === undefined">
+					<i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-show="!(pgEdit || edit)" ng-click="edit = true; pgEdit = true;">
+					<i class="fa fa-pencil blue"></i>
+					<translate>LABEL.EDITAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-click="remove(estruturaOrganizacional);"
+					ng-show="estruturaOrganizacional.id !== undefined">
+					<i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+				</button>
+				
+				<bloquear-desbloquear ng-model="estruturaOrganizacional" ng-repository="EstruturaOrganizacionalRepository" ng-edit="edit"></bloquear-desbloquear>
+				
+				<button title="{{$translate.instant('LABEL.DEFINICOES_PATRIMONIO')}}" alt="{{$translate.instant('LABEL.DEFINICOES_PATRIMONIO')}}" class="btn btn-clear"
+						ng-show="estruturaOrganizacional.id && patrimonioAtivo" ng-click="abreModalPatrimonio();" type="button">
+					<i class="fa fa-cogs blue"></i> <translate>LABEL.DEFINICOES_PATRIMONIO</translate>
+				</button>
+				
+				<button title="{{$translate.instant('LABEL.DEFINICOES_ALMOXARIFADO')}}" alt="{{$translate.instant('LABEL.DEFINICOES_ALMOXARIFADO')}}"
+						class="btn btn-clear" ng-show="estruturaOrganizacional.id && almoxarifadoAtivo" ng-click="abreModalAlmoxarifado();" type="button">
+					<i class="fa fa-cogs blue"></i> <translate>LABEL.DEFINICOES_ALMOXARIFADO</translate>
+				</button>
+				
+				<button title="{{$translate.instant('LABEL.PESQUISAR')}}" alt="{{$translate.instant('LABEL.PESQUISAR')}}" class="btn btn-clear"
+						ng-click="$showPageSearchWorkspace(workspace); atualizaPaginaPesquisa();">
+					<i class="fa fa-search"></i> <translate>LABEL.PESQUISAR</translate>
+				</button>
+			</div><!-- .col -->
+
+			<div class="col-sm-3 text-right">
+				<favorito/>
+
+				<button title="{{$translate.instant('LABEL.AJUDA')}}" alt="{{$translate.instant('LABEL.AJUDA')}}" class="btn btn-clear" type="button">
+					<i class="fa fa-life-ring"></i>
+					<translate>LABEL.AJUDA</translate>
+				</button>
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+	<form name="estruturaOrganizacionalForm" novalidate autocomplete="off">
+		<!-- INICIO BLOCO DO FORMULARIO DE DADOS DE UMA ESTRUTURA ORGANIZACIONAL -->
+		<div id="containerEstruturaOrganizacional">
+			<p>
+				<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+			</p>
+	
+			<fieldset>
+				<div class="row">
+					<div class="col-sm-6">
+						<auto-complete ng-find="findEstruturaSuperior(value)" ng-acao-borracha="limparEstruturaOrganizacionalParent()"
+								ng-id="estruturaOrganizacionalParent" ng-disabled="!edit" ng-item="item.nome" ng-label="LABEL.ESTRUTURA_SUPERIOR"
+								ng-model="estruturaOrganizacional.estruturaOrganizacionalParent">
+						</auto-complete>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						<label-input ng-type="text" ng-id="estruturaOrganizacional.nome" form="estruturaOrganizacionalForm" ng-disabled="!edit" ng-label="LABEL.NOME"
+								ng-obrigatorio="true" ng-model="estruturaOrganizacional.nome" ng-custom-maxlength="255"/>
+					</div><!-- .col -->
+	
+					<div class="col-sm-2">
+						<label-input ng-type="text" ng-id="estruturaOrganizacional.sigla" form="estruturaOrganizacionalForm" ng-disabled="!edit" ng-label="LABEL.SIGLA"
+								ng-obrigatorio="true" ng-model="estruturaOrganizacional.sigla" ng-custom-maxlength="30"/>
+					</div><!-- .col -->
+	
+					<div class="col-sm-4">
+                    	<label-select ng-id="estruturaOrganizacional.dominioTipoEstruturaOrganizacional" ng-label="LABEL.TIPO_DE_ESTRUTURA_ORGANIZACIONAL"
+                    			ng-model="estruturaOrganizacional.dominioTipoEstruturaOrganizacional" form="estruturaOrganizacionalForm" ng-obrigatorio="true"
+                    			ng-disabled="!edit" ng-custom-options="dominio.originalElement as dominio.descricao for dominio" track-by="track by dominio.id"
+                    			ng-list="dominiosTipoEstruturaOrganizacional" />                    
+					</div><!-- .col -->
+				</div><!-- .row -->
+	
+				<div class="row">
+					<div class="col-sm-4">
+						<label-input ng-type="text" ng-id="estruturaOrganizacional.codigo" form="estruturaOrganizacionalForm" ng-disabled="true" ng-label="LABEL.CODIGO"
+								ng-obrigatorio="false" ng-model="estruturaOrganizacional.codigo" />
+					</div><!-- .col -->
+	
+					<div class="col-sm-8">
+						<label-input ng-type="text" ng-id="estruturaOrganizacional.classificacao" form="estruturaOrganizacionalForm" ng-disabled="!edit"
+								ng-label="LABEL.CLASSIFICACAO" ng-obrigatorio="true" ng-model="estruturaOrganizacional.classificacao" ng-custom-maxlength="100"/>
+					</div><!-- .col -->
+				</div><!-- .row -->
+	
+				<div class="row">
+					<div class="col-sm-4">
+						<label-input-data ng-id="estruturaOrganizacional.dataInicio" form="estruturaOrganizacionalForm" ng-label="LABEL.DATA_INICIO" ng-obrigatorio="true"
+								ng-disabled="!edit" ng-model="estruturaOrganizacional.dataInicio" />
+					</div><!-- .col -->
+	
+					<div class="col-sm-4">
+						<label-input-data ng-id="estruturaOrganizacional.dataFim" ng-label="LABEL.DATA_FIM" ng-obrigatorio="false" ng-disabled="!edit"
+								ng-model="estruturaOrganizacional.dataFim" />
+					</div><!-- .col -->
+					
+				</div><!-- .row -->
+	
+				<div class="row">
+					<div class="col-sm-12">
+						<auto-complete ng-find="findLocalizacao(value)" ng-acao-borracha="limparLocalizacao()" ng-set-result="setLocalizacao(item)" ng-item="item.nome"
+								ng-id="estruturaOrganizacional.localizacao" ng-label="LABEL.LOCALIZACAO" ng-model="estruturaOrganizacional.localizacao"
+								ng-disabled="!edit" ng-obrigatorio="true" form="estruturaOrganizacionalForm">
+						</auto-complete>
+					</div>
+				</div>
+	
+				<fieldset>
+					<legend>
+						<label> 
+							<translate>LABEL.RESPONSAVEIS</translate> 
+						</label>
+					</legend>
+	
+					<div class="row" ng-show="edit">
+						<div class="col-sm-6">
+							<auto-complete ng-find="findPessoaEstruturaOrganizacionalResponsavel(value)"
+									ng-acao-borracha="limparPessoaEstruturaOrganizacionalResponsavel()" ng-id="pessoaEstruturaOrganizacionalResponsavel"
+									ng-set-result="setPessoaEstruturaOrganizacionalResponsavel(item)" ng-disabled="!edit" ng-item="item.pessoa.nome"
+									ng-label="LABEL.RESPONSAVEL" ng-model="pessoaEstruturaOrganizacionalResponsavel" button-new-show="true"
+									button-new-tooltip="{{$translate.instant('LABEL.CLIQUE_ADD_RESPONSAVEL')}}" button-new-action="abrirNovoColaborador();">
+							</auto-complete>
+						</div>
+						
+						<div class="col-sm-6">
+							<label-input ng-type="text" ng-id="pessoaEstruturaOrganizacionalResponsavel.id" form="estruturaOrganizacionalForm" ng-disabled="true"
+											ng-label="LABEL.FUNCAO" ng-obrigatorio="false" ng-model="pessoaEstruturaOrganizacionalResponsavel.funcao.nome">
+							</label-input>
+						</div>
+	
+						<div class="col-sm-6">
+							<div class="form-group">
+								<button class="btn btn-success" ng-click="addPessoaEFuncaoEstruturaOrganizacionalResponsavel();" type="button">
+									<translate>LABEL.ADICIONAR_RESPONSAVEL</translate>
+								</button>
+							</div>
+						</div>
+					</div>
+	
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="panel panel-default">
+								<div class="panel-heading clearfix">
+									<button class="btn btn-clear" ng-click="removeEstruturaOrganizacionalResponsavel();" type="button" ng-show="edit">
+										<i class="fa fa-close red"></i>
+										<translate>LABEL.REMOVER</translate>
+									</button>
+								</div><!-- .panel-heading -->
+								<table class="table table-striped table-bordered table-hover">
+									<thead>
+										<tr>
+											<th style="width: 3%;" ng-show="edit">
+												&nbsp;
+											</th>
+											<th style="width: 15%;">
+												<translate>LABEL.ORDEM</translate>
+											</th>
+											<th style="width: 40%;">
+												<translate>LABEL.RESPONSAVEL</translate>
+											</th>
+											<th style="width: 30%;">
+												<translate>LABEL.FUNCAO</translate>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="estruturaOrganizacionalResponsavel in estruturaOrganizacional.estruturasOrganizacionalResponsaveis">
+											<td class="text-center" ng-show="edit">
+												<input type="radio" ng-click="checkResponsavel(estruturaOrganizacionalResponsavel, $index);"
+														ng-checked="estruturaOrganizacionalResponsavel.$checked" />
+											</td>
+											<td>
+												{{ estruturaOrganizacionalResponsavel.ordem = $index + 1; estruturaOrganizacionalResponsavel.ordem }}
+												<a href="#void" ng-show="edit">
+													<i class="fa fa-angle-up fa-lg" ng-click="moveToUp(estruturaOrganizacionalResponsavel, $index);"></i>
+												</a>
+												<a href="#void" ng-show="edit">
+													<i class="fa fa-angle-down fa-lg" ng-click="moveToDown(estruturaOrganizacionalResponsavel, $index);"></i>
+												</a>
+											</td>
+											<td>
+												{{ estruturaOrganizacionalResponsavel.responsavel.pessoa.nome }}
+											</td>
+											<td>
+												{{ estruturaOrganizacionalResponsavel.responsavel.funcao.nome }}
+											</td>
+										</tr>
+										<tr ng-hide="estruturaOrganizacional.estruturasOrganizacionalResponsaveis.length != 0">
+											<td colspan="4">
+												<translate>LABEL.TABELA_VAZIA</translate>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div><!-- row Responsaveis -->
+				</fieldset>
+			</fieldset>
+		</div><!-- #containerEstruturaOrganizacional -->
+		
+		<br />
+		<br />
+	</form>
+</div><!-- .page-content -->
+
+<script type="text/ng-template" id="modal-estruturaOrganizacionalAlmoxarifado.html">
+		<div ng-include src="'/cit-almoxarifado-web/html/estruturaOrganizacionalAlmoxarifado/estruturaOrganizacionalAlmoxarifadoModal.html'" />
+</script>
+
+<script type="text/ng-template" id="modal-estruturaOrganizacionalPatrimonio.html">
+		<div ng-include src="'/citgrp-patrimonio-web/html/estruturaOrganizacionalPatrimonio/estruturaOrganizacionalPatrimonioModal.html'" />
+</script>

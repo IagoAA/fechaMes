@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    *********************************************************************************************************************
+    *												LICENCA*GPLv2														*
+    * Copyright [2011,2012,2013,2014,2015] da CentralIT Tecnologia da Informação Ltda (www.centralit.com.br)          	*
+    *                                                                                                                 	*
+    * Este arquivo é parte do programa/software: Citsmart (www.citsmart.com.br)                                       	*
+    *                                                                                                                 	*
+    * O Citsmart é um software livre; você pode redistribui-lo e/ou modificá-lo dentro dos termos da Licença          	*
+    * Pública Geral GNU como publicada pela Fundação do Software Livre (FSF); na versção 2 da Licença.                	*
+    *                                                                                                                 	*
+    * Este programa/software é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA; sem uma         	*
+    * garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral     	*
+    * GNU/GPL em português para maiores detalhes.                                                                     	*
+    *                                                                                                                 	*
+    * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título 'LICENCA.txt', junto com este     	*
+    * programa/software, se não, acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br	*
+    * ou escreva para a Fundação do Software Livre (FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301,USA 	*
+    *********************************************************************************************************************
+
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <security:global-method-security secured-annotations="enabled" />
+
+    <security:http auto-config="true" use-expressions="true" access-denied-page="/login?error=403">
+
+		<security:form-login login-page="/login" authentication-failure-url="/login?error=403" default-target-url="/sso2" />
+
+		<security:intercept-url pattern="/login" access="permitAll" />
+		<security:intercept-url pattern="/resetPassword" access="permitAll" />
+		<security:intercept-url pattern="/recoveryPassword" access="permitAll" />
+		<security:intercept-url pattern="/requestRecoveryPassword" access="permitAll" />
+		<security:intercept-url pattern="/j_spring_security_check" access="permitAll" />
+		<security:intercept-url pattern="/modulos" access="permitAll" />
+		<security:intercept-url pattern="/assets/**" access="permitAll" />
+		<security:intercept-url pattern="/**" access="isFullyAuthenticated()" />
+
+
+        <security:logout invalidate-session="true" logout-success-url="/login" logout-url="/logout" />
+    </security:http>
+
+	<bean id="customAuthenticationProvider" class="br.com.centralit.api.security.CustomAuthenticationProvider" />
+
+	<security:authentication-manager>
+        <security:authentication-provider ref="customAuthenticationProvider" />
+    </security:authentication-manager>
+</beans>

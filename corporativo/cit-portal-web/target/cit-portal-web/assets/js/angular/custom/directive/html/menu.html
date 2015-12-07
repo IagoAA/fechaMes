@@ -1,0 +1,54 @@
+<div id="nav-main" ng-class="{'open': $navContainerShow}">
+	<div class="nav-backdrop" ng-click="openAndCloseNav();"></div>
+	
+	<a class="nav-button" href="javascript:;" ng-click="openAndCloseNav();">
+		<i class="fa fa-navicon"></i>
+		<span class="nav-button-text"><translate>LABEL.MENU</translate></span>
+	</a><!-- .nav-button -->
+
+	<nav class="nav-container" ng-class="{'level-search-results-actived': canSearchInServer()}">
+		<ul class="level-1">
+			<li class="nav-item-search">
+				<input type="text" ng-model="searchMenuInput" placeholder="{{$translate.instant('LABEL.NAO_ACHOU_PESQUISE')}}" ng-keyup="searchMenu($event);" />
+			</li>
+			
+			<li ng-repeat="menu in menuList">
+				<a href="javascript:;" style="color: {{menu.cor}}">
+					<i class="fa {{menu.icone}} nav-item-icon"></i> {{menu.nome}} <i class="fa fa-angle-right nav-item-has-children-icon" ng-if="hasChildren(menu);"></i> 
+				</a>
+				
+				<ul class="level-2" ng-if="hasChildren(menu);">
+					<li ng-repeat="submenu in menu.submenuList">
+						<div class="level-2-container" ng-repeat="menu in submenu" ng-if="hasChildren(menu);">
+							<a href="javascript:;" style="color: {{menu.cor}}" ng-if="menu.ativo">{{menu.nome}}</a> 
+							
+							<ul class="level-3" >
+								<li ng-repeat="menu in menu.submenu">
+									<a href="javascript:;" ng-click="openLink(menu);" style="color: {{menu.cor}}" ng-if="menu.ativo">
+										<i ng-class="{'fa fa-angle-right': !menu.businessProcess, 'fa fa-cogs nav-item-icon': menu.businessProcess}"></i> {{menu.nome}}
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul><!-- .level-2 -->
+			</li>
+		</ul><!-- .level-2 -->
+		
+		<ul class="level-search-results" ng-show="canSearchInServer()">
+			<li class="level-search-results-title">
+				<translate>LABEL.RESULTADO_DA_BUSCA</translate>
+			</li>
+
+			<li ng-repeat="menu in searchMenuItens">
+				<a href="javascript:;" ng-click="openLink(menu);" style="color: {{menu.cor}};" ng-if="menu.ativo">
+					<i class="fa fa-angle-right"></i> {{menu.pagina.nome}}
+				</a>
+			</li>
+
+			<li class="level-search-results-empty" ng-show="searchMenuIsEmpty();">
+				<translate>LABEL.SEM_RESULTADOS</translate>
+			</li>
+		</ul>
+	</nav><!-- .nav-container-wrap -->
+</div><!-- #nav-main -->

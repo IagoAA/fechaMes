@@ -1,0 +1,82 @@
+<div class='row'>
+	<div class="col-sm-12">
+		<div class='row' ng-show="showCampos">
+			<div class='col-sm-3'>
+				<div class='form-group' ng-class="{'has-error' : obrigatorios.dominioTelefone}">
+					<label><translate>LABEL.TIPO</translate><span class='red'>*</span></label>
+					<i ng-show='obrigatorios.dominioTelefone' class='fa fa-warning red'></i> 
+					<div class="input-group col-sm-12">
+						<select class="col-sm-12 form-control" ng-model="telefone.dominioTelefone" id="telefone.dominioTelefone" ng-options="tipoTelefone.originalElement as tipoTelefone.descricao for tipoTelefone in tiposTelefone"/>
+					</div>
+				</div>
+			</div>
+			<div class='col-sm-5'>
+				<div class='form-group' ng-class="{'has-error' : obrigatorios.numero}">
+					<label for='telefone.numero' class='control-label'><translate>LABEL.NUMERO</translate> <span class='red'>*</span></label> 
+					<i ng-show='obrigatorios.numero' class='fa fa-warning red'></i> 
+					<input type='text'  class='form-control' id='telefone.numero' ui-br-phone-number name='telefone.numero' ng-model='telefone.numero' ng-disabled='isVisualizar'/>
+				</div>
+			</div>
+		</div>
+	
+		<div class='row'>
+			<div class='col-sm-12'>
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix" ng-show="showCampos">
+						<button class="btn btn-clear" ng-click="adicionarTelefone()" type="button">
+							<i class="fa fa-plus-circle yellow-dark"></i>
+							<translate>LABEL.ADICIONAR</translate> </a>
+						</button>
+						
+						<button class="btn btn-clear" ng-click="openModal('modalConfirmRemocao.html')" ng-show="telefones.length > 0" type="button">
+							<i class="fa fa-close red"></i>
+							<translate>LABEL.REMOVER</translate> </a>
+						</button>
+					</div>
+					<table id="sample-table-2" class="table table-striped table-bordered table-hover" >
+						<thead>
+							<tr>
+								<th class="text-center" style="width: 5%;"></th>
+								<th class="text-center"><translate>LABEL.TIPO</translate></th>
+								<th class="text-center"><translate>LABEL.NUMERO</translate></th>
+							</tr>
+						</thead>
+						<tbody ng-show="telefones.length < 1">
+							<tr>
+								<td colspan="4" class="text-center"><translate>LABEL.TABLEVAZIA</translate></td>
+							</tr>
+						</tbody>
+						<tbody ng-show="telefones.length > 0">
+							<tr ng-repeat="telefone in telefones">
+								<td class="text-center">
+									<input type="radio" name="telefoneSelected" ng-checked="telefone.$checked" ng-click="checkTelefone(telefone)"/>
+								</td>
+								<td class="text-center">{{telefone.dominioTelefone.descricao}}</td>
+								<td class="text-center">{{telefone.numero | brPhoneNumber}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/ng-template" id="modalConfirmRemocao.html">
+	<div class="modal-header">
+	    <button class="btn btn-clear" ng-click="removerTelefone();">
+	        <i class="fa fa-check blue"></i>
+	        <translate>LABEL.CONFIRMAR</translate></th>
+	    </button>
+	    
+	    <button ng-click="$dismiss('cancel');" class="btn btn-clear">
+	        <i class="fa fa-times red"></i>
+	        <translate>LABEL.CANCELAR</translate></th>
+	    </button>
+	</div><!-- .modal-header -->
+	
+	<div class="modal-body">
+	    <h2 class="title-modal blue"> <translate>LABEL.CONFIRMACAO</translate></th></h2>
+	    <translate>MSG.CONFIRMA_EXCLUSAO</translate></th>
+	</div><!-- .modal-body -->
+</script>
+</div>
+

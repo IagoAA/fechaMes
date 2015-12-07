@@ -1,0 +1,13 @@
+ <div class="alert alert-info" ng-if="!config.content">
+ 	<translate>MSG.CLIQUE_NO_ICONE_PARA_CONFIGURAR_O_WIDGET</translate>
+ </div>
+ 
+<div class="row">
+	<div class="col-sm-12">
+		<span ng-if="carregando" class="red">&nbsp;&nbsp;&nbsp;&nbsp;<b><translate>MSG.AGUARDE</translate></b></span>
+		 
+		<div ng-if="!carregando && !completeTaskList" ng-include="'assets/js/angular/lib/dashboard-framework/widgets/bpe-task/shortTaskList.html'"></div>
+		<div ng-if="!carregando && completeTaskList" ng-include="'assets/js/angular/lib/dashboard-framework/widgets/bpe-task/completeTaskList.html'"></div>
+	</div>
+</div>
+ 

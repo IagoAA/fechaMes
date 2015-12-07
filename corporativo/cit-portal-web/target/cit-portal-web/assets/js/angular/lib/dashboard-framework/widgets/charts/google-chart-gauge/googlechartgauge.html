@@ -1,0 +1,13 @@
+<div>
+  <div class="alert alert-info" ng-if="!chart">
+    <translate>MSG.CLIQUE_NO_ICONE_PARA_CONFIGURAR_O_WIDGET</translate>
+  </div>
+  <div ng-if="chart">
+  	<div class="row">
+		<div class="col-xs-12">
+			<div google-chart chart="chart" style="height:130px; width:100%;"></div>
+	    	<!-- explicit close of tag seems to be necessary -->
+		</div>
+	</div>
+  </div>
+</div>

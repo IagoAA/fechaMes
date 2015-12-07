@@ -1,0 +1,98 @@
+<form name="$parent.menuForm" novalidate>
+	<div class="modal-header">
+	    <button class="btn btn-clear" ng-click="$parent.saveOrUpdateMenu();">
+	        <i class="fa fa-save green"></i>
+	        <translate>LABEL.SALVAR</translate>
+	    </button>
+	    
+	    <button ng-click="$dismiss('cancel');" class="btn btn-clear">
+	        <i class="fa fa-times red"></i>
+	        <translate>LABEL.FECHAR</translate>
+	    </button>
+	</div><!-- .modal-header -->
+	
+	<div class="modal-body">
+	    <h2 class="title-modal"><translate>LABEL.ADICIONAR_MENU</translate></h2>
+
+	    <div class="row">
+	        <div class="col-sm-12">
+	            <label-input ng-model="$parent.menu.nome" ng-label="LABEL.NOME" ng-id="menu.nome" ng-obrigatorio="true" form="$parent.menuForm"></label-input>
+	        </div><!-- .col -->
+	    </div><!-- .row -->
+	    
+	    <div class="row">
+	        <div class="col-sm-12">
+		          <label-input-identifier ng-id="menu.chave" ng-label="LABEL.CHAVE_UNICA" ng-model="$parent.menu.chave" ng-evento-blur="aplicarFiltroUpper()"
+                  	form="$parent.menuForm" ng-obrigatorio="true" ng-custom-maxlength="255" ng-disabled="$parent.menu.id"  />	        
+	        </div>
+	    </div>
+	    
+	    <div class="row">
+	        <div class="col-sm-12">
+	            <label-input ng-model="$parent.menu.pagina.nome" ng-label="LABEL.TITULO_PAGINA" ng-id="menu.pagina.nome" ng-obrigatorio="true" form="$parent.menuForm"></label-input>
+	        </div><!-- .col -->
+	    </div><!-- .row -->
+	    
+	    <div class="row">
+	        <div class="col-sm-12">
+	            <label-input ng-model="$parent.menu.pagina.pagina" ng-label="LABEL.LINK" ng-id="menu.pagina.pagina" ng-obrigatorio="true" form="$parent.menuForm"></label-input>
+	        </div><!-- .col -->
+	    </div><!-- .row -->
+	    
+	    <fieldset>
+			<legend><translate>LABEL.PRIVILEGIOS</translate></legend>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="control-label"><translate>LABEL.PERMISSOES</translate></label>
+						
+						<ui-select  id="privilegio" multiple ng-model="$parent.menu.menuPrivilegios" theme="select2" style="min-width: 100%;">
+							<ui-select-match placeholder="{{$translate.instant('LABEL.SELECIONE_PERMISSOES')}}">{{$item.privilegio.nome}}</ui-select-match>
+							<ui-select-choices  repeat="privilegio in privilegios">
+								{{privilegio.privilegio.nome}}
+							</ui-select-choices>
+						</ui-select>
+					</div><!-- .form-group  -->
+				</div>
+				
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="control-label"><translate>LABEL.GRUPOS</translate></label>
+						
+						<ui-select id="grupo" multiple ng-model="$parent.menu.menuGrupos" theme="select2" style="min-width: 100%;">
+							<ui-select-match placeholder="{{$translate.instant('LABEL.SELECIONE_GRUPOS')}}">{{$item.grupo.nome}}</ui-select-match>
+							<ui-select-choices refresh="searchByGrupo($select.search);" repeat="grupo in grupos">
+								{{grupo.grupo.nome}}
+							</ui-select-choices>
+						</ui-select>
+					</div><!-- .form-group  -->
+				</div>
+			</div><!-- .row -->
+			
+		</fieldset>
+	    
+	    <div class="row">
+	        <div class="col-sm-12">
+	            <div class="form-group">
+					<label class="control-label"><translate>LABEL.AJUDA_PAGINA</translate></label>
+					<div text-angular ng-model="$parent.menu.pagina.ajuda"></div>
+				</div><!-- .form-group -->
+	        </div><!-- .col -->
+	    </div><!-- .row -->
+	    
+		<div class="row">
+	        <div class="col-sm-12">
+				<label-input-radio
+					ng-label="LABEL.ATIVO"
+					list="$parent.radioValueList"
+					ng-model="$parent.menu.ativo"
+					value="value"
+					text="text"
+					ng-obrigatorio="true"
+					form="$parent.menuForm"
+					></label-input-radio>
+	        </div><!-- .col -->
+	    </div><!-- .row -->
+	</div><!-- .modal-body -->
+</form>

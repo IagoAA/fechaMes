@@ -1,0 +1,13 @@
+<div>
+	<h1 class="title">{{menuPagina.nome}}</h1>
+	
+	<ul class="breadcrumb">
+	    <li>
+	        <translate>LABEL.MENU</translate>
+	    </li>
+	
+	    <li ng-repeat="label in listaBreadcrumb track by $index">
+	        {{label}}
+	    </li>
+	</ul>
+</div>

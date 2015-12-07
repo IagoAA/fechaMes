@@ -1,0 +1,59 @@
+<fieldset>
+	<legend>
+		<translate>LABEL.OBSERVACOES</translate>
+	</legend>
+	<div class='row'>
+		<div class="col-sm-12">
+			<div class="row" ng-hide="!edit">
+				<div class="col-sm-4">
+					<label-input ng-type="text" ng-id="autor.username" ng-label="LABEL.AUTOR" ng-disabled="true" ng-model="autor.username" form="form"></label-input>
+				</div>
+				<div class="col-sm-4">
+					<label-input-data ng-id="dataAtual" ng-label="LABEL.DATA" ng-disabled="true" ng-model="dataAtual" form="form"></label-input-data>
+				</div>
+			</div>
+			<div class="row" ng-hide="!edit">
+				<div class="col-sm-12">
+					<label-text-area ng-id="observacao.descricao" rows="4" ng-label="LABEL.OBSERVACAO" ng-obrigatorio="false" ng-disabled="false" ng-model="observacao.descricao"
+						ng-custom-maxlength="500" form="form"></label-text-area>
+				</div>
+			</div>
+			<div class="row text-left" ng-hide="!edit">
+				<div class="col-sm-12">
+					<button class="btn btn-success" type="button" ng-click="adicionarObservacao()">
+						<i class="fa fa-plus-circle"></i>
+						<translate>LABEL.ADICIONAR</translate>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class="col-sm-12">
+			<div class="row">
+				<div class="col-sm-12">
+					<ul class="list-unstyled">
+						<li ng-repeat="observacao in observacoes">
+							<h3>{{ observacao.autor.username }}</h3>
+							<div class="well well-sm text-word-break">{{ observacao.descricao }}</div>
+							<div>
+								<b><translate>LABEL.DATA_ULTIMA_MODIFICACAO</translate></b>: {{ observacao.dataCriacao | date : 'dd/MM/yyyy HH:mm:ss'}}
+							</div>
+							<div class="text-right" ng-hide="!edit || observacao.autor.id !== usuarioLogado.id">
+								<button class="btn btn-info btn-danger" type="button" title="Excluir" ng-click="remove(observacao, $index)" ng-disabled='disabled'>
+									<i class="fa fa-close"></i>
+									<translate>LABEL.REMOVER</translate>
+								</button>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="well well-sm" ng-hide="observacoes.length > 0">
+		<translate>MSG.SEM_OBSERVACOES</translate>
+	</div>
+	
+</fieldset>

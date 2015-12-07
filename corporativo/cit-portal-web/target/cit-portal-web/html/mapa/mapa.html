@@ -1,0 +1,63 @@
+<!-- #section:basics/content.breadcrumbs -->
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try {
+			ace.settings.check('breadcrumbs', 'fixed')
+		} catch (e) {
+		}
+	</script>
+	<style type="text/css">
+		.angular-google-map-container { height: 400px; }
+	</style>
+
+	<ul class="breadcrumb">
+		<li><i class="ace-icon fa fa-home home-icon"></i> <a href="#">Home</a>
+		</li>
+		<li class="active">Mapa</li>
+	</ul>
+	<!-- /.breadcrumb -->
+
+	<!-- #section:basics/content.searchbox -->
+	<div class="nav-search" id="nav-search">
+		<form class="form-search">
+			<span class="input-icon"> <input type="text"
+				placeholder="Search ..." class="nav-search-input"
+				id="nav-search-input" autocomplete="off" /> <i
+				class="ace-icon fa fa-search nav-search-icon"></i>
+			</span>
+		</form>
+	</div>
+	<!-- /.nav-search -->
+
+	<!-- /section:basics/content.searchbox -->
+</div>
+
+<!-- /section:basics/content.breadcrumbs -->
+<div class="page-content" ng-controller="MapaController">
+	<div class='row'>
+		<div class='col-sm-9'>
+			<ui-gmap-google-map center='map.center' zoom='map.zoom' events="map.events">
+				<ui-gmap-markers models="randomMarkers" coords="'self'" icon="'icon'" click="'onClicked'"></ui-gmap-markers>
+			</ui-gmap-google-map>
+		</div>
+		<div class='col-sm-3' ng-show="mostraMarker">
+			<ul class="media-list list-unstyled list-map">
+				<li class="media" ng-repeat="item in itens">
+					<a class="media-left" href="#">
+						<img src="{{item.imagem}}" alt="" height="64" width="64">
+				   </a>
+				   <div class="media-body">
+				   		<h4 class="media-heading">{{item.material}}</h4>
+				   		<div><b>N. Patrimonial:</b>{{item.numeroPatrimonial}}</div>
+				   		<div><b>Situação:</b>{{item.situacaoFisica}}</div>
+				   		<div><b>Status:</b>{{item.status}}</div>
+				   		<div><b>Conta Contábil:</b>{{item.contaContabil}}</div>
+				   		<div><b>Valor Mercado:</b>{{item.valorMercado}}</div>
+				   </div>
+				</li>
+
+				</ul>
+		</div>
+	</div>
+
+</div>

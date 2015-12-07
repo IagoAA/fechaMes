@@ -1,0 +1,21 @@
+<div class="page-content" style="margin-top: -35px;" ng-controller="DashboardController">
+	<tabset class="tabbable tabbable-dashboard margin-top margin-bottom">
+        <tab>
+        	<tab-heading><translate>Exemplo 1</translate></tab-heading>
+
+        	<adf-dashboard name="{{name1}}" collapsible="{{collapsible}}" structure="4-8" adf-model="model1" />
+       	</tab>
+
+       	<tab class="mod-blue">
+        	<tab-heading><translate>Exemplo 2</translate></tab-heading>
+
+        	<adf-dashboard name="{{name2}}" collapsible="{{collapsible}}" structure="4-8" adf-model="model2" />
+       	</tab>
+
+       	<tab class="mod-green">
+        	<tab-heading><translate>Exemplo 3</translate></tab-heading>
+
+        	<adf-dashboard name="{{name3}}" collapsible="false" structure="4-8" adf-model="model3" />
+       	</tab>
+    </tabset>
+</div><!-- .page-content -->

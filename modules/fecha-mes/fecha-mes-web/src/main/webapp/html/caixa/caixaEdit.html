@@ -1,0 +1,78 @@
+<div id="editCaixa" class="page-content clearfix" ng-controller="CaixaController">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+				<button title="{{$translate.instant('LABEL.SALVAR')}}" alt="{{$translate.instant('LABEL.SALVAR')}}" class="btn btn-clear" ng-click="saveOrUpdate()" ng-show="edit">
+					<i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.LIMPAR')}}" alt="{{$translate.instant('LABEL.LIMPAR')}}" class="btn btn-clear" ng-click="resetForm();" ng-show="caixa.id === undefined">
+					<i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-show="!(pgEdit || edit)" ng-click="edit = true; pgEdit = true;">
+					<i class="fa fa-pencil blue"></i>
+					<translate>LABEL.EDITAR</translate>
+				</button>
+				<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-click="remove(caixa);" ng-show="caixa.id !== undefined">
+					<i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+				</button>
+				
+				<bloquear-desbloquear ng-model="caixa" ng-repository="CaixaRepository" ng-edit="edit"></bloquear-desbloquear>
+
+				<button title="{{$translate.instant('LABEL.PESQUISAR')}}" alt="{{$translate.instant('LABEL.PESQUISAR')}}" class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); atualizaPaginaPesquisa();">
+					<i class="fa fa-search"></i> <translate>LABEL.PESQUISAR</translate>
+				</button>
+			</div><!-- .col -->
+
+			<div class="col-sm-4 text-right">
+				<favorito/>
+
+				<help-button workspace="workspace" />
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+	<form name="caixaForm" novalidate autocomplete="off">
+		<p>
+			<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+		</p>
+
+		<fieldset>
+			<legend><translate>LABEL.DADOS_CAIXA</translate></legend>
+
+	        <div class="row">
+	     		<div class="col-md-2">
+					<label-input ng-type="text" ng-id="caixa.codigo" ng-label="LABEL.CODIGO" ng-disabled="true" ng-model="caixa.codigo" ng-custom-maxlength="30" form="caixaForm"/>
+	          	</div><!-- .col-sm-2 -->
+				<div class="col-sm-3">
+					<auto-complete ng-find="findLoja(value)" form="caixaForm" ng-obrigatorio="true" ng-label="LABEL.LOJA" ng-set-result="setLoja(item)" 
+						ng-acao-borracha="limparAutoCompleteLoja(item)" ng-item="item.codigoENome + ' - ' + item.classificacao" ng-id="caixa.loja" ng-model="caixa.loja" ng-disabled="!edit" />
+				</div><!-- .col-sm-3 -->
+	         	<div class="col-md-3">
+					<label-input ng-type="text" ng-id="caixa.nome" ng-label="LABEL.NOME" ng-obrigatorio="true" ng-disabled="!edit" ng-model="caixa.nome" ng-custom-maxlength="100" form="caixaForm"/>
+	          	</div><!-- .col-sm-3 -->
+				<div class='col-sm-4'>
+				 	<auto-complete ng-find="findLuck(value)" ng-acao-borracha="limparAutoCompleteLuck()" ng-item="item.nome" ng-id="caixa.luck" ng-label="LABEL.PAIS" ng-model="caixa.luck" ng-disabled="!edit" form="caixaForm" ng-obrigatorio="true"> </auto-complete>
+				</div><!-- .col-sm-4 -->
+			</div><!-- row -->
+			
+			<div class="row">
+				<div class="col-sm-2">
+					<div class="form-group">
+						<label-select ng-id="caixa.dominioTipoDocumentoCaixa.nome" ng-model="caixa.dominioTipoDocumentoCaixa.nome" ng-label="LABEL.TIPO_DOCUMENTO_CAIXA" ng-obrigatorio="true" ng-disabled="!edit"
+							form="caixaForm" ng-list="dominiosTipoDocumentoCaixa" ng-custom-options="dominioTipoDocumentoCaixa.codigo as dominioTipoDocumentoCaixa.descricao for dominioTipoDocumentoCaixa"></label-select>
+					</div><!-- .form-group  -->
+				</div><!-- .col -->
+				<div class="col-sm-2">
+					<div class="form-group">
+						<label-select ng-id="caixa.dominioTipoRecolhimentoCaixa.nome" ng-model="caixa.dominioTipoRecolhimentoCaixa.nome" ng-label="LABEL.TIPO_RECOLHIMENTO_CAIXA" ng-obrigatorio="true" ng-disabled="!edit"
+							form="caixaForm" ng-list="dominiosTipoRecolhimentoCaixa" ng-custom-options="dominioTipoRecolhimentoCaixa.codigo as dominioTipoRecolhimentoCaixa.descricao for dominioTipoRecolhimentoCaixa"></label-select>
+					</div><!-- .form-group  -->
+				</div><!-- .col -->
+			</div><!-- row -->
+		</fieldset>
+	</form>
+</div><!-- .page-content -->

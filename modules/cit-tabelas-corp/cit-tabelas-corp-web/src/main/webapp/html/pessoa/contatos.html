@@ -1,0 +1,123 @@
+<div class="widget-box margin-bottom">
+	<div class="widget-header">
+		<h2 class="widget-title">
+			<translate>LABEL.CONTATOS</translate>
+		</h2>
+		<div class="widget-toolbar">
+			<a href="#void" ng-click="widgetContatoIsCollapsed = !widgetContatoIsCollapsed">
+				<i class="fa" ng-class="{'fa-chevron-up': !widgetContatoIsCollapsed, 'fa-chevron-down': widgetContatoIsCollapsed}"></i>
+			</a>
+		</div>
+	</div>
+		
+	<div collapse="widgetContatoIsCollapsed" class="widget-body">
+		<div class="widget-main clearfix">
+			<div class="row" ng-show="!isVisualizar">
+				<div class='col-sm-3'>
+					<div class='form-group' ng-class="{'has-error' : nomeInvalid}">
+						<label for='contato.nome' class='control-label'><translate>LABEL.NOME</translate> <span class='red'>*</span></label> 
+						<i ng-show='nomeInvalid' class='fa fa-warning red'></i> 
+					 	<input type='text'  class='form-control' id='contato.nome' maxlength='255' name='contato.nome' ng-model='contato.nome' ng-disabled='isVisualizar' ng-required='obrigatorio' placeholder='Digite o Nome'/>
+					</div>
+				</div>
+				
+				<div class='col-sm-3'>
+					<div class='form-group'>
+						<label class='control-label'><translate>LABEL.TELEFONE</translate></label> 
+						<input type='text'  class='form-control' id='contato.telefone' ui-br-phone-number  name='contato.telefone' ng-model='contato.telefone' ng-disabled='isVisualizar'/>
+					</div>
+				</div>
+				
+				<div class='col-sm-3'>
+					<label-input ng-id="contato.cargo" name="contato.cargo" ng-type="text" ng-obrigatorio='false' ng-label="LABEL.CARGO" ng-model="contato.cargo" ng-disabled="isVisualizar" />
+				</div>
+				
+				<div class="checkbox">
+					<label> 
+						<input type="checkbox" id="contato.representanteLegal" ng-model="contato.representanteLegal" ng-disabled="isVisualizar"/> 
+						<translate>LABEL.REPRESENTANTE_LEGAL</translate>
+					</label>
+				</div>
+				
+			</div>
+			<div class="row" ng-show="!isVisualizar">
+				<div class='col-sm-4'>
+					<div class='form-group' ng-class="{'has-error': formPessoa['cpfContato'].$error.required && (!formPessoa['cpfContato'].$pristine)}">
+						<label class='control-label'>
+							<translate>LABEL.CPF</translate> 
+						</label>	
+						<i ng-show="formPessoa['cpfContato'].$error.required && (!formPessoa['cpfContato'].$pristine)" class='fa fa-warning red' tooltip="{{$translate.instant('LABEL.REPRESENTANTE_LEGAL') + ' ' +$translate.instant('LABEL.CAMPO_OBRIGATORIO')}}" tooltip-placement='top'></i>				
+						<input type="text" ng-cpf  class='form-control' id="cpfContato"  name="cpfContato" ng-model="contato.cpf" ui-mask="999.999.999-99" ng-disabled="isVisualizar" ng-required="contato.representanteLegal"/>
+						<p class='help-block small red' ng-show="contato.cpf && !formPessoa.cpfContato.$valid"><translate>LABEL.CPF</translate><translate>LABEL.INVALIDO</translate> </p>     				
+					</div>				
+				</div>
+				<div class='col-sm-4'>
+					<div class="form-group">
+						<label-input ng-id="contato.email" name="contato.email" ng-type="email" ng-obrigatorio='false' ng-label="LABEL.EMAIL" ng-model="contato.email" ng-disabled="isVisualizar"  ng-custom-maxlength='255' form="formPessoa"/>
+					</div>				
+				</div>				
+			</div>			
+			
+			</br>
+			<div class="row" >
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+						<div class="panel-heading clearfix"  ng-show="!isVisualizar">
+							<button class="btn btn-clear" ng-click="adicionarContato()" type="button">
+								<i class="fa fa-plus-circle yellow-dark"></i>
+								<translate>LABEL.ADICIONAR</translate> </a>
+							</button>
+							
+							<button class="btn btn-clear" ng-click="apresentarDialogConfirmacaoRemocaoContato()" ng-show="pessoa.contatos.length > 0" type="button">
+								<i class="fa fa-close red"></i>
+								<translate>LABEL.REMOVER</translate> </a>
+							</button>
+							
+							<span class="divider-vertical"></span>
+							
+						</div><!-- .panel-heading -->
+					
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th class="text-center" style="width: 5%;"></th>
+									<th class="text-center" style="width: 10%;"><translate>LABEL.NOME</translate></th>
+									<th class="text-center" style="width: 10%;"><translate>LABEL.TELEFONE</translate></th>
+									<th class="text-center" style="width: 10%;"><translate>LABEL.CARGO</translate></th>
+									<th class="text-center" style="width: 10%;"><translate>LABEL.CPF</translate></th>
+									<th class="text-center" style="width: 10%;"><translate>LABEL.EMAIL</translate></th>
+									<th class="text-center" style="width: 10%;"><translate>LABEL.REPRESENTANTE_LEGAL</translate></th>
+								</tr>
+							</thead>
+							
+							<tbody ng-show="pessoa.contatos.length < 1">
+								<tr>
+									<td colspan="5" class="text-center"><translate>LABEL.TABLEVAZIA</translate></td>
+								</tr>
+							</tbody>
+			
+							<tbody ng-show="pessoa.contatos.length > 0"> 
+								<tr ng-repeat="contato in pessoa.contatos">
+									<td class="text-center">
+										<input type="radio" name="contatoSelected" ng-checked="contato.$checked" ng-click="checkContato(contato)"/>
+									</td>
+									<td>{{contato.nome}}</td>
+									<td>{{contato.telefone| brPhoneNumber}}</td>
+									<td>{{contato.cargo}}</td>
+									<td>{{contato.cpf}}</td>
+									<td>{{contato.email}}</td>
+									<td class="text-center" ng-show="contato.representanteLegal">
+									<input type="checkbox" ng-model="contato.representanteLegal" />
+								</td>
+								</tr>
+							</tbody>
+			
+						</table>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

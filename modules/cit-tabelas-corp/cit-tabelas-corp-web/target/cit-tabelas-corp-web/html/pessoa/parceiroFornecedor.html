@@ -1,0 +1,127 @@
+<div class="row" ng-show="apresentarFornecedor">
+	<div class='col-sm-3'>
+		<div class="checkbox">
+			<label> <input type="checkbox" id="fornecedor.comprasEletronicas" ng-model="fornecedor.comprasEletronicas" ng-disabled="isVisualizar"/> <translate>LABEL.COMPRAS_ELETRONICAS</translate>
+			</label>
+		</div>
+	</div>
+	<div class='col-sm-3'>
+		<div class="checkbox">
+			<label> <input type="checkbox" id="fornecedor.estrangeiro" ng-model="fornecedor.estrangeiro" ng-disabled="isVisualizar"/> <translate>LABEL.ESTRANGEIRO</translate>
+			</label>
+		</div>
+	</div>
+</div>
+
+<fieldset ng-show="apresentarFornecedor">
+		
+	<div ng-show="admMateriaisAtivo">
+		<legend class="blue">
+			<translate>LABEL.RAMOS_ATIVIDADES</translate>
+		</legend>
+		<div class="row" ng-show="!isVisualizar">
+			<div class="col-sm-4">
+				<auto-complete ng-find="findGrupo(value)" form="formPessoa" ng-obrigatorio="false" ng-label="LABEL.GRUPO" ng-item="item.descricao"	ng-id="fornecedorRamoAtividade.grupoFederalSupply" ng-model="fornecedorRamoAtividade.grupoFederalSupply" ng-disabled="isVisualizar" />
+			</div>
+		
+			<div class="col-sm-4">
+				<auto-complete ng-find="findSubGrupo(value)" form="formPessoa" ng-obrigatorio="false" ng-label="LABEL.SUB_GRUPO" ng-item="item.descricao" ng-id="fornecedorRamoAtividade.subGrupoFederalSupply" ng-model="fornecedorRamoAtividade.subGrupoFederalSupply" ng-disabled="!fornecedorRamoAtividade.grupoFederalSupply" />
+			</div>	
+		</div>
+	</div>
+	
+	<div class="row" ng-show="apresentarFornecedor">
+		<div class="col-sm-10">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix"  ng-show="!isVisualizar">
+					<button title="{{$translate.instant('LABEL.ADICIONAR')}}" alt="{{$translate.instant('LABEL.ADICIONAR')}}" class="btn btn-clear" ng-click="adicionarRamoAtividade();" type="button">
+						<i class="fa fa-plus-circle yellow-dark"></i>
+						<translate>LABEL.ADICIONAR</translate> </a>
+					</button>
+					
+					<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-click="apresentarDialogConfirmacaoRemocaoRamoAtividade()" ng-show="fornecedor.fornecedorRamoAtividades.length > 0" type="button">
+						<i class="fa fa-close red"></i>
+						<translate>LABEL.REMOVER</translate> </a>
+					</button>
+					
+				</div><!-- .panel-heading -->
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th class="text-center" style="width: 5%;"></th>
+							<th class="text-center" style="width: 10%;"><translate>LABEL.GRUPO</translate></th>
+							<th class="text-center" style="width: 10%;"><translate>LABEL.SUB_GRUPO</translate></th>
+						</tr>
+					</thead>
+	
+					<tbody>
+						<tr ng-repeat="fornecedorRamoAtividade in fornecedor.fornecedorRamoAtividades">
+							<td class="text-center">
+								<input type="radio" name="fornecedorRamoAtividadeSelected" ng-checked="fornecedorRamoAtividade.$checked" ng-click="checkRamoAtividade(fornecedorRamoAtividade)"/>
+							</td>
+							<td>{{fornecedorRamoAtividade.grupoFederalSupply.descricao}}</td>
+							<td>{{fornecedorRamoAtividade.subGrupoFederalSupply.descricao}}</td>
+						</tr>
+					</tbody>
+	
+				</table>
+			</div>
+		</div>
+	</div>
+		
+</fieldset>
+
+<fieldset ng-show="apresentarFornecedor">
+	
+	<legend class="blue">
+		<translate>LABEL.OBSERVACOES</translate>
+	</legend>
+
+	<div class="row" ng-show="apresentarFornecedor" ng-show="!isVisualizar">
+
+		<div class="col-sm-6">
+			<label-input ng-id="fornecedorObservacao.descricao" name="fornecedorObservacao.descricao" ng-typ="text" ng-obrigatorio='false' ng-label="LABEL.DESCRICAO"
+				ng-model="fornecedorObservacao.descricao" ng-disabled="isVisualizar" ng-custom-maxlength='100'/>
+		</div>
+	</div>
+
+	<div class="row" ng-show="apresentarFornecedor">
+		<div class="col-sm-10">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix"  ng-show="!isVisualizar">
+					<button title="{{$translate.instant('LABEL.ADICIONAR')}}" alt="{{$translate.instant('LABEL.ADICIONAR')}}" class="btn btn-clear" ng-click="adicionarObservacaoFornecedor();" ng-disabled="!fornecedorObservacao.descricao" type="button">
+						<i class="fa fa-plus-circle yellow-dark"></i>
+						<translate>LABEL.ADICIONAR</translate> </a>
+					</button>
+					
+					<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-show="fornecedor.observacoes.length > 0" ng-click="editObservacao();" type="button">
+						<i class="fa fa-pencil blue"></i>
+						<translate>LABEL.EDITAR</translate>
+					</button>
+					
+					<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-click="apresentarDialogConfirmacaoRemocaoObservacao()" ng-show="fornecedor.observacoes.length > 0" type="button">
+						<i class="fa fa-close red"></i>
+						<translate>LABEL.REMOVER</translate> </a>
+					</button>
+				</div>
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th class="text-center" style="width: 5%;"></th>
+							<th class="text-center" style="width: 10%;"><translate>LABEL.DESCRICAO</translate></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="fornecedorDescricao in fornecedor.observacoes">
+							<td class="text-center">
+									<input type="radio" name="fornecedorDescricaoSelected" ng-checked="fornecedorDescricao.$checked" ng-click="checkObservacao(fornecedorDescricao)"/>
+							</td>
+							<td>{{fornecedorDescricao.descricao}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+</fieldset>

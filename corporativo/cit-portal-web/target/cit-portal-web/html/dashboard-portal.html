@@ -1,0 +1,12 @@
+<div class="page-content" style="margin-top: -35px;" >
+<form name="formDashboard" novalidate ng-controller="DashboardController" >
+	<tabset class="tabbable tabbable-dashboard margin-top margin-bottom">
+        <tab ng-repeat="painel in paineis" active="painel.active" >
+        	<tab-heading ng-click='obterDadosPainel(painel, $index)' title="{{painel.nome}}">
+        		<translate>{{painel.nome}}</translate>
+        	</tab-heading>
+			<adf-dashboard adf-model="painel.model" />
+       	</tab>
+    </tabset>
+  </form>
+</div>

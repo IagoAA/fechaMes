@@ -1,0 +1,72 @@
+<div id="editFuncao" class="page-content clearfix" ng-controller="FuncaoController">
+    <div class="bar-buttons-action fixed">
+        <div class="row">
+            <div class="col-sm-8 text-left">
+                
+                <button class="btn btn-clear" ng-click="saveOrUpdate()" ng-show="edit">
+                    <i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+                </button>
+                
+                <button class="btn btn-clear" ng-click="limparFuncao()" ng-show="funcao.id === undefined">
+                    <i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+                </button>
+                
+                <button class="btn btn-clear" ng-show="!edit" ng-click="edit = true">
+                    <i class="fa fa-pencil blue"></i>
+                    <translate>LABEL.EDITAR</translate>
+                </button>
+                
+                <button class="btn btn-clear" ng-click="remove(funcao);" ng-show="funcao.id !== undefined">
+                    <i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+                </button>
+                
+                <bloquear-desbloquear ng-model="funcao" ng-repository="FuncaoRepository" ng-edit="edit"></bloquear-desbloquear>
+                
+                <button class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); atualizaPaginaPesquisa();">
+                    <i class="fa fa-search"></i> <translate>LABEL.PESQUISAR</translate>
+                </button>
+
+            </div><!-- .col -->
+
+            <div class="col-sm-4 text-right">
+                
+                <favorito/>
+                
+                <help-button workspace="workspace" />
+                
+            </div><!-- .col -->
+        </div><!-- .row -->
+    </div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+    <form name="funcaoForm">
+        <p>
+            <small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+        </p>
+            
+            <div class="row">
+                
+                <div class="col-md-6">
+                    
+                    <label-input-number ng-id="funcao.codigo" ng-label="LABEL.CODIGO" ng-model="funcao.codigo" form="funcaoForm" ng-obrigatorio="true" ng-disabled="!edit" ng-custom-maxlength="9" />
+                    
+                </div>
+                
+                <div class="col-md-6">
+                    
+                    <label-input ng-id="funcao.nome" ng-label="LABEL.NOME" ng-model="funcao.nome" form="funcaoForm" ng-obrigatorio="true" ng-custom-maxlength="80" ng-type="text" ng-disabled="!edit"  />
+                    
+                </div>
+                
+            </div>
+
+    </form>
+</div><!-- .page-content -->
+
+
+
+
+
+
+

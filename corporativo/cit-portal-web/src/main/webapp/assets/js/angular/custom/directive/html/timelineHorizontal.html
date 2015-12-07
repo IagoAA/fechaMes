@@ -1,0 +1,38 @@
+<div class="timeline timeline-horizontal {{timelineClass}}" ng-class="{'no-buttons': !showButtons, 'no-button-prev': !showButtonPrev, 'no-button-next': !showButtonNext}">
+	<div class="timeline-container">
+		<div class="timeline-contents">
+			<div class="timeline-content">
+				<div class="timeline-start-end-point" ng-if="showStartEndPoint">
+					<div class="timeline-start-point">
+						<div class="timeline-start-end-point-icon timeline-start-point-icon">
+							<i class="fa fa-{{startPointIcon}}"></i>
+						</div>
+						
+						<div class="timeline-start-end-point-text timeline-start-point-text">
+							{{startPointText}}
+						</div>
+					</div><!-- .contrato-ocorrencia-item-timeline-date-init -->
+					
+					<div class="timeline-end-point">
+						<div class="timeline-start-end-point-icon timeline-end-point-icon">
+							<i class="fa fa-{{endPointIcon}}"></i>
+						</div>
+						
+						<div class="timeline-start-end-point-text timeline-end-point-text">
+							{{endPointText}}
+						</div>
+					</div><!-- .contrato-ocorrencia-item-timeline-date-end -->
+				</div><!-- .contrato-ocorrencia-item-date -->
+				
+				<div class="timeline-content-inner">
+					<div class="timeline-content-buttons">
+						<a href="javascript:;" class="timeline-content-button timeline-content-button-prev" ng-click="prevItem();">&laquo;</a>
+						<a href="javascript:;" class="timeline-content-button timeline-content-button-next" ng-click="nextItem();">&raquo;</a>
+					</div>
+					
+					<ul class="timeline-items" ng-transclude></ul><!-- .timeline-items -->
+				</div><!-- .timeline-content-inner -->
+			</div><!-- .timeline-content -->
+		</div><!-- .timeline-contents -->
+	</div><!-- .timeline-container -->
+</div><!-- .timeline-horizontal -->

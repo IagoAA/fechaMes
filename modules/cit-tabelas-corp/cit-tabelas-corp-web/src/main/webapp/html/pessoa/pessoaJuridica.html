@@ -1,0 +1,89 @@
+<fieldset ng-show="pessoa.dominioPessoa.codigo == 2">
+	<legend class="blue">Pessoa Jurídica</legend>
+
+		<div class='row'>
+			<div class='col-sm-3'>
+			
+				<div class='form-group' ng-class="{'has-error': formPessoa['cnpj'].$error.required && (!formPessoa['cnpj'].$pristine || formPessoa.$submitted)}">
+					<label class='control-label'>
+						<translate>LABEL.CNPJ</translate> 
+						<span class='red'>*</span>
+					</label>
+					<i ng-show="formPessoa['cnpj'].$error.required && (!formPessoa['cnpj'].$pristine || formPessoa.$submitted)" class='fa fa-warning red' tooltip="{{$translate.instant('LABEL.CNPJ') + ' ' +$translate.instant('LABEL.CAMPO_OBRIGATORIO')}}" tooltip-placement='top'></i>
+					<input type="text" ng-cnpj  class='form-control' id="cnpj"  name="cnpj" ng-model="pessoa.pessoaJuridica.cnpj" ui-mask="99.999.999/9999-99" ng-disabled="isVisualizar"  ng-required="pessoa.dominioPessoa.codigo == 2"/>
+     				<p class='help-block small red' ng-show="pessoa.pessoaJuridica.cnpj && !formPessoa.cnpj.$valid">*<translate>LABEL.CNPJ</translate><translate>LABEL.INVALIDO</translate> </p>
+				</div>
+			
+			</div>
+
+			<div class='col-sm-3'>
+				<label-input ng-id="pessoa.pessoaJuridica.nomeFantasia" name="nomeFantasia" ng-typ="text" ng-obrigatorio='false' ng-label="LABEL.NOME_FANTASIA"
+					ng-model="pessoa.pessoaJuridica.nomeFantasia" ng-disabled="isVisualizar" ng-custom-maxlength='255'/>
+			</div>
+
+			<div class='col-sm-3'>
+				<div class='form-group'>
+					<label-input ng-id="pessoa.pessoaJuridica.razaoSocial" name="razaoSocial" form="formPessoa" ng-typ="text" ng-obrigatorio='pessoa.dominioPessoa.codigo == 2' ng-label="LABEL.RAZAO_SOCIAL"
+						ng-model="pessoa.pessoaJuridica.razaoSocial" ng-disabled="isVisualizar" ng-custom-maxlength='255'/>
+				</div>
+			</div>
+
+			<div class='col-sm-3'>
+				<div class='form-group'>
+					<label-input ng-id="pessoa.pessoaJuridica.inscricaoEstadual" name="inscricaoEstadual" ng-typ="text" ng-obrigatorio='false' ng-label="LABEL.INSCRICAO_ESTADUAL"
+						ng-model="pessoa.pessoaJuridica.inscricaoEstadual" ng-disabled="isVisualizar" ng-custom-maxlength='255'/>
+				</div>
+			</div>
+
+		</div>
+
+		<div class='row'>
+			<div class='col-sm-3'>
+				<div class='form-group'>
+					<label-input ng-id="pessoa.pessoaJuridica.inscricaoMunicipal" name="inscricaoMunicipal" ng-typ="text" ng-obrigatorio='false' ng-label="LABEL.INSCRICAO_MUNICIPAL"
+						ng-model="pessoa.pessoaJuridica.inscricaoMunicipal" ng-disabled="isVisualizar" ng-custom-maxlength='255'/>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label for="pessoa.pessoaJuridica.porte" class="control-label"><translate>LABEL.PORTE</translate></label> 
+							<select class="form-control" id="pessoa.pessoaJuridica.porte" ng-model="pessoa.pessoaJuridica.dominioPorte.id" ng-options="porte.id  as porte.descricao for porte in tiposPorte" data-placeholder="Selecione" ng-disabled="isVisualizar"/>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label for="tipo-notificacao" class="control-label"><translate>LABEL.ABRANGENCIA</translate></label> <select class="form-control" id="pessoa.pessoaJuridica.abrangencia"
+						ng-model="pessoa.pessoaJuridica.dominioAbrangencia.id" ng-options="abrangencia.id  as abrangencia.descricao for abrangencia in tiposAbrangencia"
+						data-placeholder="Selecione" ng-disabled="isVisualizar"/>
+				</div>
+			</div>
+		</div>
+
+		<div class='row'>
+			<div class='col-sm-6'>
+				<div class='form-group'>
+					<label-input ng-id="pessoa.pessoaJuridica.site" name="site" ng-typ="text" ng-obrigatorio='false' ng-label="LABEL.SITE" ng-model="pessoa.pessoaJuridica.site"
+						ng-disabled="isVisualizar" ng-custom-maxlength='255'/>
+				</div>
+			</div>
+		</div>
+
+		<div class='row'>
+			<div class='col-sm-12'>
+				<div class="checkbox">
+					<label> <input type="checkbox" id="pessoa.pessoaJuridica.filial" ng-model="pessoa.pessoaJuridica.filial" ng-disabled="isVisualizar"/> <translate>LABEL.FILIAL</translate>
+					</label>
+				</div>
+
+				<div class="checkbox">
+					<label> <input type="checkbox" id="pessoa.pessoaJuridica.filantropico" ng-model="pessoa.pessoaJuridica.filantropico" ng-disabled="isVisualizar" /> <translate>LABEL.FILANTROPICO</translate>
+					</label>
+				</div>
+
+				<div class="checkbox">
+					<label> <input type="checkbox" id="pessoa.pessoaJuridica.impostoSimples" ng-model="pessoa.pessoaJuridica.impostoSimples" ng-disabled="isVisualizar"/> <translate>LABEL.IMPOSTO_SIMPLES</translate>
+					</label>
+				</div>
+			</div>
+		</div>
+</fieldset>

@@ -1,0 +1,12 @@
+br\com\centralit\api\service\CaixaService.class
+br\com\centralit\api\service\validation\LuckValidator.class
+br\com\centralit\api\service\impl\LuckServiceImpl.class
+br\com\centralit\api\service\impl\CaixaServiceImpl.class
+br\com\centralit\api\dao\impl\LuckDaoHibernate.class
+br\com\centralit\api\model\Luck.class
+br\com\centralit\api\model\Caixa.class
+br\com\centralit\api\dao\LuckDao.class
+br\com\centralit\api\service\LuckService.class
+br\com\centralit\api\dao\impl\CaixaDaoHibernate.class
+br\com\centralit\api\dao\CaixaDao.class
+br\com\centralit\api\service\validation\CaixaValidator.class

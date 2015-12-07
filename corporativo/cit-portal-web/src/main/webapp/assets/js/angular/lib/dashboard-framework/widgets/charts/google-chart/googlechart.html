@@ -1,0 +1,35 @@
+<div>
+  <div class="alert alert-info" ng-if="!chart">
+  	<translate>MSG.CLIQUE_NO_ICONE_PARA_CONFIGURAR_O_WIDGET</translate>
+  </div>
+  <div ng-if="chart">
+  	<div class="row">
+		<div class="col-xs-12">
+	    	<div google-chart chart="chart" style="{{cssStyle}}" on-ready="chartReady()"></div>
+		</div>
+	</div>
+    <div class="row">
+    	<div class="col-xs-12">
+    	
+    				<label for="chartType"><translate>LABEL.TIPO_GRAFICO</translate></label>
+		            <select class="form-control" id="chartType" ng-model="chart.type" ng-change="chartSelectionChange()">
+		                <option value="AreaChart">AreaChart</option>
+		                <option value="PieChart">PieChart</option>
+		                <option value="ColumnChart">ColumnChart</option>
+		                <option value="LineChart">LineChart</option>
+		                <option value="Table">Table</option>
+		                <option value="BarChart">BarChart</option>
+		            </select>
+		      <div class="form-group margin-top" ng-show="chart.type=='Table'" style="margin-bottom: 0;">
+		            <label for="chartType"><translate>LABEL.FORMATO</translate>:</label>
+
+		            <ul class="list-charts-format inputs-list list-unstyled" style="margin-bottom: 0;">
+		                <li ng-repeat="format in formatCollection">
+		                    <button class="btn btn-primary" ng-click="toggleFormat(format)">{{format.name}}</button>
+		                </li>
+		            </ul>
+		        </div>
+		</div>
+	</div>
+  </div>
+</div>

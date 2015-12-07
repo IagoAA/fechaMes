@@ -1,0 +1,462 @@
+<div id="breadcrumbs" class="breadcrumbs">
+	<script type="text/javascript">
+		try {
+			ace.settings.check('breadcrumbs', 'fixed')
+		} catch (e) {
+		}
+	</script>
+
+	<ul class="breadcrumb">
+		<li>
+			<i class="ace-icon fa fa-home home-icon"></i> <a href="#">Home</a>
+		</li>
+		<li class="active">
+			<translate>Órgão Externo</translate><favorito />
+		</li>
+	</ul>
+</div><!-- #breadcrumbs -->
+
+<div class="page-content" ng-controller="OrgaoExternoController">
+
+	<div class="tabbable">
+		<ul class="nav nav-tabs tab-color-blue">
+			<li class="active">
+				<a href="#searchOrgaoExterno" data-toggle="tab" id="tab_pesquisar" ng-click="fetchResult()" aria-expanded="true">
+					<i class="ace-icon fa fa-search bigger-120"></i>
+					<translate>LABEL.PESQUISAR</translate>
+				</a>
+			</li>
+
+			<li>
+				<a href="#editOrgaoExterno" data-toggle="tab" id="tab_cadastrar" aria-expanded="true" >
+					<i class="ace-icon fa fa-edit bigger-120"></i>
+					<translate>LABEL.CADASTRAR</translate>
+				</a>
+			</li>
+		</ul><!-- .nav -->
+
+		<div class="tab-content">
+			<div class="tab-pane fade active in" id="searchOrgaoExterno">
+				<div class="table-container">
+					<div class="table-header">
+						<div class='row'>
+							<div class='col-sm-6'>
+								<translate>LABEL.MOSTRANDO</translate> {{filterCriteria.start}} <translate>LABEL.ATE</translate> {{filterCriteria.limit > totalItens ? totalItens : filterCriteria.limit}}  <translate>LABEL.DE</translate> ({{totalItens}}) <translate>Órgãos Externos</translate>.
+							</div>
+							<div class='col-sm-6 align-right'>
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-default dropdown-toggle btn-primary btn-white" data-toggle="dropdown" aria-expanded="false">
+										<i class="ace-icon fa fa-file"></i><translate>LABEL.EXPORTAR</translate> <span class="ace-icon fa fa-caret-down icon-on-right"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li>
+											<a href="#void"><i class="ace-icon fa fa-file-o"></i> Excel</a>
+										</li>
+										<li>
+											<a href="#void"><i class="ace-icon fa fa-file-o"></i> CSV</a>
+										</li>
+										<li>
+											<a href="#void"><i class="ace-icon fa fa-file-o"></i> XML</a>
+										</li>
+										<li>
+											<a href="#void"><i class="ace-icon fa fa-file-o"></i> JSON</a>
+										</li>
+									</ul>
+								</div><!-- .btn-group -->
+								&nbsp;
+
+								<filtros ng-filter="filterCriteria" ng-workspace="workspace"></filtros>
+
+								&nbsp;
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-default dropdown-toggle btn-primary btn-white" data-toggle="dropdown" aria-expanded="false">
+										<i class="ace-icon fa fa-eye"></i> <translate>LABEL.MOSTRAR</translate><span class="ace-icon fa fa-caret-down icon-on-right"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li>
+											<a href="#void" ng-click="filterCriteria.limit = 1;filterResult();"><i class="ace-icon fa fa-angle-right"></i> 1</a>
+										</li>
+										<li>
+											<a href="#void" ng-click="filterCriteria.limit = 10;filterResult();"><i class="ace-icon fa fa-angle-right"></i> 10</a>
+										</li>
+										<li>
+											<a href="#void" ng-click="filterCriteria.limit = 20;filterResult();"><i class="ace-icon fa fa-angle-right"></i> 20</a>
+										</li>
+										<li>
+											<a href="#void" ng-click="filterCriteria.limit = 30;filterResult();"><i class="ace-icon fa fa-angle-right"></i> 30</a>
+										</li>
+										<li>
+											<a href="#void" ng-click="filterCriteria.limit = 40;filterResult();"><i class="ace-icon fa fa-angle-right"></i> 40</a>
+										</li>
+										<li>
+											<a href="#void" ng-click="filterCriteria.limit = 50;filterResult();"><i class="ace-icon fa fa-angle-right"></i> 50</a>
+										</li>
+										<li>
+											<a href="#void" ng-click="filterCriteria.limit = 100;filterResult();"><i class="ace-icon fa fa-angle-right"></i> 100</a>
+										</li>
+										<li>
+											<a href="#void" ng-click="filterCriteria.limit = 200;filterResult();"><i class="ace-icon fa fa-angle-right"></i> 200</a>
+										</li>
+										<li>
+											<a href="#void" ng-click="filterCriteria.limit = 500;filterResult();"><i class="ace-icon fa fa-angle-right"></i> 500</a>
+										</li>
+									</ul>
+								</div><!-- .btn-group -->
+								&nbsp;&nbsp;
+								<a style="color: white;" href="" ng-click="filterResult()"><i class="fa fa-refresh"></i></a>
+							</div><!-- .col -->
+						</div><!-- .row -->
+					</div><!-- .table-header -->
+
+					<div class="table-responsive">
+						<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th class="text-center" style="width: 10%;">
+										<translate>Código</translate>
+									</th>
+									<th class="text-center" style="width: 60%;">
+										<translate>Nome</translate>
+									</th>
+									<th class="text-center" style="width: 10%;">
+										<translate>Sigla</translate>
+									</th>
+									<th class="text-center" style="width: 10%;">
+										<translate>Identificação</translate>
+									</th>
+									<th class="text-center" style="width: 10%;">
+										<translate>LABEL.ACOES</translate>
+									</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<td colspan="5" class="text-center">
+										<div ng-show="totalPages > 1" class="align-center">
+											<pagination rotate="true" total-items="totalItens" num-pages="totalPages" ng-model="filterCriteria.start" items-per-page="filterCriteria.limit" class="pagination-sm" boundary-links="true" ng-change="fetchResult()"></pagination>
+										</div>
+									</td>
+								</tr>
+							</tfoot>
+							<tbody>
+								<tr>
+									<td>
+										<div class="row">
+											<div class="col-sm-12">
+												<input class="col-sm-12 form-control" on-enter-blur on-blur-change="filterResult()" ng-model="filterCriteria.filters[0].value" type="text" />
+											</div><!-- .col -->
+										</div><!-- .row -->
+									</td>
+									<td>
+										<div class="row">
+											<div class="col-sm-12">
+												<input class="col-sm-12 form-control" on-enter-blur on-blur-change="filterResult()" ng-model="filterCriteria.filters[1].value" type="text" />
+											</div><!-- .col -->
+										</div><!-- .row -->
+									</td>
+									<td>
+										<div class="row">
+											<div class="col-sm-12">
+												<input class="col-sm-12 form-control" on-enter-blur on-blur-change="filterResult()" ng-model="filterCriteria.filters[2].value" type="text" />
+											</div><!-- .col -->
+										</div><!-- .row -->
+									</td>
+									<td>
+										<div class="row">
+											<div class="col-sm-12">
+												<input class="col-sm-12 form-control" on-enter-blur on-blur-change="filterResult()" ng-model="filterCriteria.filters[3].value" type="text" />
+											</div><!-- .col -->
+										</div><!-- .row -->
+									</td>
+									<td></td>
+								</tr>
+								<tr ng-repeat="OrgaoExterno in OrgaosExternos">
+									<td>{{OrgaoExterno.codigo}}</td>
+									<td>{{OrgaoExterno.nome}}</td>
+									<td>{{OrgaoExterno.sigla}}</td>
+									<td>{{OrgaoExterno.identificacao}}</td>
+									<td>
+				   						<div class="btn-group" style="margin: auto;">
+				   							<a class="btn btn-sm btn-primary" title="Visualizar" ng-click="abreVisualizar(OrgaoExterno.id)"><i class="fa fa-search"></i></a>
+				   							<a class="btn btn-sm btn-success" title="Editar"  ng-click="abreEditar(OrgaoExterno.id)"><i class="fa fa-edit"></i></a>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div><!-- .table-container -->
+			</div><!-- #search -->
+
+			<div class="tab-pane fade" id="editOrgaoExterno">
+
+				<form autocomplete="off">
+					<div class="widget-box">
+						<div class="widget-header">
+							<h2 class="widget-title"><translate>Órgão Externo</translate></h2>
+
+							<div class="widget-toolbar">
+								<a href="#void" data-action="collapse">
+									<i class="ace-icon fa fa-chevron-up"></i>
+								</a>
+							</div><!-- .widget-toolbar -->
+						</div><!-- .widget-header -->
+
+						<div class="widget-body">
+							<div class="widget-main clearfix">
+								<p>
+									<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+								</p>
+
+								<div class="row">
+									<div class="col-sm-5">
+										<div class="form-group">
+											<label for="$scope.endereco.bairro.cidade.estado.regiao.pais.nome" class="control-label"><translate>País</translate><span class="red">*</span></label>
+											<input type="text" class="form-control" id="$scope.endereco.bairro.cidade.estado.regiao.pais.nome" ng-model="$scope.endereco.bairro.cidade.estado.regiao.pais.nome" ng-disabled="isVisualizar"/>
+										</div><!-- .form-group  -->
+									</div><!-- .col -->
+
+									<div class="col-sm-5">
+										<div class="form-group">
+											<label for="orgaoExterno.pessoa.pessoaJuridica.cnpj" class="control-label"><translate>Identificação</translate><span class="red">*</span></label>
+											<input type="text" class="form-control" id="orgaoExterno.pessoa.pessoaJuridica.cnpj" ng-model="orgaoExterno.pessoa.pessoaJuridica.cnpj" ng-disabled="isVisualizar"/>
+										</div><!-- .form-group  -->
+									</div><!-- .col -->
+
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label block">&nbsp;</label>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" id="validaCNPJ" ng-model="validaCNPJ" name="validaCNPJ"> Valida CNPJ
+												</label>
+											</div><!-- .checkbox -->
+										</div><!-- .form-group  -->
+									</div><!-- .col -->
+								</div><!-- .row -->
+
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label for=orgaoExterno.codigo class="control-label"><translate>Código</translate><span class="red">*</span></label>
+											<input type="text" class="form-control" id="orgaoExterno.codigo" ng-model="orgaoExterno.codigo" name="orgaoExterno.codigo" ng-disabled="isVisualizar"/>
+										</div><!-- .form-group -->
+									</div><!-- .col -->
+
+									<div class="col-sm-8">
+										<div class="form-group">
+											<label for=orgaoExterno.pessoa.nome class="control-label"><translate>Nome</translate><span class="red">*</span></label>
+											<input type="text" class="form-control" id="orgaoExterno.pessoa.nome" ng-model="orgaoExterno.pessoa.nome" name="orgaoExterno.pessoa.nome" ng-disabled="isVisualizar"/>
+										</div><!-- .form-group -->
+									</div><!-- .col -->
+
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label for=orgaoExterno.sigla class="control-label"><translate>Sigla</translate><span class="red">*</span></label>
+											<input type="text" class="form-control" id="orgaoExterno.sigla" ng-model="orgaoExterno.sigla" name="orgaoExterno.sigla" ng-disabled="isVisualizar"/>
+										</div><!-- .form-group -->
+									</div><!-- .col -->
+								</div><!-- .row -->
+
+								<div class="row">
+									<div class="col-sm-5">
+										<div class="form-group">
+											<label for=orgaoExterno.pessoa.email class="control-label"><translate>E-mail</translate><span class="red">*</span></label>
+											<input type="text" class="form-control" id="orgaoExterno.pessoa.email" ng-model="orgaoExterno.pessoa.email" name="orgaoExterno.pessoa.email" ng-disabled="isVisualizar"/>
+										</div><!-- .form-group -->
+									</div><!-- .col -->
+								</div><!-- .row -->
+
+								<div class="row">
+									<div class="col-sm-12">
+										<h3>Telefone / Fax</h3>
+									</div><!-- .col -->
+								</div><!-- .row -->
+
+								<div class="row">
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label for=telefone1.numero class="control-label"><translate>Fone (1)</translate><span class="red">*</span></label>
+											<input type="text" class="form-control" id="telefone1.numero" ng-model="telefone1.numero" name="telefone1.numero" ng-disabled="isVisualizar"/>
+										</div><!-- .form-group -->
+									</div><!-- .col -->
+
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label for=telefone2.numero class="control-label"><translate>Fone (2)</translate><span class="red">*</span></label>
+											<input type="text" class="form-control" id="telefone2.numero" ng-model="telefone2.numero" name="telefone2.numero" ng-disabled="isVisualizar"/>
+										</div><!-- .form-group -->
+									</div><!-- .col -->
+
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label for=fax.numero class="control-label"><translate>Fax</translate><span class="red">*</span></label>
+											<input type="text" class="form-control" id="fax.numero" ng-model="fax.numero" name="fax.numero" ng-disabled="isVisualizar"/>
+										</div><!-- .form-group -->
+									</div><!-- .col -->
+								</div><!-- .row -->
+
+								<div class="row">
+									<div class="col-sm-12">
+										<h3>Endereço</h3>
+									</div><!-- .col -->
+								</div><!-- .row -->
+
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label for=endereco.cep class="control-label"><translate>CEP</translate><span class="red">*</span></label>
+											<input type="text" class="form-control" id="endereco.cep" ng-model="endereco.cep" name="endereco.cep" ng-disabled="isVisualizar"/>
+										</div><!-- .form-group -->
+									</div><!-- .col -->
+
+									<div class="col-sm-10">
+										<div class="form-group">
+											<label for=endereco.complemento class="control-label"><translate>Complemento</translate><span class="red">*</span></label>
+											<input type="text" class="form-control" id="endereco.complemento" ng-model="endereco.complemento" name="endereco.complemento" ng-disabled="isVisualizar"/>
+										</div><!-- .form-group -->
+									</div><!-- .col -->
+								</div><!-- .row -->
+
+								<div class="row">
+									<div class="col-sm-5">
+										<div class="form-group">
+											<label for=endereco.bairro.nome class="control-label"><translate>Bairro</translate><span class="red">*</span></label>
+											<input type="text" class="form-control" id="endereco.bairro.nome" ng-model="endereco.bairro.nome" name="endereco.bairro.nome" ng-disabled="isVisualizar"/>
+										</div><!-- .form-group -->
+									</div><!-- .col -->
+
+									<div class="col-sm-5">
+										<div class="form-group">
+											<label for=endereco.bairro.cidade.nome class="control-label"><translate>Cidade</translate><span class="red">*</span></label>
+											<input type="text" class="form-control" id="endereco.bairro.cidade.nome" ng-model="endereco.bairro.cidade.nome" name="endereco.bairro.cidade.nome" ng-disabled="isVisualizar"/>
+										</div><!-- .form-group -->
+									</div><!-- .col -->
+
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label for=endereco.bairro.cidade.estado.sigla class="control-label"><translate>UF</translate><span class="red">*</span></label>
+											<input type="text" class="form-control" id="endereco.bairro.cidade.estado.sigla" ng-model="endereco.bairro.cidade.estado.sigla" name="endereco.bairro.cidade.estado.sigla" ng-disabled="isVisualizar"/>
+										</div><!-- .form-group -->
+									</div><!-- .col -->
+								</div><!-- .row -->
+
+								<div class="widget-box">
+									<div class="widget-header">
+										<h2 class="widget-title">Contatos</h2>
+
+										<div class="widget-toolbar">
+											<a href="#void" data-action="collapse">
+												<i class="ace-icon fa fa-chevron-up"></i>
+											</a>
+										</div><!-- .widget-toolbar -->
+									</div>
+
+									<div class="widget-body" style="display: block;">
+										<div class="widget-main clearfix">
+											<p>
+												<small>( <span class="red">*</span> ) Campos obrigatórios</small>
+											</p>
+
+											<div class="row">
+												<div class="col-sm-12">
+													<table class="table table-bordered table-striped">
+														<thead>
+															<tr>
+																<th "width: 30%;">
+																	Nome
+																</th>
+																<th style="width: 20%;">
+																	Cargo
+																</th>
+																<th style="width: 20%;">
+																	Email
+																</th>
+																<th style="width: 20%;">
+																	Telefone
+																</th>
+																<th class="text-center" style="width: 10%;">
+																	Ações
+																</th>
+															</tr>
+														</thead>
+														<tfoot>
+															<tr>
+																<td colspan="5" class="text-right">
+																	<a href="#void" ng-click="addContato();"><i class="ace-icon fa fa-plus-circle"></i> Adiciona linha</a>
+																</td>
+															</tr>
+														</tfoot>
+														<tbody>
+															<tr ng-repeat="contato in orgaoExterno.pessoa.contatos">
+																<td>
+																	<span ng-show="!contato.$edit">{{ contato.nome }}</span>
+																	<div ng-show="contato.$edit">
+																		<input class="form-control" type="text" ng-model="contato.nome" />
+																	</div>
+																</td>
+																<td>
+																	<span ng-show="!contato.$edit">{{ contato.cargo }}</span>
+																	<div ng-show="contato.$edit">
+																		<input class="form-control" type="text" ng-model="contato.cargo" />
+																	</div>
+																</td>
+																<td>
+																	<span ng-show="!contato.$edit">{{ contato.email }}</span>
+																	<div ng-show="contato.$edit">
+																		<input class="form-control" type="text" ng-model="contato.email" />
+																	</div>
+																</td>
+																<td>
+																	<span ng-show="!contato.$edit">{{ contato.telefones[0].numero }}</span>
+																	<div ng-show="contato.$edit">
+																		<input class="form-control" type="text" ng-model="contato.telefones[0].numero" />
+																	</div>
+																</td>
+																<td class="text-center">
+																	<div class="btn-group">
+																		<a class="btn btn-sm btn-success" href="#void" ng-show="!contato.$edit" ng-click="contato.$edit=true">
+																			<i class="fa fa-edit"></i>
+																		</a>
+																		<a class="btn btn-sm btn-danger" href="#void" ng-show="!contato.$edit">
+																			<i class="fa fa-trash-o"></i>
+																		</a>
+																		<a class="btn btn-sm btn-success ng-hide" href="#void" ng-show="contato.$edit" ng-click="contato.$edit=false">
+																			<i class="fa fa-save"></i>
+																		</a>
+																	</div><!-- .btn-group -->
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div><!-- .col -->
+											</div><!-- .row -->
+										</div><!-- .widget-main -->
+									</div><!-- .widget-body -->
+								</div><!-- .widget-box -->
+
+							</div><!-- .widget-main -->
+						</div><!-- .widget-body -->
+					</div><!-- .widget-box -->
+
+					<div class="row text-right">
+						<div class="col-sm-12">
+							<button class="btn btn-success wide-xs" ng-click="saveOrUpdate()" ng-hide="isVisualizar" >
+								<i class="ace-icon fa fa-save"></i><translate>LABEL.SALVAR</translate>
+							</button>
+
+							<button class="btn btn-info wide-xs" ng-click="limpar()" ng-hide="isVisualizar">
+								<i class="ace-icon fa fa-eraser"></i><translate>LABEL.LIMPAR</translate>
+							</button>
+
+							<button class="btn btn-warning wide-xs"  ng-click="removeWorkspace(workspace.id)">
+								<i class="ace-icon fa fa-times"></i><translate>LABEL.FECHAR</translate>
+							</button>
+						</div><!-- .col -->
+					</div><!-- .row -->
+				</form>
+			</div><!-- #edit -->
+			<pre>{{orgaoExterno | json}}</pre>
+		</div><!-- .tab-content -->
+	</div><!-- .tabbable -->
+</div><!-- .page-content -->

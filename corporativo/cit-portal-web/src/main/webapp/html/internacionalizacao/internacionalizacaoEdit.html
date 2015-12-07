@@ -1,0 +1,113 @@
+<div id="editInternacionalizacao" class="page-content clearfix" ng-controller="InternacionalizacaoController">
+    <div class="bar-buttons-action fixed">
+        <div class="row">
+            <div class="col-sm-8 text-left">
+                
+                <button class="btn btn-clear" ng-click="saveOrUpdate()" ng-show="edit">
+                    <i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+                </button>
+                
+                <button class="btn btn-clear" ng-click="limparInternacionalizacao()" ng-show="internacionalizacao.id === undefined">
+                    <i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+                </button>
+                
+                <button class="btn btn-clear" ng-show="!edit" ng-click="edit = true">
+                    <i class="fa fa-pencil blue"></i>
+                    <translate>LABEL.EDITAR</translate>
+                </button>
+                
+                <button class="btn btn-clear" ng-click="remove(internacionalizacao);" ng-show="internacionalizacao.id !== undefined">
+                    <i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+                </button>
+                
+                <bloquear-desbloquear ng-model="internacionalizacao" ng-repository="InternacionalizacaoRepository" ng-edit="edit"></bloquear-desbloquear>
+                
+                <button class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); atualizaPaginaPesquisa();">
+                    <i class="fa fa-search"></i> <translate>LABEL.PESQUISAR</translate>
+                </button>
+
+            </div><!-- .col -->
+
+            <div class="col-sm-4 text-right">
+                
+                <favorito/>
+                
+                <help-button workspace="workspace" />
+                
+            </div><!-- .col -->
+        </div><!-- .row -->
+    </div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+    <form name="internacionalizacaoForm">
+        <p>
+            <small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+        </p>
+
+        <fieldset>
+
+            <legend><translate>LABEL.DADOS_DE_INTERNACIONALIZACAO</translate></legend>
+            
+            <div class="row">
+                
+                <div class="col-md-6">
+                    
+                    <auto-complete ng-id="internacionalizacao.modulo" ng-label="LABEL.MODULO" ng-model="internacionalizacao.modulo" form="internacionalizacaoForm" ng-obrigatorio="false" ng-find="findAutoCompleteModulo(value)" ng-item="item.nome"  ng-disabled="!edit"/>
+                    
+                </div>
+                
+                <div class="col-md-6">
+                    
+                    <label-select ng-id="internacionalizacao.tipoDominioIdioma" ng-label="LABEL.TIPODOMINIOIDIOMA" ng-model="internacionalizacao.tipoDominioIdioma" form="internacionalizacaoForm" ng-obrigatorio="true" ng-disabled="!edit" ng-custom-options="dominio.originalElement as dominio.descricao for dominio" track-by="track by dominio.id" ng-list="tipoDominioIdiomaList" />
+                    
+                </div>
+                
+            </div>
+            
+            <div class="row" ng-show="edit && !internacionalizacao.id">
+            
+            	<div class="col-md-6">
+            	
+            		<label-input-checkbox ng-model="converterJson" ng-label="LABEL.ENTRADA_EM_LOTE_JSON"></label-input-checkbox>
+            		
+            	</div>
+            
+            </div>
+            
+            <div class="row" ng-hide="converterJson">
+                
+                <div class="col-md-6">
+                    
+                    <label-input ng-id="internacionalizacao.chave" ng-label="LABEL.CHAVE" ng-model="internacionalizacao.chave" form="internacionalizacaoForm" ng-obrigatorio="!converterJson" ng-disabled="!edit"/>
+                    
+                </div>
+                
+                <div class="col-md-6">
+                    
+                    <label-input ng-id="internacionalizacao.valor" ng-label="LABEL.VALOR" ng-model="internacionalizacao.valor" form="internacionalizacaoForm" ng-obrigatorio="!converterJson" ng-disabled="!edit" />
+                    
+                </div>
+                
+            </div>
+            
+            <div class="row" ng-show="converterJson">
+            	
+            	<div class="col-md-12">
+            	
+            		<label-text-area ng-model="jsonPortalStr" ng-label="LABEL.JSON" ng-obrigatorio="converterJson" form="internacionalizacaoForm" rows="20" ng-custom-maxlength="100000"></label-text-area>
+            	
+            	</div>
+             		
+            </div>
+            
+        </fieldset>
+    </form>
+</div><!-- .page-content -->
+
+
+
+
+
+
+

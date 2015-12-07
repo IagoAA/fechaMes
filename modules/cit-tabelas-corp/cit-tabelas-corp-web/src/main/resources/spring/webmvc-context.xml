@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    *********************************************************************************************************************
+    *												LICENCA*GPLv2														*
+    * Copyright [2011,2012,2013,2014,2015] da CentralIT Tecnologia da Informação Ltda (www.centralit.com.br)          	*
+    *                                                                                                                 	*
+    * Este arquivo é parte do programa/software: Citsmart (www.citsmart.com.br)                                       	*
+    *                                                                                                                 	*
+    * O Citsmart é um software livre; você pode redistribui-lo e/ou modificá-lo dentro dos termos da Licença          	*
+    * Pública Geral GNU como publicada pela Fundação do Software Livre (FSF); na versção 2 da Licença.                	*
+    *                                                                                                                 	*
+    * Este programa/software é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA; sem uma         	*
+    * garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral     	*
+    * GNU/GPL em português para maiores detalhes.                                                                     	*
+    *                                                                                                                 	*
+    * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título 'LICENCA.txt', junto com este     	*
+    * programa/software, se não, acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br	*
+    * ou escreva para a Fundação do Software Livre (FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301,USA 	*
+    *********************************************************************************************************************
+
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+          http://www.springframework.org/schema/beans 
+          http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+          http://www.springframework.org/schema/context 
+          http://www.springframework.org/schema/context/spring-context-3.1.xsd
+          http://www.springframework.org/schema/mvc 
+          http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+	    
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+	    	<bean id="jacksonMessageConverter" class="br.com.centralit.framework.json.CustomMappingJackson2"/>
+  		</mvc:message-converters>
+	</mvc:annotation-driven>
+	
+	<mvc:default-servlet-handler />
+
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/assets/**" location="/assets/" />
+
+	<!-- i18n -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="WEB-INF/i18n" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="useCodeAsDefaultMessage" value="true" />
+	</bean>
+
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
+		<property name="defaultLocale" value="pt_BR" />
+	</bean>
+		
+	<!-- View Handler -->
+	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="resourceLoaderPath" value="/WEB-INF/html/" />
+	</bean>
+	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/html/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+         <!-- setting maximum upload size -->
+        <property name="maxUploadSize" value="52428800" />
+
+    </bean>
+</beans>

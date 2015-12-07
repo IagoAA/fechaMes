@@ -1,0 +1,110 @@
+<div class="table-container">
+	<div class="table-header clearfix">
+		<div class="table-header-right">
+			<button class="btn btn-primary btn-inline btn-white table-header-item" ng-click="$showAdvancedFilters = !$showAdvancedFilters" type="button">
+				<i class="fa fa-filter"></i> <translate>LABEL.FILTROS_AVANCADOS</translate>
+			</button>
+			<button class="btn btn-primary btn-inline btn-white table-header-item" ng-click="limparFilters()" type="button">
+				<i class="fa fa-eraser"></i>
+			</button>
+		</div><!-- .table-header-right -->
+
+		<div class="table-header-left">
+			<div class="form-group">
+				<div class="input-group">
+					<input type="text" class="form-control" maxlength="255" placeholder="{{labelPalavraChave}}" ng-change="filterResult(true)" ng-model="filterCriteria.keywordValue" />
+					<span class="input-group-addon">
+						<i class="fa fa-search fa-lg"></i>
+					</span>
+				</div>
+			</div><!-- .form-group -->
+		</div><!-- .table-header-left -->
+	</div><!-- .table-header -->
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+			 <tr>
+				<th class="text-center" style="width: 5%"></th>
+                <th class="text-center" ng-repeat="header in headers" style="width: {{header.tamanho ? header.tamanho : divisaoColunas}}%">
+                    <sort-by onsort="onSort" sortdir="filterCriteria.dir" sortedby="filterCriteria.sort" sortvalue="{{ header.value }}">{{ header.title }}</sort-by>
+                </th>
+            </tr>
+		</thead>
+		<tfoot>
+			<tr ng-show="total == 0">
+				<td class="text-center" colspan="{{headers.length + 1}}">
+					<div  class="row">
+						<translate>LABEL.TABELA_VAZIA</translate>
+				    </div>
+				</td>
+			</tr>
+			<tr ng-show="total != 0">
+				<td colspan="{{headers.length + 1}}">
+				    <div  class="row">
+				    	<div class="col-sm-4 table-showing">
+					    	<translate>LABEL.MOSTRANDO</translate>
+							{{totalItens < 1 ? '0' : filterCriteria.start}}
+							<translate>LABEL.ATE</translate>
+							{{filterCriteria.limit > totalItens ? totalItens : filterCriteria.limit}}
+							<translate>LABEL.DE</translate>
+							({{totalItens}})
+							<translate ng-if="totalItens > 1">LABEL.ITENS</translate>
+							<translate ng-if="totalItens < 2">LABEL.ITEM</translate>
+						</div><!-- .col -->
+						<div class="col-sm-8 text-right" ng-show="totalPages > 1">
+							<pagination rotate="true" max-size="10" total-items="totalItens" num-pages="totalPages" ng-model="filterCriteria.start" items-per-page="filterCriteria.limit" class="pagination-sm" boundary-links="true" ng-change="fetchResult()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+						</div><!-- .col -->
+				    </div>
+				</td>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr ng-show="$showAdvancedFilters" class="tr-filter">
+                <td class="text-center" style="width: 5%">
+                </td>
+                <td class="text-center" ng-repeat="filter in filterCriteria.filters" >
+                	<div>
+                	<label-input ng-if="filter.type === 'string' && !filter.listaDominio && !filter.dominio" ng-model="filter.value" ng-evento-change="filterResult()"></label-input>
+                	<label-input-number ng-if="filter.type === 'numeric'" ng-model="filter.value" ng-evento-change="filterResult()"></label-input-number>
+                	<label-input-data ng-if="filter.type === 'date'" ng-model="filter.value" ng-evento-change="filterResult()"></label-input-data>
+                	<label-input-money ng-if="filter.type === 'money'" ng-model="filter.value" ng-evento-change="filterResult()"></label-input-money>
+                	<select ng-if="filter.type === 'string' && filter.listaDominio || filter.dominio" ng-model="filter.value" class="form-control" ng-options='dominio.descricao as dominio.descricao for dominio in filter.listaDominio' ng-change='filterResult()'>
+                		<option value=''></option>
+                	</select>
+					<div ng-if="filter.type === 'numeric-range'" class="row">
+						<div class="col-sm-6">
+							<label-input-number ng-model="filter.valueMin" ng-evento-change="filterResult()"></label-input-number>
+						</div>
+						<div class="col-sm-6">
+							<label-input-number ng-model="filter.valueMax" ng-evento-change="filterResult()"></label-input-number>
+						</div>
+					</div>
+					<div ng-if="filter.type === 'date-range'" class="btn-group row">
+<!--                 		<button type="button" class="btn btn-clear" dropdown-toggle> -->
+<!-- 							<i class="fa fa-search"></i> <translate>LABEL.INICIO</translate> | <translate>LABEL.FIM</translate> <span class="fa fa-caret-down icon-on-right"></span> -->
+<!-- 						</button> -->
+<!-- 	                	<div class="dropdown-menu-center dropdown-menu dropdown-date-range dropdown-caret" role="date-range"> -->
+<!-- 							<div class="row"> -->
+								<div class="col-sm-6">
+									<label-input-data ng-model="filter.valueMin" ng-evento-change="filterResult()"></label-input-data>
+								</div>
+								<div class="col-sm-6">
+									<label-input-data ng-model="filter.valueMax" ng-evento-change="filterResult()"></label-input-data>
+								</div>
+<!-- 							</div> -->
+<!-- 						</div> -->
+					</div>
+                </td>
+            </tr>
+            <tr ng-repeat="model in lista">
+            	<td class="text-center" style="width: 5%"><input type="radio" name="modelChecked" ng-value="model" ng-model="$parent.itemSelecionado" /></td>
+            	<td ng-repeat="header in headers" >
+            		<div class="{{header.filter == 'currency'? 'text-right' : 'text-center'}}">
+            			<span ng-if="header.filter">{{aplicarFiltro(model[header.value], header.filter)}}</span>
+            			<span ng-if="!header.filter">{{model[header.value]}}</span>
+            			<span ng-if="header.aux"> - {{model[header.aux]}}</span>
+            		</div>
+            	</td>
+            </tr>
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,115 @@
+<div id="editCaracteristica" class="page-content clearfix" ng-controller="CaracteristicaController">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+				<button title="{{$translate.instant('LABEL.SALVAR')}}" alt="{{$translate.instant('LABEL.SALVAR')}}" class="btn btn-clear" ng-click="saveOrUpdate()" ng-show="edit">
+					<i class="fa fa-save green"></i>
+					<translate>LABEL.SALVAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.LIMPAR')}}" alt="{{$translate.instant('LABEL.LIMPAR')}}" class="btn btn-clear" ng-click="resetForm();" ng-show="caracteristica.id === undefined">
+					<i class="fa fa-eraser yellow-dark"></i>
+					<translate>LABEL.LIMPAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-show="!(pgEdit && edit)" ng-click="edit = true; pgEdit = true;">
+					<i class="fa fa-pencil blue"></i>
+					<translate>LABEL.EDITAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-click="remove(caracteristica);" ng-show="caracteristica.id !== undefined">
+					<i class="fa fa-times red"></i>
+					<translate>LABEL.REMOVER</translate>
+				</button>
+
+				<button-lock ng-model="caracteristica.dataBloqueio" action-lock="confirmarBloqueioCaracteristica();" ng-show="caracteristica.id !== undefined && isBloquear && edit"></button-lock>
+
+				<button title="{{$translate.instant('LABEL.DESBLOQUEAR')}}" alt="{{$translate.instant('LABEL.DESBLOQUEAR')}}" class="btn btn-clear" ng-show="isDesbloquear && pgEdit" ng-click="desbloquear();">
+					<i class="fa fa-unlock grey"></i>
+					<translate>LABEL.DESBLOQUEAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.PESQUISAR')}}" alt="{{$translate.instant('LABEL.PESQUISAR')}}" class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); atualizaPaginaPesquisa();">
+					<i class="fa fa-search"></i>
+					<translate>LABEL.PESQUISAR</translate>
+				</button>
+			</div>
+			<!-- .col -->
+
+			<div class="col-sm-4 text-right">
+				<favorito/>
+
+				<help-button workspace="workspace" />
+			</div>
+			<!-- .col -->
+		</div>
+		<!-- .row -->
+	</div>
+	<!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+	<form name="caracteristicaForm" novalidate autocomplete="off">
+		<p>
+			<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+		</p>
+
+		<fieldset>
+			<legend><translate>LABEL.DADOS_CARACTERISTICA</translate></legend>
+
+			<div class="row">
+				<div class="col-sm-2">
+					<label-input ng-type="text" ng-id="caracteristica.codigo" ng-label="LABEL.CODIGO" ng-disabled="true" ng-model="caracteristica.codigo"
+						ng-custom-maxlength="30" form="caracteristicaForm" />
+				</div>
+
+				<div class="col-sm-4">
+					<label-input ng-type="text" ng-id="caracteristica.descricao" ng-label="LABEL.DESCRICAO" ng-obrigatorio="true" ng-disabled="!edit" ng-model="caracteristica.descricao"
+						ng-custom-maxlength="80" form="caracteristicaForm" />
+				</div>
+
+				<div class="col-sm-2">
+					<div class="form-group">
+						<label-select ng-id="caracteristica.dominioTipoDado.nome" ng-model="caracteristica.dominioTipoDado.codigo" ng-custom-change="limpaCamposDependentes()" ng-label="LABEL.TIPO_DADO" ng-obrigatorio="true" ng-disabled="!edit"
+							form="caracteristicaForm" ng-list="dominiosTipoDado" ng-custom-options="dominioTipoDado.codigo as dominioTipoDado.descricao for dominioTipoDado"></label-select>
+					</div>
+					<!-- .form-group  -->
+				</div>
+				<!-- .col -->
+
+				<div class="col-sm-2" ng-show="caracteristica.dominioTipoDado.codigo === 6">
+					<div class="form-group">
+						<label-select ng-id="caracteristica.chaveDominio" ng-model="caracteristica.chaveDominio" ng-label="LABEL.TIPO_CHAVE_DOMINIO" ng-disabled="!edit"
+							form="caracteristicaForm" ng-list="chavesDominio" ng-custom-options="chaveDominio as chaveDominio for chaveDominio"></label-select>
+					</div>
+					<!-- .form-group -->
+				</div>
+				<!-- .col -->
+
+				<div class="col-sm-2" ng-show="caracteristica.dominioTipoDado.codigo === 1 || caracteristica.dominioTipoDado.codigo === 2">
+					<label-input-number ng-max-number="500" ng-obrigatorio="caracteristica.dominioTipoDado.codigo === 1 || caracteristica.dominioTipoDado.codigo === 2" ng-min-number="0" ng-id="caracteristica.tamanho" form="caracteristicaForm" ng-label="LABEL.TAMANHO" ng-disabled="!edit"
+						ng-model="caracteristica.tamanho" ng-custom-maxlength="3"></label-input-number>
+				</div>
+			</div>
+			<!-- row -->
+			<div class="row">
+				<div class="col-sm-2" ng-if="false">
+					<div class="form-group">
+						<label-select ng-id="caracteristica.dominioTipoRestricao.id" ng-model="caracteristica.dominioTipoRestricao.id" ng-label="LABEL.TIPO_RESTRICAO" ng-obrigatorio="true"
+							ng-disabled="!edit" form="caracteristicaForm" ng-list="dominiosTipoRestricao"
+							ng-custom-options="dominioTipoRestricao.id as dominioTipoRestricao.descricao for dominioTipoRestricao"></label-select>
+					</div>
+					<!-- .form-group  -->
+				</div>
+				<!-- .col -->
+				<div class="col-sm-4">
+					<label-input ng-type="text" ng-id="caracteristica.expressaoRegular" ng-label="LABEL.EXPRESSAO_REGULAR" ng-disabled="!edit"
+						ng-show="caracteristica.dominioTipoDado.codigo === 1 || caracteristica.dominioTipoDado.codigo === 2 || caracteristica.dominioTipoDado.codigo === 3 || caracteristica.dominioTipoDado.codigo === 4 || caracteristica.dominioTipoDado.codigo === 5"
+						ng-model="caracteristica.expressaoRegular" ng-custom-maxlength="50" form="caracteristicaForm"  label-info-tooltip="LABEL.ICON_REGEX_HELP"/>
+				</div>
+			</div>
+			<!-- row -->
+		</fieldset>
+	</form>
+</div>
+<!-- .page-content -->

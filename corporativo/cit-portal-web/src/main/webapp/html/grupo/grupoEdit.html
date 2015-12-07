@@ -1,0 +1,97 @@
+<div class="page-content clearfix">
+	<form name="formGrupo" novalidate ng-controller="GrupoController" id="grupoEdit" autocomplete="off">
+		<div class="bar-buttons-action fixed">
+			<div class="row">
+				<div class="col-sm-8 text-left">
+					<button class="btn btn-clear" ng-click="saveOrUpdate()" ng-show="!isVisualizar" type="button">
+						<i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+					</button>
+					
+					<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-show="isVisualizar" type="button" ng-click="habilitarEdicao()">
+						<i class="fa fa-pencil blue"></i>
+						<translate>LABEL.EDITAR</translate>
+					</button>
+					
+					<button title="{{$translate.instant('LABEL.LIMPAR')}}" alt="{{$translate.instant('LABEL.LIMPAR')}}" ng-show="grupo.id === undefined" class="btn btn-clear" ng-click="resetForm()" type="button">
+						<i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+					</button>
+					
+					<button class="btn btn-clear" ng-disabled="!grupo.id || isVisualizar" ng-click="apresentarDialogConfirmacaoRemocao();" type="button">
+						<i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+					</button>
+					
+					<bloquear-desbloquear ng-model="grupo" ng-repository="GrupoRepository" ng-edit="edit"></bloquear-desbloquear>
+					
+					<button class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); fetchResult()" type="button">
+						<i class="fa fa-search"></i>  <translate>LABEL.PESQUISAR</translate>
+					</button>
+					
+				</div>
+				
+				<div class="col-sm-4 text-right">
+					<favorito/>
+				
+					<help-button workspace="workspace" />
+				</div>
+			</div>
+		</div>
+		
+		<breadcrumb ng-workspace="workspace"></breadcrumb>
+		
+		<p>
+			<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+		</p>
+		
+		 <fieldset>
+        	<legend><translate>LABEL.DADO_GRUPO</translate></legend>
+			<div class="row">
+				<div class="col-sm-6">
+					<label-input ng-id="grupo.nome" name="grupo.nome" ng-typ="text" ng-obrigatorio="true" ng-custom-maxlength='255' form="formGrupo" ng-label="LABEL.NOME" ng-model="grupo.nome"
+						ng-disabled="isVisualizar" />
+				
+				</div>
+				
+				<div class="col-sm-6">
+				
+					<label-input ng-type="text" ng-id="grupo.sigla" ng-label="LABEL.SIGLA" ng-model="grupo.sigla" ng-custom-maxlength="80" form="formGrupo" ng-obrigatorio="true"
+						ng-disabled="isVisualizar" />
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+						<label-input ng-id="grupo.email" name="grupo.email" ng-type="email" ng-obrigatorio='false' ng-custom-maxlength='255' form="formGrupo" ng-label="LABEL.EMAIL" ng-model="grupo.email"
+							ng-disabled="isVisualizar" />
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="control-label"><translate>LABEL.USUARIOS</translate></label>
+						
+						<ui-select multiple ng-model="$parent.grupo.grupoUsuarios" theme="select2" ng-disabled="isVisualizar" style="min-width: 100%;">
+							<ui-select-match placeholder="Seleciona um opção...">{{$item.usuario.username}}</ui-select-match>
+							<ui-select-choices refresh="searchByUsuario($select.search);" repeat="grupoUsuario in grupoUsuariosSource | filter:$select.search">
+								{{grupoUsuario.usuario.username}}
+							</ui-select-choices>
+						</ui-select>
+					</div><!-- .form-group  -->
+			    </div>
+			    
+			    <div class="col-sm-6">
+			    	<div class="form-group">
+						<label class="control-label"><translate>LABEL.PERMISSOES</translate></label>
+						
+						<ui-select multiple ng-model="$parent.grupo.grupoPrivilegios" theme="select2" ng-disabled="isVisualizar" style="min-width: 100%;">
+							<ui-select-match placeholder="Seleciona um opção...">{{$item.privilegio.nome}}</ui-select-match>
+							<ui-select-choices refresh="searchByPrivilegio($select.search);" repeat="grupoPrivilegio in grupoPrivilegiosSource | filter:$select.search">
+								{{grupoPrivilegio.privilegio.nome}}
+							</ui-select-choices>
+						</ui-select>
+					</div><!-- .form-group  -->
+				</div>
+			</div>
+		</fieldset>	
+	</form>
+</div>

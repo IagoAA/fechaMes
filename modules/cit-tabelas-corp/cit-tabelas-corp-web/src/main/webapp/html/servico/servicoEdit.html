@@ -1,0 +1,62 @@
+<div id="editServico" class="page-content clearfix" ng-controller="ServicoController">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+				<button title="{{$translate.instant('LABEL.SALVAR')}}" alt="{{$translate.instant('LABEL.SALVAR')}}" class="btn btn-clear" ng-click="saveOrUpdate()" ng-show="edit">
+					<i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.LIMPAR')}}" alt="{{$translate.instant('LABEL.LIMPAR')}}" class="btn btn-clear" ng-click="resetForm();" ng-show="servico.id === undefined">
+					<i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-show="!(pgEdit || edit)" ng-click="edit = true; pgEdit = true;">
+					<i class="fa fa-pencil blue"></i>
+					<translate>LABEL.EDITAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-click="remove(servico);" ng-show="servico.id">
+					<i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+				</button>
+
+				<bloquear-desbloquear ng-model="servico" ng-repository="ServicoRepository" ng-edit="edit"></bloquear-desbloquear>
+
+				<button title="{{$translate.instant('LABEL.PESQUISAR')}}" alt="{{$translate.instant('LABEL.PESQUISAR')}}" class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); atualizaPaginaPesquisa();">
+					<i class="fa fa-search"></i> <translate>LABEL.PESQUISAR</translate>
+				</button>
+			</div><!-- .col -->
+
+			<div class="col-sm-4 text-right">
+				<favorito/>
+
+				<help-button workspace="workspace" />
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+	<form name="servicoForm" novalidate autocomplete="off">
+		<p>
+			<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+		</p>
+
+		<fieldset>
+			<legend><translate>LABEL.DADOS_GERAIS</translate></legend>
+
+			<div class="row">
+				<div class="col-md-2">
+					<label-input ng-type="text" ng-id="servico.codigo" ng-label="LABEL.CODIGO" ng-disabled="true" ng-model="servico.codigo" ng-custom-maxlength="30" form="servicoForm" />
+				</div><!-- .col-sm-2 -->
+
+				<div class="col-md-6">
+					<label-input ng-type="text" ng-id="servico.nome" ng-label="LABEL.NOME" ng-obrigatorio="true" ng-disabled="!edit" ng-model="servico.nome" ng-custom-maxlength="100" form="servicoForm" />
+				</div><!-- .col-sm-6 -->
+
+				<div class="col-md-4">
+					<label-input ng-type="text" ng-id="servico.sigla" ng-label="LABEL.SIGLA" ng-obrigatorio="true" ng-disabled="!edit" ng-model="servico.sigla" ng-custom-maxlength="5" form="servicoForm" />
+				</div><!-- .col-sm-4 -->
+			</div><!-- .row -->
+		</fieldset>
+	</form>
+</div><!-- .page-content -->

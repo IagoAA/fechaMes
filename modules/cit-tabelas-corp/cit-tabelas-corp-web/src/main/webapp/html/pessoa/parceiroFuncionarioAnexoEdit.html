@@ -1,0 +1,92 @@
+
+<div class="widget-box margin-bottom">
+	<div class="widget-header">
+		<h4 class="widget-title">
+			<translate>LABEL.CONTRATO</translate>
+		</h4>
+		<div class="widget-toolbar">
+			<a href="#void"
+				ng-click="widgetAnexosIsCollapsed = !widgetAnexosIsCollapsed"> <i
+				class="fa"
+				ng-class="{'fa-chevron-up': !widgetAnexosIsCollapsed, 'fa-chevron-down': widgetAnexosIsCollapsed}"></i>
+			</a>
+		</div>
+	</div>
+	<div collapse="widgetAnexosIsCollapsed" class="widget-body">
+		<div class="widget-main clearfix">
+			<div class="row" style="padding: 0px 12px 0px 12px !important;">
+				<div nv-file-drop="" uploader="uploader" id="actionUploadArquivos" ng-show="true"
+					onclick="$('#uploadArquivos').click();">
+					<div nv-file-over="" uploader="uploader"
+						over-class="another-file-over-class" class="well my-drop-zone">
+						<p>
+							<translate>MSG.ARRASTE_SOLTE_ARQUIVO<translate/>
+						</p>
+					</div>
+				</div>
+				<input id="uploadArquivos" type="file" nv-file-select=""
+					uploader="uploader" multiple ng-show="false" />
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+						<div class="panel-heading clearfix"  ng-show="edit && (funcionario.anexos.length > 0 || uploader.queue.length > 0)">							
+							<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-click="removerUploadAnexoFuncionario(funcionarioAnexoSelected)" ng-show="funcionario.anexos.length > 0 || uploader.queue.length > 0">
+								<i class="fa fa-close red"></i>
+								<translate>LABEL.REMOVER</translate>
+							</button>
+							<button class="btn btn-clear" type="button" ng-if="funcionario.id && funcionario.anexos.length > 0" ng-disabled="!funcionarioAnexoSelected.id" ng-click="visualizarArquivo(funcionarioAnexoSelected)">
+								<i class="fa fa-search blue"></i>
+								<translate>LABEL.VISUALIZAR</translate>
+							</button>
+							<a title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-if="funcionario.id && funcionario.anexos.length > 0" 
+								ng-disabled="!funcionaroAnexoSelected.id" href="/cit-tabelas-corp-web/rest/funcionarioAnexo/downloadArquivo?idFuncionarioAnexo={{funcionarioAnexoSelected.id}}">
+								<i class="fa fa-download blue"></i>
+								<translate>LABEL.DOWNLOAD</translate>
+							</a>	
+						</div>					
+					<table class="table" ng-show="funcionario.anexos.length > 0 || uploader.queue.length > 0">
+						<thead>
+							<tr>
+								<th class="text-center" style="width: 5%;" ng-show="edit"></th>
+								<th width="50%"><translate>LABEL.NOME</translate></th>
+								<th ng-show="uploader.isHTML5"><translate>LABEL.TAMANHO</translate></th>								
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in uploader.queue">
+								<td class="text-center" ng-show="edit">
+									<input type="radio" name="funcionarioAnexoSelected" ng-value="item" ng-model="$parent.funcionarioAnexoSelected"></input>
+								</td>							
+								<td><strong>{{ item.file.name }}</strong></td>
+								<td ng-show="uploader.isHTML5" nowrap>{{
+									item.file.size/1024/1024|number:2 }} MB</td>
+							</tr>
+							<tr ng-repeat="anexo in funcionario.anexos">
+								<td class="text-center">
+									<input type="radio" name="funcionarioAnexoSelected" ng-value="anexo" ng-model="$parent.funcionarioAnexoSelected"></input>
+								</td>							
+								<td><strong>{{ anexo.descricao }}</strong></td>
+								<td nowrap>{{ anexo.tamanho/1024/1024|number:2 }}
+									MB</td>
+							</tr>
+						</tbody>
+					</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/ng-template" id="visualizarArquivos">
+		<div class="modal-header">
+	    	<button ng-click="$dismiss('cancel');" class="btn btn-clear">
+	        	<i class="fa fa-times red"></i>
+	        	Cancelar
+	    	</button>
+		</div><!-- .modal-header -->
+
+		<div class="modal-body">
+	    	<iframe src="{{url}}" allowfullscreen class="iframe-report" />
+		</div><!-- .modal-body -->
+</script>
+</div>

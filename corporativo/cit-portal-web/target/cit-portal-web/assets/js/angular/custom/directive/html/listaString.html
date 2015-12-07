@@ -1,0 +1,33 @@
+<div class="row" >
+	<div class='col-md-12'>
+		<div class="input-group">
+			<input ng-show="!numberOnly" class="form-control" maxlength="{{maxLength}}" type="text" id="inputItem" name="inputItem" ng-model="item" />
+			
+			<input ng-show="numberOnly" integer maxlength="{{maxLength}}" ng-trim='false' class="form-control" type="text" id="inputItem" name="inputItem" ng-model="item" />
+
+			<span class="input-group-addon"  style="cursor:pointer" ng-click="adicionaItem()" ng-show="entradaValida()">
+				<i class="fa fa-plus-circle yellow-dark bigger-110"></i>
+			</span>
+			<span class="input-group-addon"  style="cursor:pointer" ng-click="item = ''" >
+				<i class="fa fa-eraser bigger-110"></i>
+			</span>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12" style="height:{{altura}};overflow:auto">
+		<table class="table table-bordered table-hover">
+			<tbody>
+				<tr ng-repeat="item in lista">
+					<td style="width: 5%;" class="text-center">
+						<a href="" ng-click="removeItem($index)">
+							<i class="ace-icon fa fa-times red"></i>
+						</a>
+					</td>
+					<td style="width: 95%;" >{{item}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

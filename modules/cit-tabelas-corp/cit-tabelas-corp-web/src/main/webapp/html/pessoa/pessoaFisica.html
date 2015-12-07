@@ -1,0 +1,83 @@
+<fieldset ng-show="pessoa.dominioPessoa.codigo == 1">
+	<legend class="blue">Pessoa Física</legend>
+		<div class='row'>
+			<div class='col-sm-3'>
+				<div class='form-group' ng-class="{'has-error': formPessoa['cpf'].$error.required && (!formPessoa['cpf'].$pristine || formPessoa.$submitted)}">
+					<label class='control-label'>
+						<translate>LABEL.CPF</translate> 
+						<span class='red'>*</span>
+					</label>
+					<i ng-show="formPessoa['cpf'].$error.required && (!formPessoa['cpf'].$pristine || formPessoa.$submitted)" class='fa fa-warning red' tooltip="{{$translate.instant('LABEL.TIPO_PESSOA') + ' ' +$translate.instant('LABEL.CAMPO_OBRIGATORIO')}}" tooltip-placement='top'></i>
+					<input type="text" ng-cpf  class='form-control' id="cpf"  name="cpf" ng-model="pessoa.pessoaFisica.cpf" ui-mask="999.999.999-99" ng-disabled="isVisualizar" ng-required="pessoa.dominioPessoa.codigo == 1"/>
+     				<p class='help-block small red' ng-show="pessoa.pessoaFisica.cpf && !formPessoa.cpf.$valid">*<translate>LABEL.CPF</translate><translate>LABEL.INVALIDO</translate> </p>
+				</div>
+			</div>
+
+			<div class='col-sm-3'>
+				<div class='form-group'>
+					<label-input ng-id="pessoa.pessoaFisica.rg" ng-typ="text" ng-obrigatorio='false' ng-label="LABEL.RG" ng-model="pessoa.pessoaFisica.rg" ng-disabled="isVisualizar" ng-custom-maxlength='20'/>
+				</div>
+			</div>
+
+			<div class='col-sm-3'>
+				<div class='form-group'>
+					<label-input-number ng-id="pessoa.pessoaFisica.tituloEleitor" name="tituloEleitor" ng-typ="text" ng-obrigatorio='false' ng-label="LABEL.TITULO_ELEITOR"
+						ng-model="pessoa.pessoaFisica.tituloEleitor" ng-disabled="isVisualizar" ng-custom-maxlength='50'/>
+				</div>
+			</div>
+
+			<div class='col-sm-3'>
+				<div class='form-group'>
+					<label-input-number ng-id="pessoa.pessoaFisica.numeroPassaporte" name="numeroPassaporte" ng-typ="text" ng-obrigatorio='false' ng-label="LABEL.NUMERO_PASSAPORTE"
+						ng-model="pessoa.pessoaFisica.numeroPassaporte" ng-disabled="isVisualizar" ng-custom-maxlength='50'/>
+				</div>
+			</div>
+
+		</div>
+
+		<div class='row'>
+			<div class='col-sm-6'>
+				<div class='form-group'>
+					<label-input ng-id="pessoa.pessoaFisica.nomeMae" name="nomeMae" ng-typ="text" ng-obrigatorio='false' ng-label="LABEL.NOME_MAE" ng-model="pessoa.pessoaFisica.nomeMae"
+						ng-disabled="isVisualizar" ng-custom-maxlength='255'/>
+				</div>
+			</div>
+
+			<div class='col-sm-6'>
+				<div class='form-group'>
+					<label-input ng-id="pessoa.pessoaFisica.nomePai" name="nomePai" ng-type="text" ng-obrigatorio='false' ng-label="LABEL.NOME_PAI" ng-model="pessoa.pessoaFisica.nomePai"
+						ng-disabled="isVisualizar" ng-custom-maxlength='255'/>
+				</div>
+			</div>
+		</div>
+
+		<div class='row'>
+			<div class='col-sm-3'>
+				<label-input-data ng-id="pessoa.pessoaFisica.dataNascimento" ng-label="LABEL.DATA_NASCIMENTO" ng-obrigatorio='pessoa.dominioPessoa.codigo == 1' form='formPessoa' ng-model="pessoa.pessoaFisica.dataNascimento" ng-disabled="isVisualizar"></label-input-data>
+			</div>
+
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label for="pessoa.pessoaFisica.estadoCivil" class="control-label">
+						<translate>LABEL.ESTADO_CIVIL</translate>
+					</label> 
+					<select class="form-control" id="pessoa.pessoaFisica.estadoCivil" name="pessoa.pessoaFisica.dominioEstadoCivil" ng-value="pessoa.pessoaFisica.dominioEstadoCivil.id" ng-model="pessoa.pessoaFisica.dominioEstadoCivil.id"
+						ng-options="estadoCivil.id  as estadoCivil.descricao for estadoCivil in dominiosEstadoCivil" data-placeholder="Selecione" ng-disabled="isVisualizar"/>
+				</div>
+			</div>
+
+			<div class='col-sm-3'>
+				<div class="form-group">
+					<label class="control-label block">
+						<translate>LABEL.SEXO</translate>
+					</label>
+					<div class="radio-inline" ng-repeat="sexo in dominiosSexo">
+						<label> 
+							<input type="radio" name="pessoa.pessoaFisica.dominioSexo" ng-value="sexo.id" ng-model="pessoa.pessoaFisica.dominioSexo.id" ng-disabled="isVisualizar"/> 
+							{{sexo.descricao}}
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+</fieldset>

@@ -1,0 +1,64 @@
+<div id="editOrganizacao" class="page-content clearfix" ng-controller="OrganizacaoController">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+				<button title="{{$translate.instant('LABEL.SALVAR')}}" alt="{{$translate.instant('LABEL.SALVAR')}}" class="btn btn-clear" ng-click="saveOrUpdate()" ng-disabled="organizacaoForm.$invalid" ng-show="edit">
+					<i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.LIMPAR')}}" alt="{{$translate.instant('LABEL.LIMPAR')}}" class="btn btn-clear" ng-click="resetForm();" ng-show="organizacao.id === undefined">
+					<i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-show="!(pgEdit || edit)" ng-click="edit = true; pgEdit = true;">
+					<i class="fa fa-pencil blue"></i>
+					<translate>LABEL.EDITAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.PESQUISAR')}}" alt="{{$translate.instant('LABEL.PESQUISAR')}}" class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); atualizaPaginaPesquisa();">
+					<i class="fa fa-search"></i> <translate>LABEL.PESQUISAR</translate>
+				</button>
+			</div><!-- .col -->
+
+			<div class="col-sm-4 text-right">
+				<favorito/>
+
+				<help-button workspace="workspace" />
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+	<form name="organizacaoForm" novalidate autocomplete="off">
+		<p>
+			<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+		</p>
+
+		<fieldset>
+			<legend><translate>LABEL.DADOS_ORGANIZACAO</translate></legend>
+				<div class="row">
+                  	<div class="col-md-2">
+						<label-input ng-type="text" ng-id="organizacao.codigo" ng-label="LABEL.CODIGO" ng-obrigatorio="true" ng-disabled="!edit" ng-model="organizacao.codigo" ng-custom-maxlength="20" form="organizacaoForm"/>
+                   	</div><!-- .col -->				
+					<div class='col-sm-6'>
+						<label-input ng-type="text" ng-id="organizacao.nome" ng-label="LABEL.NOME" ng-obrigatorio="true" ng-disabled="!edit" ng-model="organizacao.nome" ng-custom-maxlength="255" form="organizacaoForm" />
+					</div>
+					<div class='col-sm-4'>
+						<label-input ng-type="text" ng-id="organizacao.sigla" ng-label="LABEL.SIGLA" ng-obrigatorio="true" ng-disabled="!edit" ng-model="organizacao.sigla" ng-custom-maxlength="30" form="organizacaoForm" />
+					</div>
+					<div class='col-sm-4'>
+						<label-input-data ng-id="organizacao.dataReferenciaVigente" ng-mode="month" ng-format="MM/yyyy" ng-label="LABEL.REFERENCIA_VIGENTE" ng-obrigatorio="true" ng-disabled="!edit" ng-model="organizacao.dataReferenciaVigente" form="organizacaoForm" />
+					</div>
+				</div><!-- row -->
+				<div class="row">
+					<div class="col-sm-4">
+						<label-input-data ng-id="organizacao.dataInicio" ng-label="LABEL.DATA_INICIO" ng-obrigatorio="true" ng-disabled="!edit" ng-model="organizacao.dataInicio" form="organizacaoForm" />
+					</div>
+					<div class="col-sm-4">
+						<label-input-data ng-id="organizacao.dataFim" ng-label="LABEL.DATA_FIM" ng-obrigatorio="false" ng-disabled="!edit" ng-model="organizacao.dataFim" form="organizacaoForm" />
+					</div>					
+				</div><!-- row -->				
+		</fieldset>
+	</form>
+</div><!-- .page-content -->

@@ -1,0 +1,235 @@
+<div class="page-content clearfix" id="widget-edit-controller" ng-controller="WidgetController">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+				<button type="button" class="btn btn-clear" ng-click="saveOrUpdate();" ng-show="$edit">
+					<i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+				</button>
+
+				<button type="button" class="btn btn-clear" ng-click="$edit = true;" ng-show="widget.id && !$edit">
+					<i class="fa fa-pencil blue"></i> <translate>LABEL.EDITAR</translate>
+				</button>
+
+				<button type="button" class="btn btn-clear" ng-show="widget.id === undefined" ng-click="resetForm();">
+					<i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+				</button>
+
+				<button type="button" class="btn btn-clear" ng-click="remove(widget);" ng-show="widget.id">
+					<i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+				</button>
+
+				<button type="button" class="btn btn-clear" ng-click="fetchResult(); $showPageSearchWorkspace(workspace);">
+					<i class="fa fa-search"></i> <translate>LABEL.PESQUISAR</translate>
+				</button>
+			</div><!-- .col -->
+
+			<div class="col-sm-4 text-right">
+				<favorito/>
+
+				<help-button workspace="workspace" />
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+	<form name="formWidgetEdit" autocomplete="off">
+		<p>
+			<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+		</p>
+
+		<fieldset>
+        	<legend><translate>LABEL.DADOS_WIDGET</translate></legend>
+
+        	<div class="row">
+        		<div class="col-sm-8">
+                    <label-input ng-label="LABEL.NOME" name="widget.nome" ng-model="widget.nome" ng-obrigatorio="true" ng-disabled="!$edit" form="formWidgetEdit"></label-input>
+                </div><!-- .col -->
+                
+                <div class="col-sm-2">
+					<label-input-checkbox ng-label="LABEL.APRESENTAR_URL" name="widget.apresentarUrlServico" ng-model="widget.apresentarUrlServico" ng-disabled="isVisualizar"></label-input-checkbox>
+				</div>
+        	</div>
+
+        	<div class="row">
+        		<div class="col-sm-12">
+                    <label-select ng-id="widget.tipoComponente.id" ng-model="widget.tipoComponente.id" ng-label="LABEL.TIPO" ng-obrigatorio="true"
+						ng-disabled="!$edit" form="formWidgetParametroEdit" ng-list="tiposWidget" ng-custom-options="tipoWidget.id as tipoWidget.descricao for tipoWidget">
+					</label-select>
+                </div><!-- .col -->
+        	</div>
+
+        	<div class="row">
+        		<div class="col-sm-12">
+                    <label-text-area ng-label="LABEL.DESCRICAO" name="widget.nome" ng-model="widget.descricao" rows="5" ng-disabled="!$edit" form="formWidgetEdit"></label-text-area>
+                </div><!-- .col -->
+        	</div>
+
+        	<div class="row">
+        		<div class="col-sm-12">
+        			<div class="panel panel-default">
+        				<div class="panel-heading clearfix">
+        					<button type="button" class="btn btn-clear" ng-click="$openModal('addParametroModal.html');" ng-disabled="!$edit">
+								<i class="fa fa-plus-circle yellow-dark"></i>
+								Adicionar
+							</button>
+
+							<button type="button" class="btn btn-clear" ng-disabled="!$edit" ng-click="loadWidgetParametro();">
+								<i class="fa fa-pencil blue"></i>
+								Editar
+							</button>
+
+							<button type="button" class="btn btn-clear" ng-disabled="!$edit" ng-click="removeWidgetParametro();">
+								<i class="fa fa-close red"></i>
+								Remover
+							</button>
+        				</div><!-- .panel-heading -->
+
+        				<table class="table table-bordered table-striped">
+	        				<thead>
+		        				<tr>
+		        					<th class="text-center" style="width: 5%;">
+			                            #
+			                        </th>
+		        					<th style="width: 15%;">
+		        						<translate>LABEL.NOME</translate>
+		        					</th>
+		        					<th style="width: 20%;">
+		        						<translate>LABEL.TIPO</translate>
+		        					</th>
+		        					<th style="width: 60%;">
+		        						<translate>LABEL.VALOR_PADRAO</translate>
+		        					</th>
+		        				</tr>
+	        				</thead>
+
+	        				<tbody>
+	        					<tr ng-repeat="parametro in widget.parametros">
+	        						<td class="text-center" ng-init="parametro.$index = $index">
+	        							<input type="radio" name="parametroChecked" ng-model="$parent.parametroChecked" ng-value="parametro" ng-disabled="!$parent.$edit" />
+	        						</td>
+
+	        						<td>
+	        							{{parametro.nome}}
+	        						</td>
+
+	        						<td>
+	        							{{parametro.tipoWidgetParametroDominio.descricao}}
+	        						</td>
+	        						<td ng-show="parametro.tipoWidgetParametroDominio.codigo === 3 || parametro.tipoWidgetParametroDominio.codigo === 4">
+	        							{{parametro.numeroDefault}}
+	        						</td>
+	        						<td ng-show="parametro.tipoWidgetParametroDominio.codigo === 1 || parametro.tipoWidgetParametroDominio.codigo === 2 || parametro.tipoWidgetParametroDominio.codigo === 9">
+	        							{{parametro.textoDefault}}
+	        						</td>
+	        						<td ng-show="parametro.tipoWidgetParametroDominio.codigo === 5">
+	        							{{parametro.dataDefault | date}}
+	        						</td>
+	        						<td ng-show="parametro.tipoWidgetParametroDominio.codigo === 6">
+	        							{{parametro.dominioDefault.descricao}}
+	        						</td>
+	        						<td ng-show="parametro.tipoWidgetParametroDominio.codigo === 10">
+	        							{{parametro.booleanDefault | boolText}}
+	        						</td>
+	        					</tr>
+	        				</tbody>
+	        			</table>
+        			</div><!-- .panel -->
+        		</div><!-- .col -->
+        	</div><!-- .row -->
+        </fieldset>
+	</form>
+
+<script type="text/ng-template" id="addParametroModal.html">
+	<div class="modal-header">
+	    <button class="btn btn-clear" ng-click="$parent.addAndUpdateWidgetParametro();">
+	        <i class="fa fa-save green"></i> <translate>LABEL.ADICIONAR_PARAMETRO</translate>
+	    </button>
+
+	    <button ng-click="$parent.fecharModalWidgetParametro(); $dismiss('cancel')" class="btn btn-clear">
+	        <i class="fa fa-times red"></i> <translate>LABEL.CANCELAR</translate>
+	    </button>
+	</div><!-- .modal-header -->
+
+	<div class="modal-body">
+	    <h2 class="title-modal blue"><translate>LABEL.DADOS_PARAMETRO</translate></h2>
+
+		<form name="formWidgetParametroEdit">
+	    	<div class="row">
+	        	<div class="col-sm-12">
+	            	<label-select ng-label="LABEL.TIPO" ng-model="$parent.parametro.tipoWidgetParametroDominio" ng-id="parametro.tipoWidgetParametroDominio" ng-list="$parent.listaTipoWidgetParametro"
+						ng-custom-options="tipoWidgetParametro.descricao for tipoWidgetParametro" track-by="track by tipoWidgetParametro.id" form="formWidgetParametroEdit" ng-disabled="!$edit">
+					</label-select>
+	        	</div><!-- .col -->
+	    	</div><!-- .row -->
+
+			<div class="row" ng-show="$parent.parametro.tipoWidgetParametroDominio.codigo != 9">
+	        	<div class="col-sm-12">
+	            	<label-input ng-label="LABEL.NOME" ng-model="$parent.parametro.nome" ng-disabled="!$parent.$edit" form="formWidgetParametroEdit"></label-input>
+	        	</div><!-- .col -->
+	    	</div><!-- .row -->
+
+			<div class="row" ng-show="$parent.parametro.tipoWidgetParametroDominio.codigo != 9">
+	        	<div class="col-sm-12">
+	            	<label-input ng-label="LABEL.ATRIBUTO_WIDGET" ng-model="$parent.parametro.atributoFiltro" ng-disabled="!$parent.$edit" form="formWidgetParametroEdit"></label-input>
+	        	</div><!-- .col -->
+	    	</div><!-- .row -->
+
+			<div class="row" ng-show="$parent.parametro.tipoWidgetParametroDominio.codigo === 3 || $parent.parametro.tipoWidgetParametroDominio.codigo === 4">
+				<div class="col-sm-6">
+					<label-input-number ng-id="$parent.parametro.numeroDefault" form="formWidgetParametroEdit" ng-label="LABEL.VALOR_PADRAO" ng-disabled="!$edit" ng-model="$parent.parametro.numeroDefault"
+						form="formWidgetParametroEdit">
+					</label-input-number>
+				</div>
+			</div>
+
+			<div class="row" ng-show="$parent.parametro.tipoWidgetParametroDominio.codigo === 1 || $parent.parametro.tipoWidgetParametroDominio.codigo === 9">
+				<div class="col-sm-12">
+					<label-input ng-type="text" ng-id="$parent.parametro.textoDefault" ng-disabled="!$edit" ng-label="LABEL.VALOR_PADRAO"
+						ng-model="$parent.parametro.textoDefault" form="formWidgetParametroEdit">
+					</label-input>
+				</div>
+			</div>
+
+			<div class="row" ng-show="$parent.parametro.tipoWidgetParametroDominio.codigo === 2">
+				<div class="col-sm-12">
+					<label-text-area rows="2" ng-id="$parent.parametro.textoDefault" ng-disabled="!$edit" ng-label="LABEL.VALOR_PADRAO" ng-model="$parent.parametro.textoDefault" form="formWidgetParametroEdit">
+					</label-text-area>
+				</div>
+			</div>
+
+			<div class="row" ng-show="$parent.parametro.tipoWidgetParametroDominio.codigo === 5">
+				<div class="col-sm-6">
+					<label-input-data ng-id="$parent.parametro.dataDefault" form="formWidgetParametroEdit" ng-label="LABEL.VALOR_PADRAO" ng-disabled="!$edit"
+						ng-model="$parent.parametro.dataDefault">
+					</label-input-data>
+				</div>
+			</div>
+
+			<div class="row" ng-show="$parent.parametro.tipoWidgetParametroDominio.codigo === 6">
+				<div class="col-sm-6">
+					<label-select ng-id="$parent.parametro.chaveDominioDefault" ng-model="$parent.parametro.chaveDominioDefault" ng-label="LABEL.TIPO_CHAVE_DOMINIO"
+						ng-disabled="!$edit" form="formWidgetParametroEdit" ng-list="chavesDominio" ng-custom-options="chaveDominio as chaveDominio for chaveDominio" ng-custom-change="atualizarDominiosDefault()">
+					</label-select>
+				</div>
+			</div>
+
+			<div class="row" ng-show="$parent.parametro.tipoWidgetParametroDominio.codigo === 6">
+				<div class="col-sm-6">
+					<label-select ng-id="$parent.parametro.dominioDefault.id" ng-model="$parent.parametro.dominioDefault" ng-label="LABEL.VALOR_PADRAO" ng-disabled="!$edit"
+							form="formWidgetParametroEdit" ng-list="dominiosTipoDefault" ng-custom-options="dominioDefault.originalElement as dominioDefault.descricao for dominioDefault"></label-select>
+				</div>
+			</div>
+
+			<div class="row" ng-show="$parent.parametro.tipoWidgetParametroDominio.codigo === 10">
+				<div class="col-sm-6">
+
+					<label-input-checkbox ng-id="$parent.parametro.booleanDefault" form="formWidgetParaRmetroEdit" ng-label="LABEL.VALOR_PADRAO" ng-disabled="!$edit"
+						ng-model="$parent.parametro.booleanDefault">
+					</label-input-checkbox>
+				</div>
+			</div>
+		</form>
+	</div><!-- .modal-body -->
+</script>
+</div><!-- .page-content -->

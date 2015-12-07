@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <button type="button" class="btn btn-clear" ng-click="closeDialog()"><i class="fa fa-check green"></i> <translate>LABEL.CONFIRMAR</translate></button>
+</div>
+<div class="modal-body">
+	<h2 class="title-modal blue">{{widget.title}}</h2>
+	
+	<div class="row">
+		<div class="col-sm-12">
+		  <form role="form">
+		    <div class="form-group">
+		      <label for="widgetTitle"><translate>LABEL.TITULO</translate></label>
+		      <input type="text" class="form-control" id="widgetTitle" ng-model="definition.title" required="" />
+		    </div>
+		  </form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12" ng-if="widget.edit">
+		    <adf-widget-content model="definition" content="widget.edit" />
+		</div>
+	</div>
+</div>

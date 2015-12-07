@@ -1,0 +1,48 @@
+<form role="form">
+  	<div class="form-group" ng-show="config.apresentarUrl">
+		<label-input ng-label="LABEL.URL_SERVICO" id="path" name="config.path" ng-model="config.path" form="formWidgetEdit"></label-input>
+	</div>
+	<div class="form-group" >
+		<label-select ng-id="config.tempoAtualizacao" ng-model="config.tempoAtualizacao" ng-label="LABEL.TEMPO_ATUALIZACAO"
+				 ng-list="config.listaDominioTempoAtualizacao" ng-custom-options="tempoAtualizacao.codigo as tempoAtualizacao.descricao for tempoAtualizacao">
+		</label-select>
+	</div>
+	<div class="row" ng-repeat="parametro in config.parametros">
+		<div class="col-sm-12" ng-if="parametro.tipoWidgetParametroDominio.codigo == 1">
+			<label-input ng-type="text" ng-id="parametro.textoDefault-{{$index}}" ng-label="{{parametro.nome}}" ng-model="parametro.textoDefault" ng-custom-maxlength="255" />
+		</div>
+		<div class="col-sm-12" ng-if="parametro.tipoWidgetParametroDominio.codigo == 2">
+			<label-text-area ng-type="text" ng-id="parametro.textoDefault-{{$index}}" ng-label="{{parametro.nome}}" rows="5" ng-model="parametro.textoDefault" ng-custom-maxlength="255" />
+		</div>
+		<div class="col-sm-12" ng-if="parametro.tipoWidgetParametroDominio.codigo == 3">
+			<label-input-number ng-id="parametro.textoDefault-{{$index}}" ng-label="{{parametro.nome}}" ng-model="parametro.numeroDefault" />
+		</div>
+		<div class="col-sm-12" ng-if="parametro.tipoWidgetParametroDominio.codigo == 4">
+			<label-input-money ng-id="parametro.textoDefault-{{$index}}" ng-label="{{parametro.nome}}" ng-model="parametro.numeroDefault"></label-input-money>
+		</div>
+		<div class="col-sm-12" ng-if="parametro.tipoWidgetParametroDominio.codigo == 5">
+			<label-input-data ng-id="parametro.textoDefault-{{$index}}" ng-label="{{parametro.nome}}" ng-model="parametro.dataDefault"/>
+		</div>
+		<div class="col-sm-12" ng-if="parametro.tipoWidgetParametroDominio.codigo == 6">
+			<label-select ng-id="parametro.textoDefault-{{$index}}" ng-model="parametro.dominioDefault" ng-label="{{parametro.nome}}"
+				 ng-list="config.listaDominioParametro" ng-custom-options="parametro.originalElement as parametro.descricao for parametro" track-by="track by parametro.id">
+			</label-select>
+		</div>
+		<div class="col-sm-12" ng-if="parametro.tipoWidgetParametroDominio.codigo == 10">
+			<label-input-checkbox ng-id="parametro.booleanDefault-{{$index}}" form="formWidgetParaRmetroEdit" ng-label="{{parametro.nome}}" ng-model="parametro.booleanDefault" />
+		</div>
+	</div>
+	
+	<fieldset>
+		<legend><translate>LABEL.PERMISSOES</translate></legend>
+		<div class="row">
+			<div class="col-sm-6">
+				<pick-list list-source="config.grupoSource" list-target="config.widgetGrupos" item-label="grupo.nome" source-label="{{$translate.instant('LABEL.GRUPOS')}}" target-label="{{$translate.instant('LABEL.GRUPOS_SELECIONADOS')}}"></pick-list>
+		    </div>
+		    
+		    <div class="col-sm-6">
+				<pick-list list-source="config.privilegioSource" list-target="config.widgetPrivilegios" item-label="privilegio.nome" source-label="{{$translate.instant('LABEL.PERMISSOES')}}" target-label="{{$translate.instant('LABEL.PERMISSOES_SELECIONADAS')}}"></pick-list>
+		    </div>
+		</div>
+	</fieldset>
+</form>

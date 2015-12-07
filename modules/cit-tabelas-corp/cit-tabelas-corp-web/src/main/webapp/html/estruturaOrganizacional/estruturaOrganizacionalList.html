@@ -1,0 +1,134 @@
+<div id="searchEstruturaOrganizacional" class="page-content" ng-controller="EstruturaOrganizacionalListController">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+				<button title="{{$translate.instant('LABEL.CADASTRAR')}}" alt="{{$translate.instant('LABEL.CADASTRAR')}}" class="btn btn-clear"
+						ng-click="$showPageEditWorkspace(workspace); resetForm();">
+					<i class="fa fa-plus-circle yellow-dark"></i>
+					<translate>LABEL.CADASTRAR</translate>
+				</button>
+				
+				<button title="{{$translate.instant('LABEL.VISUALIZAR')}}" alt="{{$translate.instant('LABEL.VISUALIZAR')}}" class="btn btn-clear"
+						ng-click="abrirEstruturaOrganizacional(false);" ng-show="!mostraArvore">
+					<i class="fa fa-search blue"></i>
+					<translate>LABEL.VISUALIZAR</translate>
+				</button>
+				
+				<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear"
+						ng-click="abrirEstruturaOrganizacional(true);" ng-show="!mostraArvore">
+					<i class="fa fa-pencil blue"></i>
+					<translate>LABEL.EDITAR</translate>
+				</button>
+				
+				<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-click="remove();"
+						ng-show="!mostraArvore">
+					<i class="fa fa-times red"></i>
+					<translate>LABEL.REMOVER</translate>
+				</button>
+				
+				<span class="divider-vertical"></span>
+				
+				<filtros ng-filter="filterCriteria" ng-workspace="workspace"></filtros>
+			</div><!-- .col -->
+			
+			<div class="col-sm-4 text-right">
+				<favorito/>
+				
+				<help-button workspace="workspace"></help-button>
+				
+				<button ng-show="!mostraArvore" title="{{$translate.instant('LABEL.MOSTRAR_ARVORE')}}" alt="{{$translate.instant('LABEL.MOSTRAR_ARVORE')}}"
+						class="btn btn-clear" ng-click="mostrarArvore();" style="width: 110px; padding-right: 10px;">
+					<i class="fa fa-align-left yellow"></i>
+					<translate>LABEL.MOSTRAR_ARVORE</translate>
+				</button>
+				
+				<button ng-show="mostraArvore" title="{{$translate.instant('LABEL.MOSTRAR_LISTA')}}" alt="{{$translate.instant('LABEL.MOSTRAR_LISTA')}}"
+						class="btn btn-clear" ng-click="mostrarArvore();" style="width: 110px; padding-right: 10px;">
+					<i class="fa fa-list yellow"></i>
+					<translate>LABEL.MOSTRAR_LISTA</translate>
+				</button>
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+	
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+    
+    <list-view ng-show="!mostraArvore" ng-lista="estruturasOrganizacionais" ng-repository="EstruturaOrganizacionalRepository" ng-headers="headers"
+    		ng-filter-criteria="filterCriteria" ng-item-selecionado="estruturaOrganizacionalChecked"></list-view>
+    
+    <div ng-id="arvoreEstrutura" ng-show="mostraArvore">
+    	<div class="row">
+			<div class="col-sm-8">
+				<div class="form-group has-feedback">
+					<label class="control-label"><translate>LABEL.PESQUISAR</translate></label>
+					<input type="text" class="form-control" ng-model="buscaEstrutura" ng-change="buscarTree(buscaEstrutura)">
+					<span class="glyphicon glyphicon-search form-control-feedback"></span>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<input type="checkbox" ng-model="exibirEstruturasAtivas" ng-id="exibirEstruturasAtivas" style="margin-right: 5px; margin-top: 30px;">
+				<translate>LABEL.EXIBIR_APENAS_ATIVAS</translate>
+			</div>
+		</div>
+		
+		<div class="row" ng-hide="(estruturasOrganizacionais.length > 0) || editarEstrutura">
+			<div class="col-sm-8">
+				<translate>MSG.NENHUMA_ESTRUTURA_CADASTRADA</translate>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-12">
+				<script type="text/ng-template" id="estruturaOrganizacional_render.html">
+				<div class="tree-node tree-node-content">
+					<div class="dd-handle dd2-handle" ng-click="mostrarFilhos(estruturaOrganizacional)" id="{{estruturaOrganizacional.id}}">
+						<i class="ace-icon fa {{estruturaOrganizacional.sinalPositivo ? 'fa-plus' : 'fa-minus'}} bigger-125" ></i>
+					</div>
+					<div class="dd2-content" >
+						<div class="col-sm-9">
+							<a>
+								<span class="tree-label" ng-click="abrirEstruturaOrganizacional(false, estruturaOrganizacional);">{{ estruturaOrganizacional.nome }}</span>
+							</a>
+						</div>
+						<div class="col-sm-3 pull-right action-buttons" style="text-align:right !important; cursor : default !important;">
+								<span class="" ng-show="estruturaOrganizacional.dataBloqueio" tooltip="Esta estrutura organizacional encontra-se bloqueada">
+									<i class="fa fa-lock"></i>
+								</span>
+								<a href="#void" class="green" ng-click="$showPageEditWorkspace(workspace); resetForm(estruturaOrganizacional);">
+									<i class="fa fa-plus-circle bigger-130" title="{{$translate.instant('LABEL.CADASTRAR')}}"
+										alt="{{$translate.instant('LABEL.CADASTRAR')}}">
+									</i>
+								</a>
+								<a href="#void" class="blue" ng-click="abrirEstruturaOrganizacional(false, estruturaOrganizacional);"
+										style="margin-left: 3px;">
+									<i class="fa fa-search bigger-130" title="{{$translate.instant('LABEL.VISUALIZAR')}}"
+										alt="{{$translate.instant('LABEL.VISUALIZAR')}}"></i>
+								</a>
+								<a href="#void" class="blue" ng-click="abrirEstruturaOrganizacional(true, estruturaOrganizacional);"
+										style="margin-left: 3px;">
+									<i class="fa fa-pencil bigger-130" title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}"></i>
+								</a>
+								<a href="#void" class="red" ng-click="removeEstrutura(estruturaOrganizacional);"
+										style="margin-left: 3px;">
+									<i class="fa fa-trash-o bigger-130" title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}"></i>
+								</a>
+						</div>
+					</div>	
+				</div>
+
+				 <ul>
+					<li class="dd-item dd2-item" ng-repeat="estruturaOrganizacional in estruturaOrganizacional.subEstruturasOrganizacionais"
+						ng-include="'estruturaOrganizacional_render.html'" ng-class="{'selected': estruturaOrganizacional.$edit}">
+					</li>
+				 </ul>
+				</script>
+
+				<ul class="list-unstyled">
+					<li class="dd-item dd2-item" ng-repeat="estruturaOrganizacional in estruturasOrganizacionais" ng-include="'estruturaOrganizacional_render.html'"
+							ng-class="{'selected': estruturaOrganizacional.$edit}">
+					</li>
+				</ul>
+			</div><!-- .col -->
+		</div><!-- .row -->
+    </div>
+</div><!-- .page-content -->

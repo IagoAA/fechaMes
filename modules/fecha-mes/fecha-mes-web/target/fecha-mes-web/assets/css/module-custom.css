@@ -1,0 +1,189 @@
+/* Contrato */
+.contrato-ocorrencia-container {  }
+.contrato-ocorrencia-title {  }
+.contrato-ocorrencia-items {  }
+.contrato-ocorrencia-item {
+	border: 1px solid #ddd;
+	margin-top: 32px;
+	padding: 16px;
+	transition: border-color 0.5s ease;
+		-moz-transition: border-color 0.5s ease;
+		-ms-transition: border-color 0.5s ease;
+		-o-transition: border-color 0.5s ease;
+		-webkit-transition: border-color 0.5s ease;
+}
+.contrato-ocorrencia-item:first-child {
+	margin-top: 0;
+}
+.contrato-ocorrencia-item.contrato-ocorrencia-green {
+	border-color: #69aa46;
+}
+.contrato-ocorrencia-item.contrato-ocorrencia-green:hover {
+	border-color: #69aa46;
+}
+.contrato-ocorrencia-item.contrato-ocorrencia-yellow {
+	border-color: #d5d546;
+}
+.contrato-ocorrencia-item.contrato-ocorrencia-yellow:hover {
+	border-color: #d5d546;
+}
+.contrato-ocorrencia-item.contrato-ocorrencia-red {
+	border-color: #dd5a43;
+}
+.contrato-ocorrencia-item.contrato-ocorrencia-red:hover {
+	border-color: #dd5a43;
+}
+.contrato-ocorrencia-item.contrato-ocorrencia-grey {
+	border-color: #777777;
+}
+.contrato-ocorrencia-item.contrato-ocorrencia-grey:hover {
+	border-color: #777777;
+}
+.contrato-ocorrencia-item .contrato-ocorrencia-item-status {
+	display: block;
+	font-size: 12px;
+	float: right;
+	margin: -3px 0 0 16px;
+	padding: 7px 16px 7px;
+	line-height: 1em;
+}
+.contrato-ocorrencia-item.contrato-ocorrencia-green .contrato-ocorrencia-item-status {
+	color: #fff;
+	background: #69aa46;
+}
+.contrato-ocorrencia-item.contrato-ocorrencia-yellow .contrato-ocorrencia-item-status {
+	color: #555;
+	background: #d5d546;
+}
+.contrato-ocorrencia-item.contrato-ocorrencia-red .contrato-ocorrencia-item-status {
+	color: #fff;
+	background: #dd5a43;
+}
+.contrato-ocorrencia-item.contrato-ocorrencia-grey .contrato-ocorrencia-item-status {
+	color: #fff;
+	background: #777777;
+}
+.contrato-ocorrencia-item-top {  }
+.contrato-ocorrencia-item-top:before,
+.contrato-ocorrencia-item-top:after {
+	content: "";
+	display: table;
+	line-height: 0;
+}
+.contrato-ocorrencia-item-top:after {
+	clear: both;
+}
+.contrato-ocorrencia-item-title {
+	margin: 0;
+	float: left;
+	font-size: 18px;
+	font-weight: normal;
+}
+.contrato-ocorrencia-item-top-right {
+	float: right;
+}
+.contrato-ocorrencia-item-filters {
+	border-right: 1px solid #ddd;
+	float: left;
+	margin-right: 8px;
+	padding-right: 8px;
+}
+.contrato-ocorrencia-item-filters-title {
+	display: block;
+	float: left;
+	margin: 4px 8px 0 0;
+}
+.contrato-ocorrencia-item-filters-fields {
+	float: left;
+}
+.contrato-ocorrencia-item-filters-field {
+	float: left;
+	margin-left: 4px;
+	width: 150px;
+}
+.contrato-ocorrencia-item-filters-field:first-child {
+	margin-left: 0;
+}
+.contrato-ocorrencia-item-actions {
+	float: left;
+}
+.contrato-ocorrencia-item-view-details {
+	float: left;
+	margin-left: 8px;
+}
+.contrato-ocorrencia-item-timeline {
+	margin-top: 52px;
+}
+.contrato-ocorrencia-item-timeline.timeline.timeline-horizontal .timeline-content {
+	min-height: 45px;
+}
+.contrato-ocorrencia-item-timeline.timeline.timeline-horizontal .timeline-items:before {
+	box-sizing: initial;
+		-moz-box-sizing: initial;
+		-ms-box-sizing: initial;
+		-o-box-sizing: initial;
+		-webkit-box-sizing: initial;
+	margin: 0 -55px;
+	padding: 0 55px;
+}
+.contrato-ocorrencia-item-timeline.timeline.timeline-horizontal .timeline-content-button {
+	background: #fff;
+}
+.contrato-ocorrencia-item-timeline .timeline-items {
+	min-height: 50px;
+}
+.contrato-ocorrencia-item-progress-container {
+	margin-top: 16px;
+}
+.contrato-ocorrencia-item-progress-title {
+	margin: 0 0 8px;
+	font-size: 15px;
+}
+.contrato-ocorrencia-item-progress {
+	border: 1px solid #69aa46;
+	height: 24px;
+	position: relative;
+}
+.contrato-ocorrencia-item-progress-scored {
+	background: #69aa46;
+	color: #fff;
+	line-height: 62px;
+	padding: 0;
+	vertical-align: middle;
+	width: 0%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+.contrato-ocorrencia-item-progress-total {
+	background: #ddd;
+	line-height: 62px;
+	padding: 0;
+	text-align: right;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 0;
+}
+.contrato-ocorrencia-item-progress-legend {
+	margin-top: 8px;
+}
+.contrato-ocorrencia-item-progress-legend-scored {  }
+.contrato-ocorrencia-item-progress-legend-total {  }
+.contrato-ocorrencia-item-progress-legend-color {
+	display: block;
+	width: 10px;
+	height: 10px;
+	float: left;
+	margin: 6px 8px 0 0;
+}
+.contrato-ocorrencia-item-progress-legend-scored .contrato-ocorrencia-item-progress-legend-color {
+	background: #69aa46;
+}
+.contrato-ocorrencia-item-progress-legend-total .contrato-ocorrencia-item-progress-legend-color {
+	background: #ddd;
+}

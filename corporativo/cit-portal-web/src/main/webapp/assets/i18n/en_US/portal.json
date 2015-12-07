@@ -1,0 +1,143 @@
+{
+	"LABEL" :
+	{
+		"PROJETO"             		: "Brazuka Portal",
+		"NOME"                		: "Name",
+		"DESCRICAO"                	: "Description",
+		"VERSAO"                	: "Version",
+		"SALVAR_NOVO"         		: "Salvar novo",
+		"ADICIONAR_FILTRO"    		: "Adicionar filtro",
+		"CAMPO_OBRIGATORIO"   		: "is a required field",
+		"CANCELAR"          	  	: "Cancel",
+		"CONFIRMAR"          	  	: "Confirma",
+		"SALVAR"   					: "Save",
+		"EXCLUIR"  					: "Delete",
+		"FILTROS"   				: "Filters",
+		"INFORME_FILTRO"   			: "Informe o nome do filtro",
+		"TIPO_NOTIFICACAO"  		: "Tipo de Notificação",
+		"TIPO_PRIORIDADE" 			: "Tipo de Prioridade",
+		"MENSAGEM" 					: "Mensagem",
+		"DATA_VISUALIZACAO" 		: "Data de Visualização",
+		"ACOES" 					: "Actions",
+		"NOTIFICACAO" 				: "Notificação",
+		"NOTIFICACOES"	 			: "Notificações",
+		"PESQUISAR" 				: "Search",
+		"CADASTRAR" 				: "Register",
+		"EXPORTAR" 					: "Export",
+		"LIMPAR" 					: "Clean",
+		"FECHAR" 					: "Close",
+		"EXECUTAR" 					: "Execute",
+		"NOTIFICACAO_VISUALIZADA" 	: "Notificação visualizada?",
+		"PERFIL"    				: "Perfil",
+		"MOSTRANDO" 				: "Showing",
+		"ATE" 						: "to",
+		"DE" 						: "of",
+		"USUARIOS"  				: "Users",
+		"USUARIO" 	 				: "User",
+		"MOSTRAR"					: "Show",
+		"EMAIL"						: "Email",
+		"DADOS_USUARIO"				: "Dados do Usuário",
+		"FAVORITOS"					: "Favoritos",
+		"HELP"						: "Help",
+		"SENHA"						: "Senha",
+		"CAMPOS_OBRIGATORIOS" 		: "Campos obrigatórios",
+		"USERNAME" 					: "Username",
+		"NOME_OBRIGATORIO"			: "O nome do usuário é obrigatório",
+		"PREFERENCIAS" 				: "Preferências",
+		"COMPORTAMENTO_ABA"			: "Comportamento padrão para abertura de abas",
+		"ABRIR_NOVA_ABA" 			: "Sempre abrir nova aba",
+		"LISTA_FAVORITOS"			: "Lista de Páginas Favoritas",
+		"LISTA_FILTROS"				: "Lista de Filtros por página",
+		"LISTA_HELP" 				: "Comportamento do Help por página",
+		"SENHAS_DIFERENTES"			: "Senhas diferentes",
+		"REDEFINIR_SENHA"			: "Redefinir Senha",
+		"DICA_SENHA"				: "Dica de Senha",
+		"CONFIRMA_SENHA"			: "Confirma Senha",
+		"CONFIRMACAO"				: "Confirmação",
+		"NOME_FILTRO"				: "Nome Filtro",
+		"NOME_PAGINA"				: "Nome Página",
+		"PAGINA"					: "Página",
+		"ORGANIZACOES"				: "Órgãos",
+		"ORGANIZACAO"				: "Órgão",
+		"SIGLA"						: "Sigla",
+		"INVALIDO"					: " é inválido!",
+		"SALVO"				 		: " salvo!",
+		"ALERTA_OBRIGATORIOS"		: "Preencha os dados obrigatórios!",
+		"COMFIRMA_EXCLUSAO"			: "Confirma exclusão?",
+		"EXCLUIDO"					: " excluído!",
+		"PORTADOR"					: "Portador",
+		"OBRIGATORIO"				: " is required",
+		"EMAIL_INVALIDO"			: "Email inválido",
+		"PAIS"						: "País",
+		"O_CAMPO_OBRIGATORIO"		: "O campo é obrigatório",
+		"PAISES"					: "Paises",
+		"DATA_BLOQUEIO"				: "Data de bloqueio",
+		"CODIGO"					: "Código",
+		"BLOQUEIO"					: "Bloqueio",
+		"CONFIRMA_EXCLUSAO"			: "Confirma exclusão?",
+		"REGISTRO_EXCLUIDO"			: "Registro excluído",
+		"ATUALIZADO"				: " updated successfully",
+		"PREENCHA_DADOS_OBRIGATORIOS" : "Preencha os dados obrigatórios!",
+		"DEFINIR_DETENTOR"			  : "Definir Detentor",
+		"GRUPO"                     : "Grupo",
+		"DADO_GRUPO"                : "Dados Grupo"
+	},
+	"CODIGOERRO" :
+	{
+		"701"             		: "Os seguintes campos são obrigatorios:"
+	},
+
+	"ESI" :
+	{
+		"FLUXO"         			: "Flow",
+		"FLUXOS"         			: "Flows",
+		"ESI_DESIGNER"         		: "BPE/ESI Designer",
+		"APLICACAO_FLUXO"         	: "Application flow",
+		"PROCESSOS"         		: "Process Integration",
+		"SERVICOS"         			: "Services Integration",
+		"DADOS_FLUXO"         		: "Flow Data",
+		"DIAGRAMA"	         		: "Diagram",
+		"ELEMENTOS"	         		: "Elements",
+		"ATUALIZACAO_NAO_PERMITIDA" : "Update not allowed",
+		"PROPRIEDADE_NAO_PREENCHIDA": "At least one required property of the element '#elemento#' is not met",
+
+		"GRUPO_ELEMENTOS" :
+		{
+			"EVENTOS"             		: "Events",
+			"CONECTORES"             	: "Conectors",
+			"COMPONENTES"             	: "Components",
+			"TRANSFORMADORES"           : "Transformers",
+			"TAREFAS"             		: "Tasks",
+			"GATEWAYS"             		: "Gateways",
+			"CONEXOES"             		: "Connections"
+		},
+
+		"ELEMENTO" :
+		{
+			"TAREFA_USUARIO"		: "User Task"
+		},
+
+		"ABA" :
+		{
+			"PROPRIEDADES"			: "Properties",
+			"HTML"					: "Html",
+			"JAVA_SCRIPT"			: "Java Script"
+		},
+
+		"PROPRIEDADE" :
+		{
+			"NOME_TAREFA"			: "Task name",
+			"DESCRICAO_TAREFA"		: "Task description",
+			"TIPO_INSTANCIA"		: "Instance type",
+			"TIPO_INSTANCIA_UNICA"	: "Single",
+			"TIPO_INSTANCIA_VARIAS"	: "Several (controlled by the flow)",
+			"TIPO_INSTANCIA_USUARIO": "By User",
+			"CONTABILIZA_TEMPO"		: "Counts time",
+			"PERCENTUAL_EXECUCAO"	: "Execution percentage",
+			"GRUPOS"				: "Groups",
+			"USUARIOS"				: "Users",
+			"ACAO_ENTRADA"			: "Entry action",
+			"ACAO_SAIDA"			: "Exit action"
+		}
+	}
+}

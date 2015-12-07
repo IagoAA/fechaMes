@@ -1,0 +1,71 @@
+<div class="page-content clearfix" id="notificacao-edit-controller" ng-controller="NotificacaoController">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+
+				<button title="{{$translate.instant('LABEL.LIMPAR')}}" alt="{{$translate.instant('LABEL.LIMPAR')}}" class="btn btn-clear" ng-click="limpar()" ng-hide="isVisualizar" ng-show="notificacao.id === undefined" type="button">
+					<i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-show="notificacao.id !== undefined" type="button">
+					<i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.PESQUISAR')}}" alt="{{$translate.instant('LABEL.PESQUISAR')}}" class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); fetchResult()" type="button">
+					<i class="fa fa-search"></i> <translate>LABEL.PESQUISAR</translate>
+				</button>
+			</div><!-- .col -->
+
+			<div class="col-sm-4 text-right">
+				<favorito/>
+
+				<help-button workspace="workspace" />
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+	<form name="formNotificacaoEdit" autocomplete="off">
+		<p>
+			<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+		</p>
+
+		<fieldset>
+			<legend><translate>LABEL.DADOS_NOTIFICACAO</translate></legend>
+			<div class="row">
+				<div class="col-sm-6">
+					<label-input ng-id="notificacao.assunto" name="notificacao.assunto" ng-typ="text" ng-obrigatorio='true' ng-label="LABEL.ASSUNTO" ng-model="notificacao.assunto"
+						ng-disabled="isVisualizar" ng-custom-maxlength='255'/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<label-select ng-id="tipo-notificacao" ng-model="notificacao.tipoNotificacao.codigo" ng-label="LABEL.TIPO_NOTIFICACAO" ng-obrigatorio="true" ng-disabled="isVisualizar" form="formNotificacaoEdit"
+					ng-list="tiposNotificacao" ng-custom-options="tipoNotificacao.codigo as tipoNotificacao.descricao for tipoNotificacao"> </label-select>
+				</div><!-- .col -->
+
+				<div class="col-sm-6">
+					<label for="prioridade" class="control-label"><translate>LABEL.TIPO_PRIORIDADE</translate><span class="red">*</span></label>
+					<br/>
+
+					<div class="radio-inline" ng-repeat="prioridade in tiposPrioridade">
+						<label>
+							<input type="radio" name="prioridade" ng-value="prioridade.codigo" ng-model="notificacao.tipoPrioridade.codigo" ng-disabled="isVisualizar" required="true"/>
+							{{prioridade.descricao}}
+						</label>
+					</div><!-- .radio-inline -->
+
+				</div><!-- .col -->
+			</div><!-- .row -->
+
+			<div class="row">
+				<div class="col-sm-12">
+					<label-text-area ng-id="notificacao.mensagem" name="notificacao.mensagem" ng-label="LABEL.MENSAGEM" 
+						ng-model="notificacao.mensagem" ng-obrigatorio="true" form="formNotificacaoEdit" ng-disabled="isVisualizar" rows="10"/>
+				</div><!-- .col -->
+			</div><!-- .row -->
+
+		</fieldset>
+	</form>
+</div><!-- .page-content -->

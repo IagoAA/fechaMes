@@ -1,0 +1,406 @@
+<div class="page-content clearfix" ng-controller="ConfiguracaoController">
+        
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+
+			</div><!-- .col -->
+
+			<div class="col-sm-4 text-right">
+				<favorito/>
+
+				<help-button workspace="workspace" />
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+    <p>
+		<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+	</p>
+
+    <tabset class="tabbable margin-top margin-bottom">
+       	<tab>
+       		<tab-heading><translate>LABEL.PAGINA_LOGIN</translate></tab-heading>
+
+       		<form enctype="multipart/form-data" name="configuracaoPaginaLoginForm">
+				<fieldset>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group">
+		                        <label class="control-label"><translate>LABEL.LOGO_PAGINA_LOGIN</translate></label>
+
+		                        <div nv-file-drop="" uploader="uploader" id="actionUploadLogoLogin" onclick="$('#uploadLogoLogin').click();">
+									<div nv-file-over="" uploader="uploader" over-class="another-file-over-class" class="well my-drop-zone">
+										<span ng-show="uploader.queue.length <= 0"><translate>MSG.ARRASTE_SOLTE_ARQUIVO<translate/></span>
+										<span ng-show="uploader.queue.length > 0">{{uploader.queue[0].file.name}}</span>
+									</div>
+								</div>
+								<input id="uploadLogoLogin" type="file" nv-file-select="" uploader="uploader" ng-show="false" />
+		                    </div><!-- .form-group -->
+		                    <div>
+		                    	<img src="/cit-portal-web/assets/css/images/logo-login.png" class="img-thumbnail" style="max-width: 300px; height: auto;" />
+		                    </div>
+						</div><!-- .col -->
+					</div><!-- .row -->
+
+					<div class="row margin-top">
+						<div class="col-sm-4">
+							<button class="btn btn-success" ng-click="saveOrUpdateConfigPaginaLogin();"><translate>LABEL.SALVAR_CONFIGURACAO</translate></button>
+						</div><!-- .col -->
+					</div><!-- .row -->
+				</fieldset>
+			</form>
+       	</tab>
+
+       	<tab>
+       		<tab-heading><translate>LABEL.EMAIL</translate></tab-heading>
+
+       		<form name="configuracaoEmailForm">
+       			<fieldset>
+		       		<p>
+		       			<strong><translate>LABEL.AUTENTICACAO</translate></strong>
+		       		</p>
+
+		       		<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label"><translate>LABEL.USUARIO</translate>:</label>
+								<input type="text" class="form-control" ng-model="parametro.EMAIL_LOGIN" />
+							</div><!-- .form-control -->
+						</div><!-- .col -->
+					</div><!-- .row -->
+
+		       		<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label"><translate>LABEL.SENHA</translate>:</label>
+								<input type="password" class="form-control" ng-model="parametro.EMAIL_SENHA" />
+							</div><!-- .form-control -->
+						</div><!-- .col -->
+					</div><!-- .row -->
+
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="checkbox" style="margin: 0;">
+									<label>
+										<input type="checkbox" ng-model="parametro.EMAIL_EXIGE_AUTENTICACAO" ng-true-value="'true'" ng-false-value="'false'" />
+										<translate>LABEL.EXIGE_AUTENTICACAO</translate>
+									</label>
+								</div><!-- .checkbox -->
+							</div><!-- .form-control -->
+						</div><!-- .col -->
+					</div><!-- .row -->
+
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="checkbox" style="margin: 0;">
+									<label>
+										<input type="checkbox" ng-model="parametro.EMAIL_TSL_SSL" ng-true-value="'true'" ng-false-value="'false'" />
+										<translate>LABEL.TSL_SSL</translate>
+									</label>
+								</div><!-- .checkbox -->
+							</div><!-- .form-control -->
+						</div><!-- .col -->
+					</div><!-- .row -->
+
+					<p>
+		       			<strong><translate>LABEL.CONFIGURACOES_SERVIDOR</translate></strong>
+		       		</p>
+
+		       		<div class="row">
+						<div class="col-sm-4">
+							
+							<label-input label-info-tooltip="{{$translate.instant('MSG.INFO_SMTP_HOST')}}" ng-type="text" ng-id="parametro.EMAIL_SMTP_HOST" ng-label="LABEL.SMTP_HOST" ng-model="parametro.EMAIL_SMTP_HOST" ng-custom-maxlength="30" form="configuracaoPaginaLoginForm" />
+							
+						</div><!-- .col -->
+					</div><!-- .row -->
+
+		       		<div class="row">
+						<div class="col-sm-4">
+						
+							<label-input label-info-tooltip="{{$translate.instant('MSG.INFO_SMTP_PORTA')}}" ng-type="text" ng-id="parametro.EMAIL_SMTP_PORTA" ng-label="LABEL.SMTP_PORTA" ng-model="parametro.EMAIL_SMTP_PORTA" ng-custom-maxlength="30" form="configuracaoPaginaLoginForm" />
+							
+						</div><!-- .col -->
+					</div><!-- .row -->
+
+					<div class="row">
+						<div class="col-sm-4">
+							<button class="btn btn-success" ng-click="saveOrUpdateParametros();"><translate>LABEL.SALVAR_CONFIGURACAO</translate></button>
+						</div><!-- .col -->
+					</div><!-- .row -->
+				</fieldset>
+			</form>
+       	</tab>
+
+       	<tab>
+       		<tab-heading><translate>LABEL.MODULOS</translate></tab-heading>
+
+       		<form name="configuracaoModulosForm">
+       		
+       			<fieldset>
+		       		<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="checkbox" style="margin: 0;">
+									<label>
+										<input type="checkbox" ng-model="parametro.EMAIL_EXIGE_AUTENTICACAO" ng-true-value="'true'" ng-false-value="'false'" form="configuracaoModulosForm"/>
+										<translate>LABEL.EXIGE_AUTENTICACAO</translate>
+									</label>
+								</div><!-- .checkbox -->
+							</div><!-- .form-control -->
+						</div><!-- .col -->
+					</div><!-- .row -->
+				</fieldset>
+				
+				<div class="row">
+					<div class="col-sm-12">
+						<fieldset>
+			       				<legend><translate>LABEL.PORTAL</translate></legend>
+					       		<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<div class="checkbox" style="margin: 0;">
+												<label>
+													<input type="checkbox" ng-model="parametro['EXECUTAR_SCRIPT_MENU']" ng-true-value="'true'" ng-false-value="'false'" form="configuracaoModulosForm" />
+													<translate>LABEL.EXECUTAR_SCRIPT_MENU</translate>
+												</label>
+											</div><!-- .checkbox -->
+										</div><!-- .form-control -->
+									</div><!-- .col -->
+								</div><!-- .row -->
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<div class="checkbox" style="margin: 0;">
+												<label>
+													<input type="checkbox" ng-model="parametro['EXECUTAR_BASE_INICIAL']" ng-true-value="'true'" ng-false-value="'false'" form="configuracaoModulosForm" />
+													<translate>LABEL.EXECUTAR_BASE_INICIAL</translate>
+												</label>
+											</div><!-- .checkbox -->
+										</div><!-- .form-control -->
+									</div><!-- .col -->
+								</div><!-- .row -->
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<div class="checkbox" style="margin: 0;">
+												<label>
+													<input type="checkbox" ng-model="parametro['EXECUTAR_INTERNACIONALIZACAO']" ng-true-value="'true'" ng-false-value="'false'" form="configuracaoModulosForm" />
+													<translate>LABEL.EXECUTAR_INTERNACIONALIZACAO</translate>
+												</label>
+											</div><!-- .checkbox -->
+										</div><!-- .form-control -->
+									</div><!-- .col -->
+								</div><!-- .row -->
+			
+							</fieldset>
+						</div>
+				</div>
+       			
+       			<div class="row">
+       			
+       				<div ng-repeat="modulo in mondulosAtivos">
+       				
+       					<div class="col-sm-4">
+			       			<fieldset>
+			       				<legend>{{modulo.nome}}</legend>
+					       		<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<div class="checkbox" style="margin: 0;">
+												<label>
+													<input type="checkbox" ng-model="parametro['EXECUTAR_SCRIPT_MENU-'+modulo.id]" ng-true-value="'true'" ng-false-value="'false'" form="configuracaoModulosForm" />
+													<translate>LABEL.EXECUTAR_SCRIPT_MENU</translate>
+												</label>
+											</div><!-- .checkbox -->
+										</div><!-- .form-control -->
+									</div><!-- .col -->
+								</div><!-- .row -->
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<div class="checkbox" style="margin: 0;">
+												<label>
+													<input type="checkbox" ng-model="parametro['EXECUTAR_BASE_INICIAL-'+modulo.id]" ng-true-value="'true'" ng-false-value="'false'" form="configuracaoModulosForm" />
+													<translate>LABEL.EXECUTAR_BASE_INICIAL</translate>
+												</label>
+											</div><!-- .checkbox -->
+										</div><!-- .form-control -->
+									</div><!-- .col -->
+								</div><!-- .row -->
+			
+							</fieldset>
+						</div>
+       			
+	       			</div>
+	  			</div> 
+       			
+				<div class="row">
+					<div class="col-sm-4">
+						<button class="btn btn-success" ng-click="saveOrUpdateParametros();"><translate>LABEL.SALVAR_CONFIGURACAO</translate></button>
+					</div><!-- .col -->
+				</div><!-- .row -->
+				
+			</form>
+       	</tab>
+       	
+     	<tab>
+       		<tab-heading><translate>LABEL.RELATORIOS</translate></tab-heading>
+
+       		<form name="configuracaoRelatorioForm">
+       			<fieldset>
+		       		<div class="row">
+						<div class="col-sm-12">
+							<label-input ng-type="text" ng-id="parametro.RELATORIO_PRIMEIRO_TITULO" form="configuracaoRelatorioForm" ng-disabled="false" ng-label="LABEL.PRIMEIRO_TITULO" ng-obrigatorio="false" ng-model="parametro.RELATORIO_PRIMEIRO_TITULO" ></label-input>
+						</div><!-- .col -->
+					</div><!-- .row -->
+		       		<div class="row">
+						<div class="col-sm-12">
+							<label-input ng-type="text" ng-id="parametro.RELATORIO_SEGUNDO_TITULO" form="configuracaoRelatorioForm" ng-disabled="false" ng-label="LABEL.SEGUNDO_TITULO" ng-obrigatorio="false" ng-model="parametro.RELATORIO_SEGUNDO_TITULO" ></label-input>
+						</div><!-- .col -->
+					</div><!-- .row -->
+		       		<div class="row">
+						<div class="col-sm-12">
+							<label-input ng-type="text" ng-id="parametro.RELATORIO_TERCEIRO_TITULO" form="configuracaoRelatorioForm" ng-disabled="false" ng-label="LABEL.TERCEIRO_TITULO" ng-obrigatorio="false" ng-model="parametro.RELATORIO_TERCEIRO_TITULO" ></label-input>
+						</div><!-- .col -->
+					</div><!-- .row -->
+					
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group">
+		                        <label class="control-label"><translate>LABEL.LOGO_RELATORIO</translate></label>
+
+		                        <div nv-file-drop="" uploader="uploaderLogo" onclick="$('#uploadLogoOrganizacao').click();">
+									<div nv-file-over="" uploader="uploaderLogo" over-class="another-file-over-class" class="well my-drop-zone">
+										<span ng-show="uploaderLogo.queue.length <= 0"><translate>MSG.ARRASTE_SOLTE_ARQUIVO<translate/></span>
+										<span ng-show="uploaderLogo.queue.length > 0">{{uploaderLogo.queue[0].file.name}}</span>
+									</div>
+								</div>
+								<input id="uploadLogoOrganizacao" type="file" nv-file-select="" uploader="uploaderLogo" ng-show="false" />
+								
+		                    </div><!-- .form-group -->
+		                    
+		                    <div>
+								<img ng-src="data:image/JPEG;base64,{{configuracao.anexoImagem.anexo}}" class="img-thumbnail" style="max-width: 300px; height: auto;" >
+<!-- 								<div ng-show="uploaderLogo.isHTML5" upload-thumb="{ file: uploaderLogo.queue[0]._file, height: 100 }"> -->
+<!-- 		                   		 </div> -->
+							</div>
+							
+						</div>
+					</div>
+					
+					<div class="row margin-top" >
+						<div class="col-sm-4">
+							<button class="btn btn-success" ng-click="saveOrUpdateParametros();"><translate>LABEL.SALVAR_CONFIGURACAO</translate></button>
+						</div><!-- .col -->
+					</div><!-- .row -->
+				</fieldset>
+			</form>
+       	</tab>
+
+		<tab ng-show="almoxarifadoAtivo">
+       		<tab-heading><translate>LABEL.CONF_ALMOXARIFADO</translate></tab-heading>
+
+       		<form name="configuracaoAlmoxarifadoForm">
+       			<fieldset>
+		       		<div class="row">
+						<div class="col-sm-3">
+							<label-select ng-id="parametro.TIPO_AVALIACAO_MONETARIA_ESTOQUE" ng-model="parametro.TIPO_AVALIACAO_MONETARIA_ESTOQUE" ng-label="LABEL.TIPO_AVALIACAO_MONETARIA_ESTOQUE"
+								ng-obrigatorio="true" form="configuracaoAlmoxarifadoForm" ng-list="dominiosTipoAvaliacaoMonetariaEstoque"
+								ng-custom-options="dominioTipoAvaliacao.codigo as dominioTipoAvaliacao.descricao for dominioTipoAvaliacao"></label-select>
+						</div><!-- .col -->
+					</div><!-- .row -->
+
+		       		<div class="row">
+						<div class="col-sm-2">
+							<label-input-number ng-id="parametro.MARGEM_ERRO_PRECO_MEDIO" ng-label="LABEL.MARGEM_PRECO_MEDIO" form="configuracaoAlmoxarifadoForm" ng-disabled="false" 
+								ng-obrigatorio="true" ng-model="parametro.MARGEM_ERRO_PRECO_MEDIO" ng-custom-maxlength="3" ng-min-number="0" ng-max-number="100" />
+						</div><!-- .col -->
+					</div><!-- .row -->
+					
+					<div class="row margin-top" >
+						<div class="col-sm-4">
+							<button class="btn btn-success" ng-click="saveOrUpdateParametros();"><translate>LABEL.SALVAR_CONFIGURACAO</translate></button>
+						</div><!-- .col -->
+					</div><!-- .row -->
+				</fieldset>
+			</form>
+       	</tab>
+       	
+       	<tab ng-show="patrimonioAtivo">
+       		<tab-heading><translate>LABEL.CONF_PATRIMONIO</translate></tab-heading>
+
+       		<form name="configuracaoPatrimonioForm">
+       			<fieldset>
+		       		<div class="row">
+						<div class="col-sm-4">
+							<label-input ng-type="text" ng-id="parametro.PATRIMONIO_MASCARA_NUMERO_PATRIMONIO" form="configuracaoPatrimonioForm" ng-custom-maxlength="15" 
+								ng-disabled="false" ng-label="LABEL.MASCARA_NUMERO_PATRIMONIO" ng-obrigatorio="true" ng-model="parametro.PATRIMONIO_MASCARA_NUMERO_PATRIMONIO" ></label-input>
+						</div><!-- .col -->
+					</div><!-- .row -->
+					
+					<div class="row">
+       					<div class="col-sm-3">
+       						<small><translate>LABEL.PROIBIDO_EDITAR_APOS_USO_CONTA</translate></small>
+       					</div>
+       				</div>
+       				
+					<div class="row">
+						<div class="col-md-6">
+	                    	<auto-complete ng-id="parametro.CONTA_CONTABIL_ALMOXARIFADO" ng-label="LABEL.CONTA_ALMOXARIFADO" ng-model="contaAlmoxarifado" form="configuracaoPatrimonioForm"
+	                    		ng-obrigatorio="true" ng-disabled="contaAlmoxarifadoEmUso" ng-find="findContaAlmoxarifado(value)" ng-item="item.codigo + ' / ' + item.descricao" 
+	                    		ng-set-result="defineContaAlmox(item.id)" />
+	                	</div>
+                	</div>
+
+					<div class="row margin-top" >
+						<div class="col-sm-4">
+							<button class="btn btn-success" ng-disabled="configuracaoPatrimonioForm.$invalid" ng-click="saveOrUpdateParametros();"><translate>LABEL.SALVAR_CONFIGURACAO</translate></button>
+						</div><!-- .col -->
+					</div><!-- .row -->
+				</fieldset>
+			</form>
+       	</tab>
+
+       	<tab>
+       		<tab-heading><translate>LABEL.CONF_GERAL</translate></tab-heading>
+
+       		<form name="configuracaoGeralForm">
+       			<fieldset>
+					<div class="row">
+				        <div class="col-sm-8">
+					        <label-input-radio ng-label="LABEL.MASCARA_NUMERO_IDENTIFICACAO" list="radioValueList" ng-model="mascara.dominioTipoMascara.codigo" 
+					        	ng-disabled="false" text="descricao"  ng-obrigatorio="true" value="codigo" form="configuracaoGeralForm" ng-click="configurarMascara()" ></label-input-radio>
+				        </div><!-- .col -->
+				    </div><!-- .row -->				    					
+
+		       		<div class="row">
+						<div class="col-sm-2">
+							<label-input-number label-info-tooltip="{{$translate.instant('MSG.INFO_TAMANHO_MASCARA_OPERACAO')}}" ng-id="mascara.tamanhoSequencial" ng-label="LABEL.TAMANHO_MASCARA" 
+								form="configuracaoGeralForm" ng-disabled="false" ng-obrigatorio="true" ng-model="mascara.tamanhoSequencial" ng-custom-maxlength="2" ng-min-number="5" 
+								ng-max-number="10" ng-keyup="configurarMascara()" />
+						</div><!-- .col -->
+					</div><!-- .row -->
+					
+		       		<div class="row">
+						<div class="col-sm-2">
+							<label-input ng-type="text" ng-id="parametro.MASCARA_NUMERO_IDENTIFICACAO" form="configuracaoGeralForm" 
+								ng-disabled="true" ng-model="parametro.MASCARA_NUMERO_IDENTIFICACAO" ></label-input>
+						</div><!-- .col -->
+					</div><!-- .row -->
+					
+					<div class="row margin-top" >
+						<div class="col-sm-2">
+							<button class="btn btn-success" ng-disabled="configuracaoGeralForm.$invalid" ng-click="saveOrUpdateParametrosGeral();"><translate>LABEL.SALVAR_CONFIGURACAO</translate></button>
+						</div><!-- .col -->
+					</div><!-- .row -->
+				</fieldset>
+			</form>
+       	</tab>
+
+    </tabset>
+</div><!-- .page-content -->

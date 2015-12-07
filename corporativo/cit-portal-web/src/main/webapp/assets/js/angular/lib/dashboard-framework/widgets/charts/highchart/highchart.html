@@ -1,0 +1,20 @@
+<div>
+  <div class="alert alert-info" ng-if="!chartConfig">
+    <translate>MSG.CLIQUE_NO_ICONE_PARA_CONFIGURAR_O_WIDGET</translate>
+  </div>
+  <div ng-if="chartConfig">
+    <highchart id="chart1" config="chartConfig"></highchart>
+  </div>
+  <div class="row" ng-show="chartConfig">
+    	<div class="col-xs-12">
+  			<translate>LABEL.TIPO_GRAFICO</translate></legend>
+            <select class="form-control" id="chartType" ng-model="tipoGrafico" ng-change="iniciarChart()">
+                <option value="area">AreaChart</option>
+                <option value="pie">PieChart</option>
+                <option value="column">ColumnChart</option>
+                <option value="line">LineChart</option>
+                <option value="bar">BarChart</option>
+            </select>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,26 @@
+<div tabindex="-1" class="modal in" id="{{idElement}}" aria-hidden="false">
+	<div class="modal-dialog" style="{{customStyle}}">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button data-dismiss="modal" class="close" type="button">&times;</button>
+				<h4 class="blue bigger" style="text-align: left;"><translate>{{title}}</translate></h4>
+			</div>
+
+			<div class="modal-body" >
+				<div class="row">
+					<div class="col-sm-12" ng-transclude></div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<button data-dismiss="modal" class="btn btn-sm" type="button" ng-click="funcao1()">
+					<i class="ace-icon fa fa-times"></i> <translate>{{label1}}</translate>
+				</button>
+
+				<button class="btn btn-sm btn-primary" type="button" ng-click="funcao2()">
+					<i class="ace-icon fa fa-save"></i><translate>{{label2}}</translate>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

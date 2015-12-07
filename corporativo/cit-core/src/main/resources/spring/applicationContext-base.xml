@@ -1,0 +1,131 @@
+<!--
+
+		*********************************************************************************************************************
+		*												LICENCA*GPLv2														*
+		* Copyright [2011,2012,2013,2014,2015] da CentralIT Tecnologia da Informação Ltda (www.centralit.com.br)          	*
+		*                                                                                                                 	*
+		* Este arquivo é parte do programa/software: Citsmart (www.citsmart.com.br)                                       	*
+		*                                                                                                                 	*
+		* O Citsmart é um software livre; você pode redistribui-lo e/ou modificá-lo dentro dos termos da Licença          	*
+		* Pública Geral GNU como publicada pela Fundação do Software Livre (FSF); na versção 2 da Licença.                	*
+		*                                                                                                                 	*
+		* Este programa/software é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA; sem uma         	*
+		* garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral     	*
+		* GNU/GPL em português para maiores detalhes.                                                                     	*
+		*                                                                                                                 	*
+		* Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título 'LICENCA.txt', junto com este     	*
+		* programa/software, se não, acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br	*
+		* ou escreva para a Fundação do Software Livre (FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301,USA 	*
+		*********************************************************************************************************************
+
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int-security="http://www.springframework.org/schema/integration/security"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-3.1.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.1.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util-3.1.xsd
+	http://www.springframework.org/schema/integration
+	http://www.springframework.org/schema/integration/spring-integration.xsd
+	http://www.springframework.org/schema/integration/security
+	http://www.springframework.org/schema/integration/security/spring-integration-security-3.1.xsd">
+
+	<bean id="properties" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="location" value="classpath:cit-app.properties"/>
+		<property name="ignoreUnresolvablePlaceholders" value="true"/>
+	</bean>
+
+	<bean id="searchProcessor" class="com.googlecode.genericdao.search.jpa.JPASearchProcessor">
+		<constructor-arg ref="metadataUtil" />
+	</bean>
+
+	<bean id="metadataUtil" class="com.googlecode.genericdao.search.jpa.hibernate.HibernateMetadataUtil"
+		factory-method="getInstanceForEntityManagerFactory">
+		<constructor-arg ref="entityManagerFactory" />
+	</bean>
+
+	<!-- Injects EntityManager to the DAO layer. -->
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<!-- Publishing session factory to be able view statistics -->
+	<bean id="sessionFactory" factory-bean="entityManagerFactory" factory-method="getSessionFactory" />
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host"><value>${mail.host}</value></property>
+        <property name="port"><value>${mail.port}</value></property>
+        <property name="username"><value>${mail.username}</value></property>
+        <property name="password"><value>${mail.password}</value></property>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+                <prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+                <prop key="mail.debug">${mail.debug}</prop>
+            </props>
+        </property>
+    </bean> 
+    
+    <bean id="htmlMail" class="br.com.centralit.framework.mail.HTMLMail">
+        <property name="mailSender" ref="mailSender" />
+    </bean> 
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- the transactional semantics... -->
+		<tx:attributes>
+			<!-- all methods starting with 'find' are read-only -->
+			<tx:method name="find*" read-only="true" />
+			<!-- all methods starting with 'get' are read-only -->
+			<tx:method name="get*" read-only="true" />
+			<!-- other methods use the default transaction settings (see below) -->
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:advisor id="managerTx" advice-ref="txAdvice" pointcut="execution(* *..service..*.*(..))" />
+	</aop:config>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<task:scheduler id="scheduler" pool-size="1" />
+	<task:annotation-driven scheduler="scheduler" />
+
+	<!-- CITCORE -->
+	<context:component-scan base-package="br.com.centralit.framework.dao" />
+	<context:component-scan base-package="br.com.centralit.framework.service" />
+	<context:component-scan base-package="br.com.centralit.framework.controller" />
+	<context:component-scan base-package="br.com.centralit.framework.filter" />
+	<context:component-scan base-package="br.com.centralit.framework.mail" />
+
+	<!-- CIT-PORTAL-API -->
+	<context:component-scan base-package="br.com.centralit.api.dao" />
+	<context:component-scan base-package="br.com.centralit.api.service" />
+	<context:component-scan base-package="br.com.centralit.api.security" />
+
+	<!-- CIT-PORTAL-WEB -->
+	<context:component-scan base-package="br.com.centralit.controller" />
+	<context:component-scan base-package="br.com.centralit.listener" />
+
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+</beans>

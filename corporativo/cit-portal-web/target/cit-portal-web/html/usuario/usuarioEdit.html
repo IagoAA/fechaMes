@@ -1,0 +1,227 @@
+<div id="editUsuario" class="page-content clearfix" ng-controller="UsuarioController">
+	<form name="usuarioForm" novalidate autocomplete="off">
+		<div class="bar-buttons-action fixed">
+			<div class="row">
+				<div class="col-sm-8 text-left">
+					<button title="{{$translate.instant('LABEL.SALVAR')}}" alt="{{$translate.instant('LABEL.SALVAR')}}" class="btn btn-clear" ng-click="saveOrUpdate()" ng-show="edit">
+						<i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+					</button>
+	
+					<button title="{{$translate.instant('LABEL.LIMPAR')}}" alt="{{$translate.instant('LABEL.LIMPAR')}}" class="btn btn-clear" ng-click="resetForm();" ng-show="usuario.id === undefined">
+						<i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+					</button>
+	
+					<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-show="!(pgEdit || edit)" ng-click="editarUsuario()">
+						<i class="fa fa-pencil blue"></i>
+						<translate>LABEL.EDITAR</translate>
+					</button>
+	
+					<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-click="remove(usuario);" ng-show="usuario.id !== undefined">
+						<i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+					</button>
+					
+					<button title="{{$translate.instant('LABEL.PESQUISAR')}}" alt="{{$translate.instant('LABEL.PESQUISAR')}}" class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); atualizaPaginaPesquisa();">
+						<i class="fa fa-search"></i> <translate>LABEL.PESQUISAR</translate>
+					</button>
+				</div><!-- .col -->
+	
+				<div class="col-sm-4 text-right">
+					<favorito/>
+	
+					<help-button workspace="workspace" />
+				</div><!-- .col -->
+			</div><!-- .row -->
+		</div><!-- .bar-buttons-action -->
+
+		<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+		<p>
+			<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+		</p>
+		
+		<fieldset>
+			<legend><translate>LABEL.DADOS_USUARIO</translate></legend>
+		
+			<div class="row">
+				<div class="col-md-4">
+					<label-input ng-type="text" ng-evento-blur="validaUsername()" ng-id="usuario.username" ng-label="LABEL.NOME" ng-obrigatorio="true" ng-disabled="usuario.id" ng-model="usuario.username" ng-custom-maxlength="100" form="usuarioForm" />
+				</div><!-- .col-sm-2 -->
+		
+				<div class="col-md-4">
+					<label-input ng-type="email" ng-evento-blur="validaEmail()" ng-id="usuario.email" ng-label="LABEL.EMAIL" ng-obrigatorio="true" ng-disabled="!edit" ng-model="usuario.email" ng-custom-maxlength="50" form="usuarioForm" />
+				</div><!-- .col-sm-6 -->
+			</div><!-- .row -->
+		</fieldset>
+		
+		<fieldset ng-hide="!edit">
+			<legend ng-hide="usuario.id"><translate>LABEL.SENHA</translate></legend>
+			<legend ng-hide="!usuario.id"><translate>LABEL.REDEFINIR_SENHA</translate></legend>
+			
+			<div class="row" ng-hide="!usuario.id">
+				<div class="col-sm-3">
+					<div class="form-group">
+						<div class="radio-inline">
+							<label>
+								<input type="radio" ng-model="isRedefinirSenha" value="true" ng-value="true" class="radio-group-inline"/> <translate>LABEL.SIM</translate>
+							</label>
+						</div>
+						<div class="radio-inline">
+							<label>
+								<input type="radio" ng-model="isRedefinirSenha" value="false" ng-value="false"  class="radio-group-inline" ng-checked="true"/> <translate>LABEL.NAO</translate>
+							</label>
+						</div>
+					</div>
+				</div>	
+			</div>
+			
+			<div class="row" ng-hide="isRedefinirSenha === false">
+				<div class="col-sm-12">
+					<div class="row">
+						<div class="col-sm-2">
+							<label-input ng-evento-blur="verificaSenha()" ng-type="password" ng-id="usuario.password" ng-label="{{isRedefinirSenha ? $translate.instant('LABEL.SENHA_ANTIGA') : $translate.instant('LABEL.SENHA')}}" ng-obrigatorio="novo || isRedefinirSenha" ng-disabled="!edit" ng-model="usuario.password" ng-custom-maxlength="100" form="usuarioForm" />
+						</div>
+						<!-- .col -->
+						
+						<div class="col-sm-2" ng-show="!usuario.id">
+							<label-input ng-evento-blur="verificaSenha()" ng-type="password" ng-id="usuario.confirmPassword" ng-label="LABEL.CONFIRMA_SENHA" ng-obrigatorio="novo" ng-disabled="!edit" ng-model="usuario.confirmPassword" ng-custom-maxlength="100" form="usuarioForm" />
+						</div>
+						<!-- .col -->
+						
+						<div class="col-sm-2" ng-show="isRedefinirSenha === true" >
+							<label-input ng-evento-blur="verificaNovaSenha()" ng-type="password" ng-id="usuario.novaSenha" ng-label="LABEL.NOVA_SENHA" ng-obrigatorio="isRedefinirSenha" ng-disabled="!edit" ng-model="usuario.novaSenha" ng-custom-maxlength="100" form="usuarioForm" />
+						</div>
+						
+						<div class="col-sm-2" ng-show="isRedefinirSenha === true" >
+							<label-input ng-evento-blur="verificaNovaSenha()" ng-type="password" ng-id="usuario.confirmNovoPassword" ng-label="LABEL.CONFIRMA_NOVA_SENHA" ng-obrigatorio="isRedefinirSenha" ng-disabled="!edit" ng-model="usuario.confirmNovoPassword" ng-custom-maxlength="100" form="usuarioForm" />
+						</div>
+						<!-- .col -->
+						
+						<div class="col-sm-4" ng-show="edit">
+							<label-input ng-type="text" ng-id="usuario.passwordHint" ng-label="LABEL.DICA_SENHA" ng-obrigatorio="novo || isRedefinirSenha" ng-disabled="!edit" ng-model="usuario.passwordHint" ng-custom-maxlength="100" form="usuarioForm" />
+						</div>
+						<!-- .col -->
+					</div>
+					<!-- row -->
+				</div>
+				<!-- col -->
+				<div class="col-sm-12">
+					<div class="row">
+						<div class="col-sm-6">
+							<label-input ng-type="password" ng-id="usuario.passwordMobile" ng-label="LABEL.SENHA_MOBILE" ng-obrigatorio="novo || isRedefinirSenha" ng-disabled="!edit" ng-model="usuario.passwordMobile" ng-custom-maxlength="10" form="usuarioForm" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- .row -->
+			
+		</fieldset>
+		
+		<fieldset>
+			<legend><translate>LABEL.PRIVILEGIOS</translate></legend>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="control-label"><translate>LABEL.PERMISSOES</translate></label>
+						
+						<ui-select multiple ng-model="$parent.usuario.usuarioPrivilegios" theme="select2" ng-disabled="!edit" style="min-width: 100%;">
+							<ui-select-match placeholder="Seleciona um opção...">{{$item.privilegio.nome}}</ui-select-match>
+							<ui-select-choices repeat="privilegio in privilegiosSource | filter:$select.search">
+								{{privilegio.privilegio.nome}}
+							</ui-select-choices>
+						</ui-select>
+					</div><!-- .form-group  -->
+				</div>
+				
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="control-label"><translate>LABEL.GRUPOS</translate></label>
+						
+						<ui-select multiple ng-model="$parent.usuario.grupoUsuarios" theme="select2" ng-disabled="!edit" style="min-width: 100%;">
+							<ui-select-match placeholder="Seleciona um opção...">{{$item.grupo.nome}}</ui-select-match>
+							<ui-select-choices repeat="grupo in grupoUsuariosSource | filter:$select.search">
+								{{grupo.grupo.nome}}
+							</ui-select-choices>
+						</ui-select>
+					</div><!-- .form-group  -->
+				</div>
+			</div><!-- .row -->
+			
+		</fieldset>
+		
+		<fieldset>
+			<legend>
+				<label ng-class="{'has-error' : usuarioForm.$submitted && usuario.organizacoes.length < 1}"> 
+					<translate>LABEL.ORGANIZACOES</translate> 
+					<span class='red'>*</span> 
+					<i ng-show="usuarioForm.$submitted && usuario.organizacoes.length < 1" class='fa fa-warning red' tooltip="{{$translate.instant('LABEL.ORGANIZACOES') + ' ' +$translate.instant('LABEL.CAMPO_OBRIGATORIO')}}" tooltip-placement='top'></i>
+				</label>
+			</legend>
+		
+			<div class="row" ng-show="edit">
+				<div class="col-sm-8">
+					<auto-complete ng-find="findOrganizacao(value)" ng-set-result="setOrganizacao(item)" form="usuarioForm" ng-obrigatorio="false" ng-label="LABEL.ORGANIZACAO" ng-item="item.nome" ng-id="organizacao" ng-model="organizacao" ng-acao-borracha="limparAutoCompleteOrganizacao()" ></auto-complete>
+				</div><!-- col -->
+			</div><!-- .row -->
+			
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+						<div class="panel-heading clearfix" ng-show="edit">
+	
+							<button class="btn btn-clear" type="button" ng-click="montaListaDelete()">
+								<i class="fa fa-times red"></i>
+								<translate>LABEL.REMOVER</translate>
+							</button>
+	
+						</div><!-- .panel-heading -->
+	
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th class="text-center" style="width: 5%;">
+										<input type="checkbox" ng-model="selectedAll" ng-checked="selectedAll" ng-click="checkAll(selectedAll);" />
+									</th>
+									<th style="width: 55%;">
+										<translate>LABEL.ORGANIZACAO</translate>
+									</th>
+									<th style="width: 25%;">
+										<translate>LABEL.SIGLA</translate>
+									</th>
+									<th style="width: 15%;" class="text-center">
+										<translate>LABEL.ORGANIZACAO_PRINCIPAL</translate>
+									</th
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="organizacaoItem in usuario.organizacoes">
+									<td class="text-center">
+										<input type="checkbox" ng-click="verificaSelectedAll(organizacaoItem);" ng-checked="organizacaoItem.$selected" ng-model="organizacaoItem.$selected" />
+									</td>
+									<td>
+										{{organizacaoItem.organizacao.nome}}
+									</td>
+									<td>
+										{{organizacaoItem.organizacao.sigla}}
+									</td>
+									<td class="text-center">
+										<input type="radio" ng-model="usuario.organizacao.id" ng-value="organizacaoItem.organizacao.id"/>
+									</td>
+								</tr>
+								<tr ng-hide="usuario.organizacoes.length != 0">
+									<td colspan="3">
+										<translate>LABEL.TABELA_VAZIA</translate>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		
+		<div ng-show="usuario.id !== undefined && usuario.paginasUsuario.length > 0" id="paginasUsuario" ng-include="'/cit-portal-web/html/usuario/paginasUsuario.html'"></div><!-- paginaUsuario -->
+		
+	</form>
+</div><!-- .page-content -->

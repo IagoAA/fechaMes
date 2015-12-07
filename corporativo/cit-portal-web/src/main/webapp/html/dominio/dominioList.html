@@ -1,0 +1,56 @@
+<div class="page-content clearfix" ng-controller="DominioListController" id="dominioList">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+
+				<button title="{{$translate.instant('LABEL.VISUALIZAR')}}" alt="{{$translate.instant('LABEL.VISUALIZAR')}}" class="btn btn-clear" ng-click="abrirDominio(false);">
+					<i class="fa fa-search blue"></i>
+					<translate>LABEL.VISUALIZAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-click="abrirDominio(true);">
+					<i class="fa fa-pencil blue"></i>
+					<translate>LABEL.EDITAR</translate>
+				</button>
+
+				<span class="divider-vertical"></span>
+
+				<filtros ng-filter="filterCriteria" ng-workspace="workspace"></filtros>
+
+			</div><!-- .col -->
+
+			<div class="col-sm-4 text-right">
+				<favorito/>
+
+				<help-button workspace="workspace" />
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+	
+	<list-view ng-lista="dominios" ng-repository="DominioRepository" ng-headers="headers" ng-filter-criteria="filterCriteria" ng-item-selecionado="dominioChecked"></list-view>
+
+	<script type="text/ng-template" id="bloquear_dominio.html">
+		<div class="modal-header">
+	    	<button class="btn btn-clear" ng-click="confirmarBloqueioDominio(dominio);">
+	       		<i class="fa fa-save green"></i>
+	        	Salvar
+	    	</button>
+
+	    	<button ng-click="$dismiss('cancel');" class="btn btn-clear">
+	        	<i class="fa fa-times red"></i>
+	        	Cancelar
+	    	</button>
+		</div><!-- .modal-header -->
+
+		<div class="modal-body">
+			<div class="row">
+				<div class='col-sm-6'>
+					<label-input-data ng-id="dominio.dataBloqueio" ng-label="LABEL.DATA_BLOQUEIO" ng-obrigatorio="false" ng-model="dominio.dataBloqueio" ng-format="dd/mm/yyyy" form="formDominio" />
+				</div>
+			</div>
+		</div>
+	</script>
+
+</div>

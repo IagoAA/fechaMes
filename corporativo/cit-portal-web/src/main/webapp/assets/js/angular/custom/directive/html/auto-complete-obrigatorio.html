@@ -1,0 +1,25 @@
+<div class="form-group" ng-class="{'has-error':  (form[id].$error.required || !model.id) && (!form[id].$pristine || form.$submitted) }">
+	<label for="{{id}}" class="control-label" ng-if='labelRender'><translate>{{label}}</translate>
+		<a class="green" href="javascript:;" ng-if="buttonNewShow" ng-click="buttonNewAction();" tooltip="{{buttonNewTooltip}}">
+			<i class="fa fa-plus-circle"></i>
+		</a>
+		<span class="red" >*</span>
+		<i ng-show='(form[id].$error.required || !model.id) && (!form[id].$pristine || form.$submitted)' class='fa fa-warning red' tooltip='{{labelAlertTooltipCopy}}' tooltip-placement='top'></i>
+		<i ng-if='labelInfoTooltipRender' class='fa fa-info-circle blue' tooltip='{{labelInfoTooltip}}' tooltip-placement='top'></i>
+		<i ng-if='labelQuestionTooltipRender' class='fa fa-question-circle green' tooltip='{{labelQuestionTooltip}}' tooltip-placement='top'></i>
+	</label>
+	
+	<div id="{{id}}" class="input-group">
+		<input class="form-control typeahead-wide" type="text" name="{{id}}" ng-model="model" typeahead-min-length="minLength ? minLength : 1" ng-disabled='disabled' required="true"
+			typeahead="item.originalElement as {{item}} for item in findResult($viewValue) | filter:$viewValue | limitTo:10" typeahead-on-select="setResultItem($item.originalElement)" data-rel="tooltip"
+			title="{{DIGITE_AUTOCOMPLETE | translate}}" ng-blur="limparCampoSemModel()"/>
+
+		<span class="input-group-addon">
+			<i class="fa fa-search bigger-110"></i>
+		</span>
+
+		<span ng-if="!disabled" class="input-group-addon"  ng-click="limparCampo(); acaoBorracha();" ng-show="model.id" ng-class="{'hover-directive' : (($hover == true) && !disabled)}" ng-mouseover="$hover = true" ng-mouseout="$hover = false" >
+			<i class="fa fa-eraser bigger-110"></i>
+		</span>
+	</div>
+</div>

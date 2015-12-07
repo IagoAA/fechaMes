@@ -1,0 +1,74 @@
+<form name="formDominio" novalidade id="dominioControllerId" ng-controller="DominioController" autocomplete="off">
+	<div class="bar-buttons-action"  >
+		<div class="row">
+			<div class="col-sm-8 text-left">
+				<button title="{{$translate.instant('LABEL.SALVAR')}}" alt="{{$translate.instant('LABEL.SALVAR')}}" class="btn btn-clear" type="button" ng-hide="!edit" ng-click="saveOrUpdate()">
+					<i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.LIMPAR')}}" alt="{{$translate.instant('LABEL.LIMPAR')}}" class="btn btn-clear" 
+				type="button" ng-show="dominio.id === undefined" ng-click="limpar();">
+					<i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+				</button>
+				
+				<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" type="button" ng-show="!edit" ng-click="edit = true;">
+					<i class="fa fa-pencil blue"></i>
+					<translate>LABEL.EDITAR</translate>
+				</button>
+
+				<bloquear-desbloquear ng-model="dominio" ng-repository="DominioRepository" ng-edit="edit"></bloquear-desbloquear>
+
+				<button title="{{$translate.instant('LABEL.PESQUISAR')}}" alt="{{$translate.instant('LABEL.PESQUISAR')}}" class="btn btn-clear" type="button" ng-click="$showPageSearchWorkspace(workspace); atualizarLista();">
+					<i class="fa fa-search"></i>  <translate>LABEL.PESQUISAR</translate>
+				</button>
+			</div>
+			<!-- .col -->
+
+			<div class="col-sm-4 text-right">
+
+				<favorito/>
+
+				<help-button workspace="workspace" />
+			</div>
+			<!-- .col -->
+		</div>
+		<!-- .row -->
+	</div>
+	
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+	<p>
+		<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate>
+		</small>
+	</p>
+
+		<div class="page-content">
+
+			<fieldset>
+				<legend>
+					<translate>LABEL.DOMINIO</translate>
+      			</legend>
+				<p>
+					<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+				</p>
+				<div class="row">
+					<div class="col-sm-4">
+						<label-input ng-type="text" ng-id="dominio.chave" ng-evento-blur="validaCodigo()" ng-label="LABEL.CHAVE" ng-obrigatorio="true" ng-disabled="true" form="formDominio" ng-model="dominio.chave" ng-custom-maxlength="50" />
+					</div><!-- .col -->
+					<div class="col-sm-2">
+						<label-input-number ng-type="text" ng-id="dominio.codigo" ng-label="LABEL.CODIGO" ng-evento-blur="validaCodigo()" ng-obrigatorio="true" ng-disabled="true" form="formDominio" ng-model="dominio.codigo" ng-custom-maxlength="5"/>
+					</div><!-- .col -->
+					<div class="col-sm-6">
+						<label-input ng-type="text" ng-id="dominio.nome" ng-label="LABEL.NOME_DOMINIO" ng-obrigatorio="true" ng-disabled="true" form="formDominio" ng-model="dominio.nome" ng-custom-maxlength="100" />
+					</div><!-- .col -->
+				</div><!-- .row -->
+				<div class="row">
+					<div class="col-sm-12">
+						<label-input ng-type="text" ng-id="dominio.descricao" ng-label="LABEL.DESCRICAO" ng-obrigatorio="true" ng-disabled="!edit" form="formDominio" ng-model="dominio.descricao" ng-custom-maxlength="255" />
+					</div><!-- .col -->
+				</div><!-- .row -->
+			</fieldset>
+
+	    </div> <!-- /.page-content -->
+</form>
+

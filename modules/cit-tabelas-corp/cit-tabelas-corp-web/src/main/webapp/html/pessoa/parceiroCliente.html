@@ -1,0 +1,6 @@
+<div class="row" ng-show="apresentarCliente">
+	<div class="col-sm-6">
+		<auto-complete ng-find="findServico(value)" ng-item="item.nome" ng-id="cliente.servico" ng-model="cliente.servico" ng-disabled="isVisualizar" ng-label="LABEL.SERVICO"
+			  ng-obrigatorio="{{apresentarCliente}}" form="formPessoa"/>
+	</div>
+</div>

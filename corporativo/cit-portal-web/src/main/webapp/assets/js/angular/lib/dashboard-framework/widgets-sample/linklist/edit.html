@@ -1,0 +1,33 @@
+<form class="form-inline" role="form">
+  <div>
+    <label>Links</label>
+  </div>
+  <div class="padding-bottom" ng-repeat="link in config.links">
+ 	<div ng-show='!link.remover'>
+	    <div class="form-group">
+	      <label class="sr-only" for="title-{{$index}}"><translate>LABEL.TITULO</translate></label>
+	      <input type="text" id="title-{{$index}}" class="form-control" ng-model="link.title" required="">
+	    </div>
+	    <div class="form-group">
+	      <label class="sr-only" for="href-{{$index}}">URL</label>
+	      <input type="url" id="href-{{$index}}" class="form-control" placeholder="http://example.com" ng-model="link.href" required="">
+	    </div>
+	    <button type="button" class="btn btn-warning" ng-click="removeLink($index, link)">
+	      <i class="fa fa-minus"></i> <translate>LABEL.REMOVER</translate>
+	    </button>    
+	  </div>
+  </div>
+  <button type="button" class="btn btn-primary" ng-click="addLink()">
+    <i class="fa fa-plus"></i> <translate>LABEL.ADICIONAR</translate>
+  </button>
+  
+  	<div class="row">
+		<div class="col-sm-6">
+			<pick-list list-source="config.grupoSource" list-target="config.widgetGrupos" source-label="{{$translate.instant('LABEL.GRUPOS')}}" target-label="{{$translate.instant('LABEL.GRUPOS_SELECIONADOS')}}" item-label="grupo.nome"></pick-list>
+	    </div>
+	    
+	    <div class="col-sm-6">
+			<pick-list list-source="config.privilegioSource" list-target="config.widgetPrivilegios" source-label="{{$translate.instant('LABEL.PERMISSOES')}}" target-label="{{$translate.instant('LABEL.PERMISSOES_SELECIONADOS')}}" item-label="privilegio.nome"></pick-list>
+	    </div>
+	</div>
+</form>

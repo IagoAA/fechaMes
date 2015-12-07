@@ -1,0 +1,3 @@
+br\com\centralit\controller\CaixaController.class
+br\com\centralit\controller\LuckController.class
+br\com\centralit\controller\UsuarioFechaMesController.class

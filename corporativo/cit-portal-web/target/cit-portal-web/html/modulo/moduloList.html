@@ -1,0 +1,42 @@
+<div id="searchModulo" class="page-content" ng-controller="ModuloListController">
+    <div class="bar-buttons-action fixed">
+        <div class="row">
+            <div class="col-sm-8 text-left">
+                <button class="btn btn-clear" ng-click="$showPageEditWorkspace(workspace); resetForm();">
+                    <i class="fa fa-plus-circle yellow-dark"></i>
+                    <translate>LABEL.CADASTRAR</translate>
+                </button>
+
+                <button class="btn btn-clear" ng-show="totalItens > 0" ng-click="abrirModulo(false);">
+                    <i class="fa fa-search blue"></i>
+                    <translate>LABEL.VISUALIZAR</translate>
+                </button>
+
+                <button class="btn btn-clear" ng-click="abrirModulo(true);">
+                    <i class="fa fa-pencil blue"></i>
+                    <translate>LABEL.EDITAR</translate>
+                </button>
+
+                <button class="btn btn-clear" ng-click="remove();">
+                    <i class="fa fa-times red"></i>
+                    <translate>LABEL.REMOVER</translate>
+                </button>
+
+                <span class="divider-vertical"></span>
+
+                <filtros ng-filter="filterCriteria" ng-workspace="workspace"></filtros>
+            </div><!-- .col -->
+
+            <div class="col-sm-4 text-right">
+                <favorito />
+
+                <help-button workspace="workspace" />
+            </div><!-- .col -->
+        </div><!-- .row -->
+    </div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+    <list-view ng-lista="modulos" ng-repository="ModuloRepository" ng-headers="headers" ng-filter-criteria="filterCriteria" ng-item-selecionado="moduloChecked"></list-view>
+    
+</div><!-- .page-content -->

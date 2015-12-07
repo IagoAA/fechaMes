@@ -1,0 +1,42 @@
+<div class="page-content ng-scope" id="searchComissao" ng-controller="ComissaoListController">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+				<button title="{{$translate.instant('LABEL.CADASTRAR')}}" alt="{{$translate.instant('LABEL.CADASTRAR')}}" class="btn btn-clear" ng-click="$showPageEditWorkspace(workspace); resetForm();">
+					<i class="fa fa-plus-circle yellow-dark"></i>
+					<translate>LABEL.CADASTRAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.VISUALIZAR')}}" alt="{{$translate.instant('LABEL.VISUALIZAR')}}" class="btn btn-clear"  ng-click="abrirComissao(false);">
+					<i class="fa fa-search blue"></i>
+					<translate>LABEL.VISUALIZAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-click="abrirComissao(true);">
+					<i class="fa fa-pencil blue"></i>
+					<translate>LABEL.EDITAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-click="remove();">
+					<i class="fa fa-times red"></i>
+					<translate>LABEL.REMOVER</translate>
+				</button>
+
+				<span class="divider-vertical"></span>
+
+				<filtros ng-filter="filterCriteria" ng-workspace="workspace"></filtros>
+			</div><!-- .col -->
+
+			<div class="col-sm-4 text-right">
+				<favorito/>
+
+				<help-button workspace="workspace" />
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+	
+	<list-view ng-lista="inventarioComissoes" ng-repository="ComissaoRepository" ng-headers="headers" ng-filter-criteria="filterCriteria" ng-item-selecionado="comissaoChecked"></list-view>
+	
+</div><!-- .page-content -->

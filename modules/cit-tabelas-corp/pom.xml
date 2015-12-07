@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--     ******************************************************************************************************************** -->
+<!--     *												LICENCA*GPLv2														* -->
+<!--     * Copyright [2011,2012,2013,2014,2015] da CentralIT Tecnologia da Informação Ltda (www.centralit.com.br)          	* -->
+<!--     *                                                                                                                 	* -->
+<!--     * Este arquivo é parte do programa/software: Citsmart (www.citsmart.com.br)                                       	* -->
+<!--     *                                                                                                                 	* -->
+<!--     * O Citsmart é um software livre; você pode redistribui-lo e/ou modificá-lo dentro dos termos da Licença          	* -->
+<!--     * Pública Geral GNU como publicada pela Fundação do Software Livre (FSF); na versão 2 da Licença.                	* -->
+<!--     *                                                                                                                 	* -->
+<!--     * Este programa/software é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA; sem uma         	* -->
+<!--     * garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral     	* -->
+<!--     * GNU/GPL em português para maiores detalhes.                                                                     	* -->
+<!--     *                                                                                                                 	* -->
+<!--     * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título 'LICENCA.txt', junto com este     	* -->
+<!--     * programa/software, se não, acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br	* -->
+<!--     * ou escreva para a Fundação do Software Livre (FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301,USA 	* -->
+<!--     ******************************************************************************************************************** -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>br.com.centralit</groupId>
+		<artifactId>citsmart-grp-modules</artifactId>
+		<version>0.0.6-SNAPSHOT</version>
+		<relativePath>../cit-suite</relativePath>
+	</parent>
+
+	<artifactId>cit-tabelas-corp</artifactId>
+	<packaging>pom</packaging>
+	<name>cit-tabelas-corp</name>
+
+	<properties>
+		<findbugs.config.path>${project.parent.parent.basedir}/filterfile.xml</findbugs.config.path>
+		<license.config.path>${project.parent.basedir}/src/licensing</license.config.path>
+	</properties>
+
+	<!-- Gerencia as versoes dos modulos filhos -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>br.com.centralit</groupId>
+				<artifactId>cit-tabelas-corp-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>br.com.centralit</groupId>
+				<artifactId>cit-tabelas-corp-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<modules>
+		<module>cit-tabelas-corp-web</module>
+		<module>cit-tabelas-corp-api</module>
+	</modules>
+
+</project>

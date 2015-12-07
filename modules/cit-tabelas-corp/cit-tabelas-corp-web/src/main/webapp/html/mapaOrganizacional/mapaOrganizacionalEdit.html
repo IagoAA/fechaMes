@@ -1,0 +1,64 @@
+<form name="formMapaOrganizacional" novalidade id="mapaOrganizacionalControllerId" novalidate ng-controller="MapaOrganizacionalController" autocomplete="off">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+				<button title="{{$translate.instant('LABEL.SALVAR')}}" alt="{{$translate.instant('LABEL.SALVAR')}}" class="btn btn-clear" ng-show="edit" ng-click="saveOrUpdate();">
+					<i class="fa fa-save green"></i> <translate>LABEL.SALVAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.LIMPAR')}}" alt="{{$translate.instant('LABEL.LIMPAR')}}" class="btn btn-clear" ng-show="mapaOrganizacional.id === undefined" ng-click="limpar();">
+					<i class="fa fa-eraser yellow-dark"></i> <translate>LABEL.LIMPAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-show="!edit && !mapaOrganizacional.dataFim" ng-click="edit = true;">
+					<i class="fa fa-pencil blue"></i>
+					<translate>LABEL.EDITAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-click="remove(mapaOrganizacional);" ng-show="mapaOrganizacional.id !== undefined && !mapaOrganizacional.dataFim">
+					<i class="fa fa-times red"></i> <translate>LABEL.REMOVER</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.PESQUISAR')}}" alt="{{$translate.instant('LABEL.PESQUISAR')}}" class="btn btn-clear" ng-click="$showPageSearchWorkspace(workspace); atualizaPaginaPesquisa();">
+					<i class="fa fa-search"></i> <translate>LABEL.PESQUISAR</translate>
+				</button>
+			</div><!-- .col -->
+
+			<div class="col-sm-4 text-right">
+				<favorito/>
+				
+				<help-button workspace="workspace" />
+
+			</div><!-- .col -->
+		</div><!-- .row -->
+	</div><!-- .bar-buttons-action -->
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+	<p>
+		<small>( <span class="red">*</span> ) <translate>LABEL.CAMPOS_OBRIGATORIOS</translate></small>
+	</p>
+
+       <fieldset>
+       	<legend>
+			<translate>LABEL.MAPA_ORGANIZACIONAL</translate>
+		</legend>
+
+		<div class="row">
+			<div class='col-sm-2'>
+				<label-input ng-type="text" ng-id="mapaOrganizacional.codigo" form="formMapaOrganizacional" ng-disabled="true" ng-label="LABEL.CODIGO" ng-obrigatorio="false" ng-model="mapaOrganizacional.codigo" ng-custom-maxlength="30" />
+			</div>
+			<div class="col-sm-6">
+				<label-input ng-type="text" ng-id="mapaOrganizacional.nome" form="formMapaOrganizacional" ng-disabled="!edit" ng-label="LABEL.NOME" ng-obrigatorio="true" ng-model="mapaOrganizacional.nome" ng-custom-maxlength="100"></label-input>
+			</div><!-- .col-sm-6 -->
+			<div class="col-sm-2">
+				<label-input-data ng-id="mapaOrganizacional.dataInicio" form="formMapaOrganizacional" ng-disabled="!edit || (mapaOrganizacional !== undefined && mapaOrganizacional.id !== undefined)" ng-label="LABEL.DATA_INICIO" ng-obrigatorio="true" ng-model="mapaOrganizacional.dataInicio" ng-format="dd/MM/yyyy"></label-input-data>
+			</div><!-- .col-sm-3 -->
+			<div class="col-sm-2">
+				<label-input-data ng-id="mapaOrganizacional.dataFim" form="formMapaOrganizacional" ng-disabled="true" ng-label="LABEL.DATA_FIM" ng-obrigatorio="false" ng-model="mapaOrganizacional.dataFim" ng-format="dd/MM/yyyy"></label-input-data>
+			</div><!-- .col-sm-3 -->
+		</div><!-- .row -->
+
+		<componente-observacao ng-observacoes="mapaOrganizacional.observacoes" ng-edit="edit"></componente-observacao>
+       </fieldset>
+</form>

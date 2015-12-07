@@ -1,0 +1,129 @@
+<div class="page-content clearfix" id="searchPainel" ng-controller="PainelListController" id="painelList">
+	<div class="bar-buttons-action fixed">
+		<div class="row">
+			<div class="col-sm-8 text-left">
+				<button title="{{$translate.instant('LABEL.CADASTRAR')}}" alt="{{$translate.instant('LABEL.CADASTRAR')}}" class="btn btn-clear" ng-click="$showPageEditWorkspace(workspace); resetForm('painelEdit');" type="button">
+					<i class="fa fa-plus-circle yellow-dark"></i>
+					<translate>LABEL.CADASTRAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.VISUALIZAR')}}" alt="{{$translate.instant('LABEL.VISUALIZAR')}}" class="btn btn-clear" ng-show="totalItens > 0" ng-click="abrirPainel(true);" type="button">
+					<i class="fa fa-search blue"></i>
+					<translate>LABEL.VISUALIZAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.EDITAR')}}" alt="{{$translate.instant('LABEL.EDITAR')}}" class="btn btn-clear" ng-show="totalItens > 0" ng-click="abrirPainel(false);" type="button">
+					<i class="fa fa-pencil blue"></i>
+					<translate>LABEL.EDITAR</translate>
+				</button>
+
+				<button title="{{$translate.instant('LABEL.REMOVER')}}" alt="{{$translate.instant('LABEL.REMOVER')}}" class="btn btn-clear" ng-show="totalItens > 0" ng-click="abirDialogConfirmacaoRemocao();" type="button">
+					<i class="fa fa-times red"></i>
+					<translate>LABEL.REMOVER</translate>
+				</button>
+
+				<span class="divider-vertical"></span>
+
+				<filtros ng-filter="filterCriteria" ng-workspace="workspace"></filtros>
+
+			</div><!-- .col -->
+
+			<div class="col-sm-4 text-right">
+				<favorito/>
+
+				<help-button workspace="workspace" />
+			</div>
+		</div>
+	</div>
+
+	<breadcrumb ng-workspace="workspace"></breadcrumb>
+
+	<div class="table-container">
+		<div class="table-header clearfix">
+			<div class="table-header-right">
+				<button class="btn btn-primary btn-inline btn-white table-header-item" ng-click="showAdvancedFilters(null, this)">
+					<i class="fa fa-filter"></i>
+					<translate>LABEL.FILTROS_AVANCADOS</translate>
+				</button>
+			</div><!-- .table-header-right -->
+
+			<div class="table-header-left">
+				<div class="form-group">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Digite uma palavra chave" on-enter-blur on-blur-change="filterResult(true)" ng-model="filterCriteria.keywordValue" />
+						<span class="input-group-addon">
+							<i class="fa fa-search fa-lg"></i>
+						</span>
+					</div>
+				</div><!-- .form-group -->
+			</div><!-- .table-header-left -->
+		</div><!-- .table-header -->
+
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<tr>
+					<th class="text-center" style="width: 3%;">
+						&nbsp;
+					</th>
+					<th class="text-center" style="width: 40%;">
+						<translate>LABEL.NOME</translate>
+					</th>
+					<th class="text-center" style="width: 40%;">
+						<translate>LABEL.USUARIO</translate>
+					</th>
+				</tr>
+			</thead>
+
+			<tfoot ng-show="totalItens > 0">
+				<tr>
+					<td colspan="5">
+						<div class="row">
+							<div class="col-sm-4 table-showing">
+								<translate>LABEL.MOSTRANDO</translate>
+								{{filterCriteria.start}}
+								<translate>LABEL.ATE</translate>
+								{{filterCriteria.limit > totalItens ? totalItens : filterCriteria.limit}}
+								<translate>LABEL.DE</translate>
+								({{totalItens}})
+								<translate>LABEL.PAINEIS</translate>.
+							</div><!-- .col -->
+							<div class="col-sm-8 text-right">
+								<pagination rotate="true" total-items="totalItens" num-pages="totalPages" ng-model="filterCriteria.start" items-per-page="filterCriteria.limit" class="pagination-sm" boundary-links="true" ng-change="fetchResult()"></pagination>
+							</div><!-- .col -->
+						</div><!-- .row -->
+					</td>
+				</tr>
+			</tfoot>
+			<tbody>
+				<tr ng-show="$showAdvancedFilters">
+					<td>
+					</td>
+					<td>
+						<div class="row">
+							<div class="col-sm-12">
+								<input class="col-sm-12 form-control" on-enter-blur on-blur-change="filterResult()" ng-model="filterCriteria.filters[0].value" type="text" />
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="col-sm-12">
+							<input class="col-sm-12 form-control" on-enter-blur on-blur-change="filterResult()" ng-model="filterCriteria.filters[1].value" type="text" />
+						</div>
+					</td>
+				</tr>
+				<tr ng-repeat="painel in paineis | orderBy:'nome'">
+					<td class="text-center">
+						<input type="radio" name="painelChecked" ng-checked="painel.$checked" ng-click="checkPainel(painel);" />
+					</td>
+					<td>{{painel.nome}}</td>
+					<td>{{painel['usuario.username']}}</td>
+				</tr>
+				<tr ng-show="totalItens <= 0">
+					<td colspan="5">
+						<strong><translate>MSG.NENHUM_REGISTRO_ENCONTRADO</translate></strong>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

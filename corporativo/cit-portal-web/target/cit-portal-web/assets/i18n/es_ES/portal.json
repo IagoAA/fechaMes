@@ -1,0 +1,22 @@
+{
+	"LABEL" : 
+	{
+		"PROJETO"           : "Portal Spain",
+		"NOME"              : "Nome",
+		"SALVAR_NOVO"       : "Salvar novo",
+		"ADICIONAR_FILTRO"  : "Adicionar filtro",
+		"CAMPO_OBRIGATORIO" : "é um campo obrigatório",
+		"CANCELAR"          : "Cancelar",
+		"SALVAR"            : "Salvar",
+		"FILTROS"           : "Filtros",
+		"NOME"              : "Nome",
+		"OBRIGATORIO"       : "*",
+		"INFORME_FILTRO"    : "Informe o nome do filtro",
+		
+		"PERFIL"    : "Perfil",
+		"PESQUISAR" : "Pesquisar",
+		"CADASTRAR" : "Cadastrar"
+	}
+	
+	
+}
