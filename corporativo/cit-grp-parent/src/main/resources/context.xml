@@ -26,36 +26,32 @@
 	<!--<Resource name="jdbc/sqlServer" auth="Container" factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
 		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" type="javax.sql.DataSource"
 		maxActive="50" maxIdle="10" maxWait="15000" username="sa" password="sqlserver"
-		url="jdbc:sqlserver://127.0.0.1:1433;databaseName=citgrp;" removeAbandoned="true"
+		url="jdbc:sqlserver://127.0.0.1:1433;databaseName=fechames;" removeAbandoned="true"
 		removeAbandonedTimeout="30" logAbandoned="true" /> -->
 
 	<!--Postgres -->
-	<Resource auth="Container" driverClassName="org.postgresql.Driver"
-		factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
-		logAbandoned="true" maxActive="50" maxIdle="10" maxWait="15000"
-		name="jdbc/cit-gestao" password="postgres" removeAbandoned="true"
-		removeAbandonedTimeout="30" type="javax.sql.DataSource"
-		url="jdbc:postgresql://localhost:5432/citgrp" username="postgres" />
 
 	<Resource auth="Container" driverClassName="org.postgresql.Driver"
 		factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
 		logAbandoned="true" maxActive="50" maxIdle="10" maxWait="15000"
 		name="jdbc/cit-portal" password="postgres" removeAbandoned="true"
 		removeAbandonedTimeout="30" type="javax.sql.DataSource"
-		url="jdbc:postgresql://localhost:5432/citgrp" username="postgres" />
+		url="jdbc:postgresql://localhost:5432/fechames" username="postgres" />
 
 	<Resource auth="Container" driverClassName="org.postgresql.Driver"
 		factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
 		logAbandoned="true" maxActive="50" maxIdle="10" maxWait="15000"
 		name="jdbc/cit-tabelas-corp" password="postgres" removeAbandoned="true"
 		removeAbandonedTimeout="30" type="javax.sql.DataSource"
-		url="jdbc:postgresql://localhost:5432/citgrp" username="postgres" />
+		url="jdbc:postgresql://localhost:5432/fechames" username="postgres" />
 
 	<Resource auth="Container" driverClassName="org.postgresql.Driver"
 		factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
 		logAbandoned="true" maxActive="50" maxIdle="10" maxWait="15000"
-		name="jdbc/citgrp-patrimonio" password="postgres" removeAbandoned="true"
+		name="jdbc/fecha-mes" password="postgres" removeAbandoned="true"
 		removeAbandonedTimeout="30" type="javax.sql.DataSource"
-		url="jdbc:postgresql://localhost:5432/citgrp" username="postgres" />
+		url="jdbc:postgresql://localhost:5432/fechames" username="postgres" />
+
+
 
 </Context>
